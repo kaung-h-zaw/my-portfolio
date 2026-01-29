@@ -1,9 +1,19 @@
-import React from "react";
-import { ArrowUpRight, Terminal, Hash, Download } from "lucide-react";
+import React, { useState } from "react";
+import {
+  ArrowUpRight,
+  Terminal,
+  Hash,
+  Download,
+  Check,
+  Copy,
+  Mail,
+} from "lucide-react";
 
 export default function AboutApp({ theme }) {
   // Theme logic
   const isDark = theme === "dark";
+  const [copied, setCopied] = useState(false);
+  const email = "kaunghtetzaw.inbox@gmail.com";
 
   // Dynamic classes based on theme
   const bgBase = isDark
@@ -15,10 +25,19 @@ export default function AboutApp({ theme }) {
   const cardBg = isDark
     ? "bg-zinc-900/50 border-cyan-900/50"
     : "bg-white border-slate-200";
+  const linkHover = isDark
+    ? "hover:bg-cyan-900/20 text-cyan-600 hover:text-cyan-400"
+    : "hover:bg-slate-200 text-slate-600 hover:text-black";
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(email);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
     <div
-      className={`h-full w-full ${bgBase} font-mono overflow-y-auto custom-scrollbar p-8 md:p-12 flex flex-col selection:bg-cyan-500 selection:text-black transition-colors duration-300`}
+      className={`h-full w-full ${bgBase} font-mono overflow-y-auto custom-scrollbar p-6 md:p-12 flex flex-col selection:bg-cyan-500 selection:text-black transition-colors duration-300`}
     >
       {/* 1. HEADER SECTION */}
       <div
@@ -34,7 +53,7 @@ export default function AboutApp({ theme }) {
           </div>
 
           <h1
-            className={`text-4xl md:text-5xl font-black uppercase tracking-tighter mb-2 ${textHeading}`}
+            className={`text-3xl md:text-5xl font-black uppercase tracking-tighter mb-2 ${textHeading}`}
           >
             Kaung Htet Zaw
           </h1>
@@ -52,12 +71,29 @@ export default function AboutApp({ theme }) {
             high-performance web applications with a focus on clean
             architecture.
           </div>
+
+          {/* COPYABLE EMAIL IN HEADER */}
+          <button
+            onClick={handleCopy}
+            className={`mt-4 flex items-center gap-2 text-xs font-bold uppercase tracking-wider cursor-pointer transition-colors select-none group w-fit
+              ${copied ? "text-emerald-500" : isDark ? "text-cyan-600 hover:text-cyan-500" : "text-slate-700 hover:text-slate-600"}
+            `}
+            title="Click to copy email"
+          >
+            {copied ? <Check size={14} /> : <Mail size={14} />}
+            <span className="lowercase">{email}</span>
+            {copied && (
+              <span className="ml-2 text-[10px] bg-emerald-500 text-white px-1.5 py-0.5 rounded-sm">
+                COPIED
+              </span>
+            )}
+          </button>
         </div>
 
         {/* Right: Photo */}
-        <div className="relative shrink-0 group">
+        <div className="relative shrink-0 group self-start md:self-auto">
           <div
-            className={`w-28 h-28 md:w-36 md:h-36 rounded-full border-2 overflow-hidden shadow-sm transition-colors ${isDark ? "border-cyan-600 bg-zinc-900" : "border-slate-300 bg-white group-hover:border-slate-500"}`}
+            className={`w-24 h-24 md:w-36 md:h-36 rounded-full border-2 overflow-hidden shadow-sm transition-colors ${isDark ? "border-cyan-600 bg-zinc-900" : "border-slate-300 bg-white group-hover:border-slate-500"}`}
           >
             <img
               src="/me-nb.png"
@@ -140,36 +176,12 @@ export default function AboutApp({ theme }) {
             <div
               className={`grid grid-cols-2 gap-y-3 gap-x-4 text-xs font-bold uppercase relative z-10 ${isDark ? "text-cyan-600" : "text-slate-500"}`}
             >
-              <span
-                className={`transition-colors cursor-default ${isDark ? "hover:text-cyan-400" : "hover:text-slate-900"}`}
-              >
-                React / Next.js
-              </span>
-              <span
-                className={`transition-colors cursor-default ${isDark ? "hover:text-cyan-400" : "hover:text-slate-900"}`}
-              >
-                TypeScript
-              </span>
-              <span
-                className={`transition-colors cursor-default ${isDark ? "hover:text-cyan-400" : "hover:text-slate-900"}`}
-              >
-                Node.js
-              </span>
-              <span
-                className={`transition-colors cursor-default ${isDark ? "hover:text-cyan-400" : "hover:text-slate-900"}`}
-              >
-                PostgreSQL
-              </span>
-              <span
-                className={`transition-colors cursor-default ${isDark ? "hover:text-cyan-400" : "hover:text-slate-900"}`}
-              >
-                Tailwind
-              </span>
-              <span
-                className={`transition-colors cursor-default ${isDark ? "hover:text-cyan-400" : "hover:text-slate-900"}`}
-              >
-                Java / JavaFX
-              </span>
+              <span>React / Next.js</span>
+              <span>TypeScript</span>
+              <span>Node.js</span>
+              <span>PostgreSQL</span>
+              <span>Tailwind</span>
+              <span>Java / JavaFX</span>
             </div>
           </div>
 
@@ -201,7 +213,7 @@ export default function AboutApp({ theme }) {
             </div>
           </a>
 
-          {/* Connect List */}
+          {/* Connect List (RESTORED TO ORIGINAL) */}
           <div>
             <div
               className={`border-b pb-1 mb-3 flex justify-between items-end ${borderBase}`}
@@ -216,13 +228,16 @@ export default function AboutApp({ theme }) {
                 href="https://github.com/kaung-h-zaw"
                 target="_blank"
                 rel="noreferrer"
-                className={`flex items-center justify-between group px-3 py-2 -mx-3 rounded transition-colors cursor-pointer 
-                  ${isDark ? "hover:bg-cyan-900/20 text-cyan-600 hover:text-cyan-400" : "hover:bg-slate-200 text-slate-600 hover:text-black"}`}
+                className={`flex items-center justify-between group px-3 py-3 -mx-3 rounded transition-colors cursor-pointer ${linkHover}`}
               >
                 <span className="text-xs font-bold uppercase">GitHub</span>
                 <ArrowUpRight
                   size={14}
-                  className={`${isDark ? "text-cyan-800 group-hover:text-cyan-400" : "text-slate-400 group-hover:text-black"}`}
+                  className={
+                    isDark
+                      ? "text-cyan-800 group-hover:text-cyan-400"
+                      : "text-slate-400 group-hover:text-black"
+                  }
                 />
               </a>
 
@@ -230,25 +245,31 @@ export default function AboutApp({ theme }) {
                 href="https://linkedin.com/in/kaung-h-zaw"
                 target="_blank"
                 rel="noreferrer"
-                className={`flex items-center justify-between group px-3 py-2 -mx-3 rounded transition-colors cursor-pointer 
-                  ${isDark ? "hover:bg-cyan-900/20 text-cyan-600 hover:text-cyan-400" : "hover:bg-slate-200 text-slate-600 hover:text-black"}`}
+                className={`flex items-center justify-between group px-3 py-3 -mx-3 rounded transition-colors cursor-pointer ${linkHover}`}
               >
                 <span className="text-xs font-bold uppercase">LinkedIn</span>
                 <ArrowUpRight
                   size={14}
-                  className={`${isDark ? "text-cyan-800 group-hover:text-cyan-400" : "text-slate-400 group-hover:text-black"}`}
+                  className={
+                    isDark
+                      ? "text-cyan-800 group-hover:text-cyan-400"
+                      : "text-slate-400 group-hover:text-black"
+                  }
                 />
               </a>
 
               <a
                 href="mailto:kaunghtetzaw.inbox@gmail.com"
-                className={`flex items-center justify-between group px-3 py-2 -mx-3 rounded transition-colors cursor-pointer 
-                   ${isDark ? "hover:bg-cyan-900/20 text-cyan-600 hover:text-cyan-400" : "hover:bg-slate-200 text-slate-600 hover:text-black"}`}
+                className={`flex items-center justify-between group px-3 py-3 -mx-3 rounded transition-colors cursor-pointer ${linkHover}`}
               >
                 <span className="text-xs font-bold uppercase">Email</span>
                 <ArrowUpRight
                   size={14}
-                  className={`${isDark ? "text-cyan-800 group-hover:text-cyan-400" : "text-slate-400 group-hover:text-black"}`}
+                  className={
+                    isDark
+                      ? "text-cyan-800 group-hover:text-cyan-400"
+                      : "text-slate-400 group-hover:text-black"
+                  }
                 />
               </a>
             </div>
