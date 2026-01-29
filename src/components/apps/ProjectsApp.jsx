@@ -2,10 +2,8 @@ import React from "react";
 import { Folder, ExternalLink, Github, Image as ImageIcon } from "lucide-react";
 
 export default function ProjectsApp({ theme }) {
-  // Theme logic
   const isDark = theme === "dark";
 
-  // Colors
   const bgMain = isDark
     ? "bg-zinc-950 text-cyan-400"
     : "bg-slate-100 text-slate-800";

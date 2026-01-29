@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Folder } from "lucide-react";
 import { SKILLS_DATA } from "../../data/content";
 
-// 1. IMPORT ICONS
 import {
   SiReact,
   SiJavascript,
@@ -17,7 +16,6 @@ import {
   SiJira,
 } from "react-icons/si";
 
-// 2. CREATE A MAP
 const ICON_MAP = {
   React: SiReact,
   JavaScript: SiJavascript,
@@ -35,10 +33,8 @@ const ICON_MAP = {
 export default function SkillsApp({ theme }) {
   const [activeDir, setActiveDir] = useState("Frontend");
 
-  // Theme logic
   const isDark = theme === "dark";
 
-  // Colors
   const bgMain = isDark
     ? "bg-zinc-950 text-cyan-400"
     : "bg-slate-100 text-slate-800";

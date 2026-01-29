@@ -40,7 +40,7 @@ export default function StatusBar({
         <span className="hidden md:inline">MEM: 640K OK</span>
       </div>
 
-      {/* Center (Mobile Only): Home Button */}
+      {/* Home Button */}
       {isMobile && (
         <button
           onClick={onCloseAll}
@@ -50,7 +50,7 @@ export default function StatusBar({
         </button>
       )}
 
-      {/* Center (Desktop Only) */}
+      {/* Desktop */}
       {!isMobile && (
         <div
           className={`absolute left-1/2 -translate-x-1/2 tracking-widest uppercase ${centerText}`}

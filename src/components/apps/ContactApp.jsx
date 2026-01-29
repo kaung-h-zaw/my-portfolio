@@ -18,10 +18,8 @@ export default function ContactApp({ theme }) {
   const [sending, setSending] = useState(false);
   const [status, setStatus] = useState(null);
 
-  // Theme Logic
   const isDark = theme === "dark";
 
-  // Colors
   const bgMain = isDark
     ? "bg-zinc-950 text-cyan-400"
     : "bg-slate-100 text-slate-800";

@@ -9,7 +9,6 @@ import {
   GraduationCap,
 } from "lucide-react";
 
-// Import your Apps
 import AboutApp from "../apps/AboutApp";
 import SkillsApp from "../apps/SkillsApp";
 import ProjectsApp from "../apps/ProjectsApp";
@@ -17,7 +16,6 @@ import ContactApp from "../apps/ContactApp";
 import ExperienceApp from "../apps/ExperienceApp";
 import EducationApp from "../apps/EducationApp";
 
-// Import your OS Components
 import TopBar from "./TopBar";
 import StatusBar from "./StatusBar";
 import DesktopIcon from "./DesktopIcon";
@@ -40,13 +38,10 @@ export default function Desktop() {
   const [zTop, setZTop] = useState(20);
   const [initialized, setInitialized] = useState(false);
 
-  // THEME STATE
-  // Logic: Try local storage, but default to "light"
+  // THEME STATE: Default to Light
   const [theme, setTheme] = useState(() => {
     if (typeof window !== "undefined") {
       const savedTheme = localStorage.getItem("os-theme");
-      // If you want to force light on new sessions/tabs, you could comment out the next line
-      // But usually, persistence is desired.
       return savedTheme || "light";
     }
     return "light";
@@ -54,18 +49,27 @@ export default function Desktop() {
 
   const isDark = theme === "dark";
 
-  // Sync theme to body and localStorage
   useEffect(() => {
     localStorage.setItem("os-theme", theme);
+
     if (theme === "dark") {
       document.body.classList.add("dark-theme");
+      document.body.style.backgroundColor = "#09090b";
     } else {
       document.body.classList.remove("dark-theme");
+      document.body.style.backgroundColor = "#e2e8f0";
     }
+
+    document.body.style.overscrollBehavior = "none";
+    document.documentElement.style.overscrollBehavior = "none";
+
+    return () => {
+      document.body.style.backgroundColor = "";
+      document.body.style.overscrollBehavior = "";
+      document.documentElement.style.overscrollBehavior = "";
+    };
   }, [theme]);
 
-  // Sync across tabs (New Feature)
-  // This ensures if you change theme in one tab, other open tabs update instantly
   useEffect(() => {
     const handleStorageChange = (e) => {
       if (e.key === "os-theme") {
@@ -76,7 +80,6 @@ export default function Desktop() {
     return () => window.removeEventListener("storage", handleStorageChange);
   }, []);
 
-  // Define Icons
   const desktopIcons = useMemo(
     () => [
       { id: "about", title: "ABOUT_ME", type: "TXT FILE", icon: FileText },
@@ -99,7 +102,6 @@ export default function Desktop() {
     [],
   );
 
-  // Define Window Content
   const windowRegistry = useMemo(
     () => ({
       about: { title: "C:\\USER\\KAUNG\\ABOUT.TXT", component: AboutApp },
@@ -121,7 +123,6 @@ export default function Desktop() {
     [],
   );
 
-  // Initialize
   useEffect(() => {
     if (!initialized) {
       const mobileCheck = window.innerWidth < 1024;
@@ -135,7 +136,6 @@ export default function Desktop() {
     }
   }, [initialized]);
 
-  // Window Management
   function openWindow(id) {
     if (isMobile) {
       setOpenWindows([{ id, z: 100, defaultPos: { x: 0, y: 0 } }]);
@@ -176,7 +176,7 @@ export default function Desktop() {
 
   return (
     <div
-      className={`h-[100dvh] w-screen ${mainBg} ${textColor} font-mono overflow-hidden flex flex-col transition-colors duration-300`}
+      className={`fixed inset-0 w-screen h-[100dvh] ${mainBg} ${textColor} font-mono overflow-hidden flex flex-col transition-colors duration-300`}
     >
       {/* 1. Top Bar */}
       <TopBar
