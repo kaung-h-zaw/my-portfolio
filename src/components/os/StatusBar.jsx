@@ -27,7 +27,7 @@ export default function StatusBar({
 
   return (
     <div
-      className={`h-16 md:h-10 flex items-center justify-between px-4 text-[10px] md:text-xs font-bold transition-colors duration-300 select-none z-[9999] shrink-0 ${bgStyle}`}
+      className={`h-16 md:h-14 flex items-center justify-between px-4 text-[10px] md:text-xs font-bold transition-colors duration-300 select-none z-[9999] shrink-0 ${bgStyle}`}
     >
       {/* Left Side: Status Dot + READY text */}
       <div className="flex gap-4 items-center flex-1">
