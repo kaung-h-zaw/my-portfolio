@@ -17,7 +17,7 @@ import ContactApp from "../apps/ContactApp";
 import ExperienceApp from "../apps/ExperienceApp";
 import EducationApp from "../apps/EducationApp";
 
-// Import your OS Components (The separate files you just updated)
+// Import your OS Components
 import TopBar from "./TopBar";
 import StatusBar from "./StatusBar";
 import DesktopIcon from "./DesktopIcon";
@@ -40,7 +40,7 @@ export default function Desktop() {
   const [zTop, setZTop] = useState(20);
   const [initialized, setInitialized] = useState(false);
 
-  // THEME STATE WITH PERSISTENCE
+  // THEME STATE
   const [theme, setTheme] = useState(() => {
     if (typeof window !== "undefined") {
       const savedTheme = localStorage.getItem("os-theme");
@@ -51,7 +51,6 @@ export default function Desktop() {
 
   const isDark = theme === "dark";
 
-  // Save theme changes
   useEffect(() => {
     localStorage.setItem("os-theme", theme);
     if (theme === "dark") {
@@ -106,7 +105,7 @@ export default function Desktop() {
     [],
   );
 
-  // Initialize (Open About on Desktop)
+  // Initialize
   useEffect(() => {
     if (!initialized) {
       const mobileCheck = window.innerWidth < 1024;
@@ -160,8 +159,9 @@ export default function Desktop() {
   const mobileLauncherText = isDark ? "text-cyan-500" : "text-slate-800";
 
   return (
+    // CHANGED: Added h-[100dvh] for mobile viewport height fix
     <div
-      className={`h-screen w-screen ${mainBg} ${textColor} font-mono overflow-hidden flex flex-col transition-colors duration-300`}
+      className={`h-[100dvh] w-screen ${mainBg} ${textColor} font-mono overflow-hidden flex flex-col transition-colors duration-300`}
     >
       {/* 1. Top Bar */}
       <TopBar
@@ -176,9 +176,11 @@ export default function Desktop() {
       <div
         className={`flex-1 relative overflow-hidden transition-colors duration-300 ${mainBg}`}
       >
-        {/* Mobile Launcher (Only visible when no windows open) */}
+        {/* Mobile Launcher */}
         {isMobile && openWindows.length === 0 && (
-          <div className="absolute inset-0 overflow-y-auto flex flex-col items-center pt-8 pb-10">
+          <div className="absolute inset-0 overflow-y-auto flex flex-col items-center pt-8 pb-20">
+            {" "}
+            {/* pb-20 for safety */}
             <div className="w-full max-w-md px-6">
               <div className={`mb-6 border-b pb-2 ${mobileLauncherBorder}`}>
                 <div
@@ -196,7 +198,7 @@ export default function Desktop() {
                     isActive={false}
                     onOpen={() => openWindow(file.id)}
                     isMobile={true}
-                    theme={theme} // Pass theme down
+                    theme={theme}
                   />
                 ))}
               </div>
@@ -204,7 +206,7 @@ export default function Desktop() {
           </div>
         )}
 
-        {/* Desktop Sidebar (Only visible on Desktop) */}
+        {/* Desktop Sidebar */}
         {!isMobile && (
           <div
             className={`absolute left-0 top-0 bottom-0 w-[260px] border-r backdrop-blur-sm p-6 flex flex-col gap-4 overflow-y-auto z-10 transition-colors duration-300 ${sidebarBg}`}
@@ -218,7 +220,7 @@ export default function Desktop() {
                   isActive={isActive}
                   onOpen={() => openWindow(file.id)}
                   isMobile={false}
-                  theme={theme} // Pass theme down
+                  theme={theme}
                 />
               );
             })}
@@ -226,8 +228,9 @@ export default function Desktop() {
         )}
 
         {/* Windows Container */}
+        {/* CHANGED: Added padding bottom on mobile to ensure window doesn't go under StatusBar */}
         <div
-          className={`absolute inset-0 ${!isMobile ? "left-[260px]" : ""} pointer-events-none`}
+          className={`absolute inset-0 ${!isMobile ? "left-[260px]" : "pb-16"} pointer-events-none`}
         >
           <AnimatePresence>
             {openWindows.map((w) => {
@@ -244,9 +247,8 @@ export default function Desktop() {
                     onFocus={() => focusWindow(w.id)}
                     isMobile={isMobile}
                     isMaximized={true}
-                    theme={theme} // Pass theme down
+                    theme={theme}
                   >
-                    {/* Render the App Component with Theme Prop */}
                     <entry.component theme={theme} />
                   </Window>
                 </div>
