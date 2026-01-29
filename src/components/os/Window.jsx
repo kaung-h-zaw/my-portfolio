@@ -1,74 +1,106 @@
-import React from "react";
-import { X, Minus, Square, Terminal } from "lucide-react";
-import AboutApp from "../apps/AboutApp";
-import SkillsApp from "../apps/SkillsApp";
-import ProjectsApp from "../apps/ProjectsApp";
-import ContactApp from "../apps/ContactApp";
+import React, { useRef } from "react";
+import Draggable from "react-draggable";
+import { motion } from "framer-motion";
+import { Terminal, Minus, Square, X } from "lucide-react";
 
-const APP_COMPONENTS = {
-  about: AboutApp,
-  skills: SkillsApp,
-  projects: ProjectsApp,
-  contact: ContactApp,
-};
+export default function Window({
+  id,
+  title,
+  defaultPos,
+  zIndex,
+  onClose,
+  onFocus,
+  children,
+  isMobile,
+  isMaximized = true,
+  theme,
+}) {
+  const nodeRef = useRef(null);
+  const isDark = theme === "dark";
 
-const WINDOW_TITLES = {
-  about: "C:\\USER\\KAUNG\\ABOUT.TXT",
-  skills: "C:\\KAUNG-SPACE\\SKILLS.EXE",
-  projects: "C:\\USER\\PROJECTS\\",
-  contact: "MAIL_CLIENT_V1.0",
-};
+  // Window Styles
+  const windowBase = isDark
+    ? "bg-zinc-950 border-2 border-cyan-900 shadow-[0_0_40px_rgba(0,0,0,0.6)]"
+    : "bg-white border border-slate-300 shadow-2xl rounded-lg";
 
-export default function Window({ id, isActive, onClose, onFocus }) {
-  const ContentComponent = APP_COMPONENTS[id];
-  const title = WINDOW_TITLES[id] || "UNKNOWN.EXE";
+  const titleBarBase = isDark
+    ? "bg-zinc-900 text-cyan-500 border-b border-cyan-900"
+    : "bg-slate-100 text-slate-800 border-b border-slate-200 rounded-t-lg";
+
+  const contentBg = isDark ? "bg-zinc-950" : "bg-white";
+
+  // Button Styles
+  const minBtn = isDark
+    ? "bg-cyan-950 hover:bg-cyan-800 text-cyan-600"
+    : "bg-slate-300 hover:bg-slate-400 text-slate-600";
+  const maxBtn = isDark
+    ? "bg-cyan-950 hover:bg-cyan-800 text-cyan-600"
+    : "bg-slate-300 hover:bg-slate-400 text-slate-600";
+  const closeBtn = isDark
+    ? "bg-red-950 hover:bg-red-900 text-red-500"
+    : "bg-red-400 hover:bg-red-500 text-red-900";
 
   return (
-    <div
-      className={`
-        absolute top-10 left-4 md:left-[20%] w-[90%] md:w-[800px] h-[70%] md:h-[600px] bg-white border-2 border-black flex flex-col shadow-[12px_12px_0_0_black]
-        ${isActive ? "z-50" : "z-10"}
-      `}
-      onClick={onFocus}
+    <Draggable
+      nodeRef={nodeRef}
+      handle=".os-titlebar"
+      bounds="parent"
+      defaultPosition={isMobile ? { x: 0, y: 0 } : defaultPos}
+      onStart={onFocus}
+      onMouseDown={onFocus}
+      disabled={isMobile || isMaximized}
     >
-      {/* Title Bar */}
-      <div
-        className={`
-        h-10 border-b-2 border-black flex justify-between items-center px-2 select-none
-        ${isActive ? "bg-black text-white" : "bg-white text-black"}
-      `}
+      <motion.div
+        ref={nodeRef}
+        initial={{ scale: 0.95, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.95, opacity: 0 }}
+        transition={{ duration: 0.15 }}
+        style={{ zIndex }}
+        className={`absolute flex flex-col ${isMobile ? "inset-0 border-0 z-50 h-full w-full" : isMaximized ? "inset-4 " + windowBase : "w-[92vw] max-w-[980px] h-[82vh] max-h-[680px] " + windowBase}`}
+        onMouseDown={onFocus}
       >
-        <div className="flex items-center gap-2 font-bold text-sm uppercase tracking-wider">
-          <Terminal size={14} />
-          <span>{title}</span>
+        <div
+          className={`os-titlebar h-10 md:h-10 flex items-center justify-between px-3 select-none md:cursor-move flex-shrink-0 ${titleBarBase}`}
+        >
+          <div
+            className={`flex items-center gap-2 font-bold text-xs uppercase tracking-wider`}
+          >
+            <Terminal size={12} />
+            <span className="truncate max-w-[150px] md:max-w-none">
+              {title}
+            </span>
+          </div>
+          <div className="flex gap-2" onMouseDown={(e) => e.stopPropagation()}>
+            {!isMobile && (
+              <>
+                <button
+                  className={`w-4 h-4 rounded-full flex items-center justify-center transition-colors ${minBtn}`}
+                >
+                  <Minus size={10} strokeWidth={3} />
+                </button>
+                <button
+                  className={`w-4 h-4 rounded-full flex items-center justify-center transition-colors ${maxBtn}`}
+                >
+                  <Square size={8} strokeWidth={3} />
+                </button>
+              </>
+            )}
+            <button
+              className={`w-4 h-4 rounded-full flex items-center justify-center transition-colors ${closeBtn}`}
+              onClick={onClose}
+              title="Close"
+            >
+              <X size={10} strokeWidth={3} />
+            </button>
+          </div>
         </div>
-
-        <div className="flex gap-2">
-          <button
-            onClick={onClose}
-            className="w-6 h-6 border border-current flex items-center justify-center hover:bg-white hover:text-black transition-colors"
-          >
-            <Minus size={12} />
-          </button>
-          <button
-            onClick={onClose}
-            className="w-6 h-6 border border-current flex items-center justify-center hover:bg-white hover:text-black transition-colors"
-          >
-            <Square size={10} />
-          </button>
-          <button
-            onClick={onClose}
-            className="w-6 h-6 border border-current flex items-center justify-center hover:bg-white hover:text-black transition-colors"
-          >
-            <X size={14} />
-          </button>
+        <div className={`flex-1 overflow-hidden relative ${contentBg}`}>
+          <div className="absolute inset-0 overflow-y-auto custom-scrollbar">
+            {children}
+          </div>
         </div>
-      </div>
-
-      {/* Content Area */}
-      <div className="flex-1 overflow-auto bg-white custom-scrollbar">
-        {ContentComponent && <ContentComponent />}
-      </div>
-    </div>
+      </motion.div>
+    </Draggable>
   );
 }

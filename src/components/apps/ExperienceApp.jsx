@@ -1,100 +1,215 @@
 import React from "react";
-import { Calendar, MapPin, Briefcase, Terminal } from "lucide-react";
+import { Activity, Server, Database, Code, Cpu } from "lucide-react";
 
-export default function ExperienceApp() {
-  const jobs = [
+export default function ExperienceApp({ theme }) {
+  // Theme Logic
+  const isDark = theme === "dark";
+
+  // Colors
+  const bgMain = isDark
+    ? "bg-zinc-950 text-cyan-400"
+    : "bg-slate-100 text-slate-800";
+  const borderBase = isDark ? "border-cyan-900/30" : "border-slate-300";
+  const statusBarBg = isDark
+    ? "bg-zinc-900 text-cyan-600"
+    : "bg-slate-200 text-slate-500";
+  const tableHeaderBg = isDark
+    ? "bg-zinc-900/50 text-cyan-700"
+    : "bg-slate-50 text-slate-500";
+  const rowHover = isDark
+    ? "hover:bg-cyan-900/10 border-cyan-900/20"
+    : "hover:bg-white border-slate-200";
+  const textMuted = isDark ? "text-cyan-800" : "text-slate-400";
+  const textPrimary = isDark ? "text-cyan-300" : "text-slate-900";
+  const textBody = isDark ? "text-cyan-600" : "text-slate-600";
+  const tagBg = isDark
+    ? "bg-black border-cyan-900 text-cyan-600"
+    : "bg-slate-50 border-slate-200 text-slate-500";
+
+  const logs = [
     {
-      role: "Capstone Project",
-      company: "The Guinea Group & QUT",
-      date: "Feb 2024 - Jun 2024",
+      id: "LOG_001",
+      timestamp: "2024-02-01 09:00:00",
+      type: "CAPSTONE_PROJECT",
+      source: "The Guinea Group & QUT",
+      status: "COMPLETED",
       location: "Brisbane, AU",
+      message:
+        "Engineered responsive survey platform for 'Leadership Under Pressure'.",
       details: [
-        "Engineered a responsive survey platform on AWS, delivering scalable access for 'Leadership Under Pressure' training.",
-        "Built reusable UI components with React.js and Tailwind CSS, establishing a design system that accelerated development.",
-        "Debugged complex API integrations using Postman, resolving backend issues and reducing data errors by 20%.",
-        "Optimized Agile workflows via Trello and Slack, ensuring clean version control and timely delivery with GitHub.",
+        "Deployed scalable AWS infrastructure for high-traffic survey access.",
+        "Implemented React/Tailwind design system for rapid UI development.",
+        "Resolved 20% of data errors via rigorous Postman API debugging.",
+        "Streamlined CI/CD and version control using GitHub and Slack integrations.",
       ],
-      stack: ["AWS", "React", "Node.js", "Postman"],
+      tags: ["AWS", "React", "Node", "Postman"],
     },
     {
-      role: "Frontend Developer",
-      company: "Freelance",
-      date: "2023 - Present",
+      id: "LOG_002",
+      timestamp: "2023-01-01 00:00:00",
+      type: "FRONTEND_DEV",
+      source: "Freelance",
+      status: "ACTIVE",
       location: "Remote",
+      message: "Delivering pixel-perfect web solutions for diverse clients.",
       details: [
-        "Transformed high-fidelity Figma designs into pixel-perfect, responsive React components.",
-        "Built dynamic landing pages with Tailwind CSS, ensuring cross-browser compatibility and mobile responsiveness.",
-        "Integrated interactive UI elements using modern JavaScript (ES6+) and Framer Motion.",
+        "Translated Figma prototypes into responsive, pixel-perfect React components.",
+        "Optimized landing page performance ensuring cross-browser compatibility.",
+        "Integrated complex animations using Framer Motion and ES6+ JavaScript.",
       ],
-      stack: ["React", "Figma", "Tailwind", "Framer"],
+      tags: ["React", "Figma", "Tailwind", "Framer"],
     },
   ];
 
   return (
-    <div className="p-4 md:p-8 font-mono max-w-4xl mx-auto space-y-12 pb-12">
-      {/* EXPERIENCE SECTION */}
-      <section>
-        <div className="flex items-center gap-3 mb-8 border-b-4 border-black pb-2">
-          <Briefcase size={28} strokeWidth={2.5} />
-          <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tighter">
-            System_Logs (Experience)
-          </h2>
+    <div
+      className={`h-full w-full ${bgMain} font-mono text-xs md:text-sm overflow-y-auto custom-scrollbar flex flex-col transition-colors duration-300`}
+    >
+      {/* 1. STATUS BAR */}
+      <div
+        className={`${statusBarBg} ${borderBase} border-b p-2 px-4 flex justify-between items-center shrink-0 select-none sticky top-0 z-20`}
+      >
+        <div className="flex gap-4 font-bold uppercase tracking-wider text-[10px] md:text-xs">
+          <span className="flex items-center gap-2">
+            <Server size={14} />{" "}
+            <span className="hidden sm:inline">sys_logs</span>
+          </span>
+          <span className="flex items-center gap-2">
+            <Database size={14} />{" "}
+            <span className="hidden sm:inline">connection: stable</span>
+          </span>
         </div>
+        <div className={textMuted}>/var/log/experience.log</div>
+      </div>
 
-        <div className="space-y-10 border-l-2 border-black border-dashed ml-3 pl-8 relative">
-          {jobs.map((job, i) => (
-            <div key={i} className="relative group">
-              {/* Timeline Dot */}
-              <div className="absolute -left-[41px] top-1 w-6 h-6 bg-white border-4 border-black group-hover:bg-black transition-colors" />
+      {/* 2. TABLE HEADER (Hidden on Mobile) */}
+      <div
+        className={`hidden md:grid grid-cols-[160px_200px_1fr] gap-4 p-3 border-b font-bold uppercase tracking-wider shrink-0 ${tableHeaderBg} ${borderBase}`}
+      >
+        <div>Timestamp</div>
+        <div>Process / Source</div>
+        <div>Message payload</div>
+      </div>
 
-              <div className="bg-white border-2 border-black p-5 shadow-[6px_6px_0_0_black] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[3px_3px_0_0_black] transition-all">
-                <div className="flex flex-col md:flex-row justify-between md:items-start gap-2 mb-4">
-                  <div>
-                    <h3 className="text-xl font-black uppercase leading-tight">
-                      {job.role}
-                    </h3>
-                    <div className="font-bold text-gray-600 text-sm md:text-base mt-1">
-                      @ {job.company}
-                    </div>
+      {/* 3. LOG ENTRIES */}
+      <div className="flex-1 p-2 md:p-0">
+        {logs.map((log) => (
+          <div
+            key={log.id}
+            className={`flex flex-col md:border-b mb-4 md:mb-0 rounded-sm md:rounded-none border md:border-0 p-3 md:p-0 transition-colors group ${isDark ? "bg-zinc-900/30 md:bg-transparent border-cyan-900/30" : "bg-white md:bg-transparent border-slate-200"} ${rowHover}`}
+          >
+            {/* MAIN ROW GRID */}
+            <div className="flex flex-col md:grid md:grid-cols-[160px_200px_1fr] gap-3 md:gap-4 md:p-4 items-baseline">
+              {/* SECTION 1: HEADER INFO (Mobile: Top Row, Desktop: Col 1 & 2) */}
+              <div className="w-full flex justify-between md:contents">
+                {/* Col 1: Timestamp */}
+                <div
+                  className={`font-bold text-[10px] md:text-xs ${textMuted} flex flex-row md:flex-col gap-2 md:gap-0 items-center md:items-start`}
+                >
+                  <span>{log.timestamp}</span>
+                  <span
+                    className={`px-1.5 rounded-sm text-[9px] border md:hidden ${log.status === "ACTIVE" ? (isDark ? "bg-cyan-900 text-cyan-400 border-cyan-700" : "bg-emerald-100 text-emerald-700 border-emerald-200") : isDark ? "bg-zinc-800 text-cyan-700 border-cyan-900" : "bg-slate-100 text-slate-500 border-slate-200"}`}
+                  >
+                    {log.status}
+                  </span>
+                  <div
+                    className={`hidden md:block mt-1 ${isDark ? "text-cyan-900" : "text-slate-300"}`}
+                  >
+                    {log.id}
                   </div>
+                </div>
+              </div>
 
-                  {/* Date & Location Badges */}
-                  <div className="flex flex-col items-start md:items-end text-[10px] md:text-xs font-bold uppercase gap-2 mt-2 md:mt-0">
-                    <span className="bg-black text-white px-2 py-1 flex items-center gap-2 shadow-[2px_2px_0_0_gray]">
-                      <Calendar size={12} /> {job.date}
-                    </span>
-                    <span className="bg-white border-2 border-black px-2 py-1 flex items-center gap-2">
-                      <MapPin size={12} /> {job.location}
-                    </span>
+              {/* Col 2: Source Info (Desktop Only - on Mobile merged below) */}
+              <div className="hidden md:block col-span-1">
+                <div
+                  className={`inline-block px-1.5 py-0.5 rounded-sm text-[10px] font-bold border mb-1 
+                    ${
+                      log.status === "ACTIVE"
+                        ? isDark
+                          ? "bg-cyan-900/30 text-cyan-400 border-cyan-800"
+                          : "bg-emerald-100 text-emerald-700 border-emerald-200"
+                        : isDark
+                          ? "bg-zinc-900 text-cyan-700 border-cyan-900"
+                          : "bg-slate-200 text-slate-600 border-slate-300"
+                    }`}
+                >
+                  {log.status}
+                </div>
+                <div
+                  className={`font-bold uppercase truncate ${textPrimary}`}
+                  title={log.type}
+                >
+                  {log.type}
+                </div>
+                <div
+                  className={`text-[10px] uppercase truncate ${textMuted}`}
+                  title={log.source}
+                >
+                  @ {log.source}
+                </div>
+              </div>
+
+              {/* Col 3: Details & Message (Mobile: Full Width) */}
+              <div className="col-span-2 md:col-span-1 pl-0 md:pl-0 w-full">
+                {/* Mobile Only: Type/Source Header */}
+                <div className="md:hidden mb-2 pb-2 border-b border-dashed border-opacity-30 border-current">
+                  <div className={`font-bold uppercase text-xs ${textPrimary}`}>
+                    {log.type}
+                  </div>
+                  <div className={`text-[10px] uppercase ${textMuted}`}>
+                    @ {log.source}
                   </div>
                 </div>
 
-                {/* DETAILED LIST */}
-                <ul className="text-sm leading-relaxed border-l-4 border-gray-200 pl-4 mb-5 text-gray-800 space-y-2">
-                  {job.details.map((point, idx) => (
-                    <li key={idx} className="relative pl-2">
-                      <span className="absolute left-[-10px] top-2 w-1.5 h-1.5 bg-black rounded-full" />
-                      {point}
-                    </li>
-                  ))}
-                </ul>
+                {/* Main Message */}
+                <div
+                  className={`font-bold mb-3 text-sm leading-snug ${textPrimary}`}
+                >
+                  <span className={`${textMuted} mr-2 hidden md:inline`}>
+                    {">"}
+                  </span>
+                  {log.message}
+                </div>
 
-                {/* Tech Stack Tags */}
-                <div className="flex flex-wrap gap-2">
-                  {job.stack.map((tech) => (
-                    <span
-                      key={tech}
-                      className="text-[10px] font-bold uppercase border border-black px-1.5 py-0.5 bg-gray-100 flex items-center gap-1"
+                {/* Detailed Lines */}
+                <div className="space-y-2 mb-4">
+                  {log.details.map((line, i) => (
+                    <div
+                      key={i}
+                      className={`flex gap-2 leading-relaxed text-xs md:text-sm ${textBody}`}
                     >
-                      <Terminal size={10} /> {tech}
+                      <span
+                        className={`${isDark ? "text-cyan-900" : "text-slate-300"} select-none flex-shrink-0`}
+                      >
+                        |
+                      </span>
+                      <span>{line}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Tags */}
+                <div className="flex flex-wrap gap-2 mt-auto">
+                  {log.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className={`px-2 py-1 border text-[10px] font-bold uppercase rounded-sm flex items-center gap-1 ${tagBg}`}
+                    >
+                      <Cpu size={10} /> {tag}
                     </span>
                   ))}
                 </div>
               </div>
             </div>
-          ))}
+          </div>
+        ))}
+
+        {/* TERMINAL CURSOR ROW */}
+        <div className={`p-4 flex gap-2 animate-pulse ${textMuted}`}>
+          <span>_</span>
         </div>
-      </section>
+      </div>
     </div>
   );
 }
