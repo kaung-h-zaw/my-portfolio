@@ -35,7 +35,7 @@ export default function ProjectsApp({ theme }) {
         "Lightweight file handoff via QR pairing. Optimized for Kobo/Kindle.",
       image: "./Sendo.png",
       tech: ["Next.js", "WebRTC"],
-      live: "https://sendo.vercel.app",
+      live: "https://sendo-ebook.vercel.app",
       repo: "https://github.com/kaung-h-zaw/sendo",
     },
     {
