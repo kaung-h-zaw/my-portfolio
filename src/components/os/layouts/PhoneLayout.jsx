@@ -18,7 +18,7 @@ const MobileAppIcon = ({ app, onClick }) => (
     }}
     className="flex flex-col items-center gap-2 active:scale-95 transition-transform duration-100 w-full group"
   >
-    <div className="w-16 h-16 bg-[#F9F6EE]/80 rounded-2xl border-2 border-black shadow-[3px_3px_0px_black] flex items-center justify-center p-1.5 group-active:shadow-[1px_1px_0px_black] group-active:translate-y-[2px] transition-all">
+    <div className="w-16 h-16 bg-[#F9F6EE]/80 rounded-2xl border-2 border-black shadow-[3px_3px_0px_black] flex items-center justify-center p-2 group-active:shadow-[1px_1px_0px_black] group-active:translate-y-[2px] transition-all">
       <img
         src={app.mobileIcon || app.icon}
         alt={app.title}
@@ -123,7 +123,7 @@ export default function PhoneLayout({
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-x-4 gap-y-7 px-6 w-full max-w-[400px] mx-auto mt-2">
+          <div className="grid grid-cols-3 gap-x-4 gap-y-4 px-6 w-full max-w-[400px] mx-auto mt-2">
             {Object.values(apps).map((app) => (
               <div key={app.id} className="flex justify-center w-full">
                 <MobileAppIcon app={app} onClick={() => openWindow(app.id)} />
@@ -157,29 +157,6 @@ export default function PhoneLayout({
           >
             {React.createElement(apps[activeApp.id].component)}
           </Window>
-        )}
-      </AnimatePresence>
-
-      {/* 5. IOS-STYLE HOME BAR */}
-      <AnimatePresence>
-        {activeApp && (
-          <div className="fixed bottom-0 left-0 right-0 z-[99999] flex justify-center items-end pb-[max(12px,env(safe-area-inset-bottom))] h-16 pointer-events-none">
-            <motion.button
-              initial={{ y: 10, opacity: 0 }}
-              animate={{ y: [0, -6, 0], opacity: 1 }}
-              transition={{
-                y: { duration: 2, repeat: Infinity, ease: "easeInOut" },
-                opacity: { duration: 0.3 },
-              }}
-              onClick={() => {
-                if (navigator.vibrate) navigator.vibrate(40);
-                closeWindow(activeApp.id);
-              }}
-              whileTap={{ scale: 0.85, backgroundColor: "#4b5563" }}
-              className="w-[35%] h-[6px] bg-black rounded-full shadow-[0_0_4px_rgba(255,255,255,0.8)] cursor-pointer pointer-events-auto"
-              aria-label="Home"
-            />
-          </div>
         )}
       </AnimatePresence>
 

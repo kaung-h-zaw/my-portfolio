@@ -67,10 +67,10 @@ export default function Window({
   if (isMaximized) {
     if (isMobile) {
       positionClass =
-        "fixed top-[65px] left-3 right-3 bottom-[calc(env(safe-area-inset-bottom)+36px)] z-50 !transform-none border-[3px] border-black rounded-xl shadow-[4px_4px_0px_black] bg-[#fdfbf7]";
+        "fixed top-[50px] left-1 right-2 bottom-[calc(env(safe-area-inset-bottom)+5px)] z-50 !transform-none border-[3px] border-black rounded-xl shadow-[4px_4px_0px_black] bg-[#fdfbf7]";
     } else {
       positionClass =
-        "fixed top-14 left-4 right-4 bottom-28 z-50 rounded-xl !transform-none border-[3px] border-black shadow-none";
+        "fixed top-10 left-0 right-0 bottom-24 z-50 rounded-xl !transform-none border-[3px] border-black shadow-none";
     }
   } else {
     positionClass =

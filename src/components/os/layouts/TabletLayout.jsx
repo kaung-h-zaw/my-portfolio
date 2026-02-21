@@ -118,7 +118,7 @@ export default function TabletLayout({
       </div>
 
       {/* 4. DESKTOP BOTTOM DOCK (StatusBar.jsx) */}
-      <div className="absolute bottom-0 left-0 right-0 z-50">
+      <div className="absolute bottom-0 left-0 right-0">
         <StatusBar
           apps={apps}
           openWindows={openWindows}
