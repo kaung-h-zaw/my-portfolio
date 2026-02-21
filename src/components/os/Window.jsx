@@ -17,21 +17,16 @@ export default function Window({
   const nodeRef = useRef(null);
   const [isMaximized, setIsMaximized] = useState(true);
   const [position, setPosition] = useState(defaultPos);
-  const [windowSize, setWindowSize] = useState({ width: 600, height: 450 });
+
+  // Define the actual size the window uses when NOT maximized
+  const restoredWidth = isMobile ? window.innerWidth * 0.9 : 600;
+  const restoredHeight = isMobile ? window.innerHeight * 0.6 : 450;
 
   useEffect(() => {
     // Force maximize on mobile init
     if (isMobile) {
       setIsMaximized(true);
       setPosition({ x: 0, y: 0 });
-    }
-
-    // Measure window size
-    if (nodeRef.current) {
-      setWindowSize({
-        width: nodeRef.current.offsetWidth || 600,
-        height: nodeRef.current.offsetHeight || 450,
-      });
     }
 
     // Center on desktop init
@@ -42,14 +37,12 @@ export default function Window({
     }
   }, [isMobile]);
 
-  // RESTORED BOUNDS LOGIC
+  // Use the actual restored dimensions so drag space isn't zero
   const bounds = {
     top: 48, // Clear top bar
     left: 0,
-    // Ensure we don't go too far right (width of screen - width of window)
-    right: Math.max(0, window.innerWidth - windowSize.width),
-    // Ensure we don't go too far down (height of screen - height of window - dock space)
-    bottom: Math.max(0, window.innerHeight - windowSize.height - 80),
+    right: Math.max(0, window.innerWidth - restoredWidth),
+    bottom: Math.max(0, window.innerHeight - restoredHeight - 80),
   };
 
   const toggleMaximize = () => {
@@ -58,10 +51,8 @@ export default function Window({
 
     if (isMaximized) {
       // Restore to center if minimizing
-      const centerX =
-        (window.innerWidth - (isMobile ? window.innerWidth * 0.9 : 600)) / 2;
-      const centerY =
-        (window.innerHeight - (isMobile ? window.innerHeight * 0.6 : 450)) / 2;
+      const centerX = (window.innerWidth - restoredWidth) / 2;
+      const centerY = (window.innerHeight - restoredHeight) / 2;
       setPosition({ x: Math.max(0, centerX), y: Math.max(0, centerY) });
     } else {
       // Reset to 0,0 if maximizing
@@ -90,14 +81,12 @@ export default function Window({
     <Draggable
       nodeRef={nodeRef}
       handle=".os-titlebar"
-      // FIX: Use "cancel" to make buttons interactable
       cancel=".no-drag"
       position={isMaximized ? { x: 0, y: 0 } : position}
       onDrag={(e, ui) => setPosition({ x: ui.x, y: ui.y })}
       onStart={onFocus}
       onMouseDown={onFocus}
       disabled={isMaximized}
-      // RESTORED: Pass bounds to Draggable (only active when not maximized)
       bounds={isMaximized ? undefined : bounds}
     >
       <div
@@ -107,23 +96,19 @@ export default function Window({
         onMouseDown={onFocus}
       >
         <motion.div
-          // 1. Start slightly smaller, lower down, and transparent
           initial={{ scale: 0.85, y: 20, opacity: 0 }}
-          // 2. Animate to full size, original position, fully visible
           animate={{ scale: 1, y: 0, opacity: 1 }}
-          // 3. When closing, quickly shrink and fade
           exit={{
             scale: 0.9,
             y: 10,
             opacity: 0,
             transition: { duration: 0.15, ease: "easeOut" },
           }}
-          // 4. THE MAGIC: Use spring physics for the opening animation
           transition={{
             type: "spring",
-            stiffness: 400, // How fast it pops up (higher = faster)
-            damping: 25, // How much it bounces (lower = more bounce, higher = less bounce)
-            mass: 1, // The "weight" of the window
+            stiffness: 400,
+            damping: 25,
+            mass: 1,
           }}
           className="flex flex-col w-full h-full shadow-[inset_0_1px_0_rgba(255,255,255,0.6)] rounded-xl"
         >
@@ -143,7 +128,6 @@ export default function Window({
               </span>
             </div>
 
-            {/* FIX: Class "no-drag" + stopPropagation for touch safety */}
             <div className="flex gap-2 no-drag">
               <button
                 onClick={(e) => {
@@ -159,7 +143,6 @@ export default function Window({
                 <Minus size={12} strokeWidth={4} />
               </button>
 
-              {/* HIDE on mobile, show on desktop */}
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -169,7 +152,6 @@ export default function Window({
                   e.stopPropagation();
                   if (!isMobile) toggleMaximize();
                 }}
-                // Add opacity and cursor change for mobile
                 className={`w-6 h-6 border-2 border-black bg-white flex items-center justify-center transition-colors rounded shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-y-[2px] cursor-pointer 
     ${isMobile ? "opacity-50 cursor-not-allowed" : "hover:bg-black hover:text-white"}`}
               >
