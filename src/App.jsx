@@ -1,4 +1,4 @@
-import Desktop from "./components/os/Desktop";
+import Desktop from "./components/os/OSContainer.jsx";
 
 function App() {
   return <Desktop />;

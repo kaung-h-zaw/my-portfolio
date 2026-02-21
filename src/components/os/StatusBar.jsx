@@ -1,92 +1,139 @@
-import React from "react";
-import { Github, Linkedin, MessageCircle, Home } from "lucide-react";
+import React, { useState } from "react";
+// Make sure this path matches where your modal file is located!
+import LinkConfirmationModal from "./LinkConfirmationModal";
 
 export default function StatusBar({
-  theme,
-  isMobile,
-  onCloseAll,
-  hasOpenWindows,
+  openWindows,
+  activeWindowId,
+  onFocusWindow,
+  onMinimizeWindow,
+  isTablet = false, // ADDED: New prop to check if we are on tablet
 }) {
-  const isDark = theme === "dark";
+  // Static sizes for desktop
+  const containerPadding = "px-3 py-3 gap-3";
+  const buttonSize = "h-12 w-12";
+  const iconSize = "w-9 h-9";
+  const socialIconImageSize = "w-7 h-7";
+  const dividerHeight = "h-6";
 
-  // Styles
-  const bgStyle = isDark
-    ? "bg-zinc-900 border-t border-cyan-900/50 text-cyan-600"
-    : "bg-slate-300 border-t border-slate-400 text-slate-600";
-  const readyText = isDark ? "text-cyan-500" : "text-emerald-700";
-  const readyDot = isDark
-    ? "bg-cyan-500 shadow-[0_0_8px_rgba(6,182,212,0.8)]"
-    : "bg-emerald-500";
-  const iconColor = isDark
-    ? "text-cyan-700 hover:text-cyan-400"
-    : "text-slate-500 hover:text-slate-900";
-  const homeBtn = isDark
-    ? "bg-cyan-950 text-cyan-400 border border-cyan-800 shadow-[0_0_10px_rgba(6,182,212,0.2)]"
-    : "bg-white text-slate-700 border border-slate-300 shadow-sm";
-  const centerText = isDark ? "text-cyan-800" : "text-slate-500";
+  const wrapperClass =
+    "fixed bottom-6 left-1/2 -translate-x-1/2 z-[9999] flex items-end select-none w-max max-w-[95vw]";
+
+  // State to hold the data for the modal. If null, the modal stays hidden.
+  const [activeLinkData, setActiveLinkData] = useState(null);
 
   return (
-    <div
-      className={`h-16 md:h-14 flex items-center justify-between px-4 text-[10px] md:text-xs font-bold transition-colors duration-300 select-none z-[9999] shrink-0 ${bgStyle}`}
-    >
-      {/* Left Side: Status Dot + READY text */}
-      <div className="flex gap-4 items-center flex-1">
-        <span className={`${readyText} flex items-center gap-2`}>
-          <div
-            className={`w-3 h-3 rounded-full animate-pulse ${readyDot}`}
-          ></div>
-          <span>READY</span>
-        </span>
-        <span className="hidden md:inline">MEM: 640K OK</span>
-      </div>
+    <>
+      <LinkConfirmationModal
+        linkData={activeLinkData}
+        onClose={() => setActiveLinkData(null)}
+      />
 
-      {/* Home Button */}
-      {isMobile && (
-        <button
-          onClick={onCloseAll}
-          className={`absolute left-1/2 -translate-x-1/2 p-3 rounded-full transition-all active:scale-95 ${homeBtn} ${!hasOpenWindows ? "opacity-50 pointer-events-none" : "opacity-100"}`}
-        >
-          <Home size={20} />
-        </button>
-      )}
-
-      {/* Desktop */}
-      {!isMobile && (
+      <div className={wrapperClass}>
         <div
-          className={`absolute left-1/2 -translate-x-1/2 tracking-widest uppercase ${centerText}`}
+          className={`flex items-center bg-[#fdfbf7] border-[2px] border-black rounded-xl shadow-[4px_4px_0px_rgba(0,0,0,1)] overflow-x-auto no-scrollbar ${containerPadding}`}
         >
-          © 2026 KAUNG HTET ZAW
-        </div>
-      )}
+          {/* 1. OPEN APPS */}
+          {openWindows.length === 0 ? (
+            <div className="w-8 h-8 flex items-center justify-center opacity-20">
+              <div className="w-1.5 h-1.5 bg-black rounded-full animate-pulse"></div>
+            </div>
+          ) : (
+            openWindows.map((win) => {
+              const isActive = win.id === activeWindowId;
+              return (
+                <button
+                  key={win.id}
+                  onClick={() =>
+                    isActive ? onMinimizeWindow(win.id) : onFocusWindow(win.id)
+                  }
+                  className={`
+                    shrink-0 ${buttonSize} flex items-center justify-center rounded-lg border-2 transition-all duration-150
+                    ${
+                      isActive
+                        ? "bg-[#A3C9C7] border-black -translate-y-0.5 shadow-[2px_2px_0px_black]"
+                        : "bg-white border-transparent hover:border-black hover:bg-gray-50"
+                    }
+                  `}
+                >
+                  <img
+                    src={win.icon}
+                    alt={win.title}
+                    className={`${iconSize} object-contain ${isActive ? "grayscale-0" : "grayscale opacity-70 hover:grayscale-0 hover:opacity-100"}`}
+                  />
+                </button>
+              );
+            })
+          )}
 
-      {/* Right Side: Social Icons */}
-      <div className={`flex items-center gap-1 md:gap-3`}>
-        <a
-          href="https://github.com/kaung-h-zaw"
-          className={`transition-colors p-1 md:p-2 ${iconColor} `}
-          target="_blank"
-          rel="noreferrer"
-        >
-          <Github size={18} />{" "}
-          {/* Slightly larger icon for mobile/desktop parity */}
-        </a>
-        <a
-          href="https://linkedin.com/in/kaung-h-zaw"
-          className={`transition-colors p-1 md:p-2  ${iconColor} `}
-          target="_blank"
-          rel="noreferrer"
-        >
-          <Linkedin size={18} />
-        </a>
-        <a
-          href="https://wa.me/66639473379"
-          className={`transition-colors p-1 md:p-2 ${iconColor} `}
-          target="_blank"
-          rel="noreferrer"
-        >
-          <MessageCircle size={18} />
-        </a>
+          {/* DIVIDER */}
+          <div
+            className={`${dividerHeight} w-[2px] bg-gray-500 mx-1 shrink-0`}
+          ></div>
+
+          {/* 2. SOCIALS */}
+          <div className="flex gap-2 shrink-0">
+            {/* ONLY RENDER GITHUB AND LINKEDIN IF NOT ON TABLET */}
+            {!isTablet && (
+              <>
+                {/* GITHUB */}
+                <button
+                  onClick={() =>
+                    setActiveLinkData({
+                      title: "GitHub",
+                      href: "https://github.com/kaung-h-zaw",
+                      icon: "/app-icons/github.png",
+                    })
+                  }
+                  className={`${buttonSize} bg-white flex items-center justify-center rounded-lg border-2 border-transparent hover:border-black hover:bg-gray-100 transition-all group`}
+                >
+                  <img
+                    src="/app-icons/github.png"
+                    alt="GitHub"
+                    className={`${socialIconImageSize} object-contain opacity-80 group-hover:opacity-100 transition-all group-hover:scale-110`}
+                  />
+                </button>
+
+                {/* LINKEDIN */}
+                <button
+                  onClick={() =>
+                    setActiveLinkData({
+                      title: "LinkedIn",
+                      href: "https://linkedin.com/in/kaung-h-zaw",
+                      icon: "/app-icons/linkedin.png",
+                    })
+                  }
+                  className={`${buttonSize} bg-white flex items-center justify-center rounded-lg border-2 border-transparent hover:border-black hover:bg-blue-50 transition-all group`}
+                >
+                  <img
+                    src="/app-icons/linkedin.png"
+                    alt="LinkedIn"
+                    className={`${socialIconImageSize} object-contain opacity-80 group-hover:opacity-100 transition-all group-hover:scale-110`}
+                  />
+                </button>
+              </>
+            )}
+
+            {/* INSTAGRAM (Always renders) */}
+            <button
+              onClick={() =>
+                setActiveLinkData({
+                  title: "Instagram",
+                  href: "https://www.instagram.com/kaung.h.zaw/",
+                  icon: "/app-icons/insta.png",
+                })
+              }
+              className={`${buttonSize} bg-white flex items-center justify-center rounded-lg border-2 border-transparent hover:border-black hover:bg-pink-50 transition-all group`}
+            >
+              <img
+                src="/app-icons/insta.png"
+                alt="Instagram"
+                className={`${socialIconImageSize} object-contain opacity-80 group-hover:opacity-100 transition-all group-hover:scale-110`}
+              />
+            </button>
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
