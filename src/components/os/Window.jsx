@@ -39,10 +39,10 @@ export default function Window({
 
   // Use the actual restored dimensions so drag space isn't zero
   const bounds = {
-    top: 48, // Clear top bar
+    top: 40, // Clear top bar
     left: 0,
     right: Math.max(0, window.innerWidth - restoredWidth),
-    bottom: Math.max(0, window.innerHeight - restoredHeight - 80),
+    bottom: Math.max(0, window.innerHeight - restoredHeight - 100),
   };
 
   const toggleMaximize = () => {
