@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Wifi, Battery, Volume2, Search, Command } from "lucide-react";
+import { Wifi, BatteryFull, Volume2, Search, Command } from "lucide-react";
 
 export default function TopBar() {
   const [time, setTime] = useState(new Date());
@@ -43,7 +43,7 @@ export default function TopBar() {
           <Search size={18} className="hover:text-black cursor-pointer" />
           <Volume2 size={18} className="hover:text-black cursor-pointer" />
           <Wifi size={18} className="hover:text-black cursor-pointer" />
-          <Battery size={20} className="hover:text-black cursor-pointer" />
+          <BatteryFull size={20} className="hover:text-black cursor-pointer" />
         </div>
 
         <span className="font-bold text-sm tracking-widest">
