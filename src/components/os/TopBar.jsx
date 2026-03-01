@@ -57,12 +57,12 @@ export default function TopBar() {
           <Search
             size={14}
             strokeWidth={2}
-            className="hidden sm:block hover:text-black/60 cursor-pointer transition-colors sm:w-4 sm:h-4"
+            className=" hover:text-black/60 cursor-pointer transition-colors sm:w-4 sm:h-4"
           />
           <Volume2
             size={14}
             strokeWidth={2}
-            className="hidden xs:block hover:text-black/60 cursor-pointer transition-colors sm:w-4 sm:h-4"
+            className=" hover:text-black/60 cursor-pointer transition-colors sm:w-4 sm:h-4"
           />
           <Wifi
             size={14}
