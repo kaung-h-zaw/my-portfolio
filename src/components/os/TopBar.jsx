@@ -18,7 +18,7 @@ export default function TopBar() {
   };
 
   return (
-    <div className="h-10 bg-white/40 backdrop-blur-md border-b border-black/20 flex items-center justify-between px-4 fixed top-0 left-0 right-0 z-[9999] select-none">
+    <div className="h-9 sm:h-10 bg-white/40 backdrop-blur-md border-b border-black/20 flex items-center justify-between px-4 fixed top-0 left-0 right-0 z-[9999] select-none">
       {/* LEFT */}
       <div className="flex items-center gap-6">
         <div className="flex items-center gap-2 font-black text-base tracking-tight cursor-pointer hover:scale-105 transition-transform text-black/70">
@@ -28,7 +28,7 @@ export default function TopBar() {
               src="/me2.png"
               alt="Logo"
               loading="eager"
-              className="w-7 h-7 rounded-full border-2 border-black/20"
+              className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 rounded-full border-2 border-black/20"
             />
           </picture>
 
@@ -52,31 +52,31 @@ export default function TopBar() {
       </div>
 
       {/* RIGHT */}
-      <div className="flex items-center gap-5">
-        <div className="flex items-center gap-3 text-black/30">
+      <div className="flex items-center gap-2.5 sm:gap-5">
+        <div className="flex items-center gap-2 sm:gap-3 text-black/30">
           <Search
-            size={16}
+            size={14}
             strokeWidth={2}
-            className="hover:text-black/60 cursor-pointer transition-colors"
+            className="hidden sm:block hover:text-black/60 cursor-pointer transition-colors sm:w-4 sm:h-4"
           />
           <Volume2
-            size={16}
+            size={14}
             strokeWidth={2}
-            className="hover:text-black/60 cursor-pointer transition-colors"
+            className="hidden xs:block hover:text-black/60 cursor-pointer transition-colors sm:w-4 sm:h-4"
           />
           <Wifi
-            size={16}
+            size={14}
             strokeWidth={2}
-            className="hover:text-black/60 cursor-pointer transition-colors"
+            className="hover:text-black/60 cursor-pointer transition-colors sm:w-4 sm:h-4"
           />
           <BatteryFull
-            size={18}
+            size={16}
             strokeWidth={2}
-            className="hover:text-black/60 cursor-pointer transition-colors"
+            className="hover:text-black/60 cursor-pointer transition-colors sm:w-[18px] sm:h-[18px]"
           />
         </div>
 
-        <span className="font-medium text-xs tracking-wider text-black/60">
+        <span className="font-medium text-[10px] sm:text-xs tracking-wider text-black/60">
           {formatTime(time)}
         </span>
       </div>

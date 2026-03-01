@@ -60,13 +60,14 @@ export default function AboutApp() {
   }, [text, isDeleting, loopNum, typingSpeed]);
 
   return (
-    <div className="font-mono text-black min-h-full flex flex-col gap-6 p-4 md:p-6 overflow-y-auto overflow-x-hidden">
+    <div className="font-mono text-black min-h-full flex flex-col gap-4 sm:gap-6 p-3 sm:p-4 md:p-6 overflow-y-auto overflow-x-hidden">
       {/* HEADER */}
       <div className="flex flex-col gap-5">
         <div className="flex items-start gap-4 md:gap-6">
           {/* Photo */}
+          {/* Photo - Smaller on mobile */}
           <div className="shrink-0 relative">
-            <div className="w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 rounded-lg overflow-hidden border border-black/10 bg-white/30">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 rounded-lg overflow-hidden border border-black/10 bg-white/30">
               <picture>
                 <source srcSet="/me-nb.webp" type="image/webp" />
                 <img
@@ -89,27 +90,23 @@ export default function AboutApp() {
             <p className="text-[10px] md:text-xs uppercase tracking-widest text-black/60 mb-1 md:mb-2">
               › profile.exe
             </p>
-            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black uppercase tracking-tight leading-none text-black/90">
+            <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-black uppercase tracking-tight leading-none text-black/90">
               {text}
               <span className="inline-block w-[2px] h-[1em] bg-black/60 ml-1 align-middle animate-pulse" />
             </h1>
-            <div className="mt-2 md:mt-3 flex items-center gap-2">
-              <span className="inline-block text-xs md:text-sm font-bold uppercase tracking-widest bg-black/80 text-white px-3 py-1 md:px-4 md:py-1.5 rounded-md">
+            <div className="mt-2 md:mt-3 flex flex-wrap items-center gap-1.5 sm:gap-2">
+              <span className="inline-block text-[10px] sm:text-xs md:text-sm font-bold uppercase tracking-widest bg-black/80 text-white px-2.5 py-1 sm:px-3 md:px-4 md:py-1.5 rounded-md">
                 Junior Developer
-              </span>
-              <span className="inline-block text-[10px] md:text-xs font-bold uppercase tracking-widest bg-green-100 text-green-700 px-2 py-1 md:px-3 md:py-1.5 rounded-md border border-green-300 whitespace-nowrap">
-                <span className="hidden sm:inline">Seeking Roles</span>
-                <span className="sm:hidden">Hiring</span>
               </span>
             </div>
           </div>
         </div>
 
         {/* Email */}
-        <div className="flex items-center mt-1">
+        <div className="flex items-center mt-1 -ml-1">
           <button
             onClick={handleCopy}
-            className="flex items-center gap-2.5 text-sm md:text-base text-black/70 hover:text-black transition-colors group cursor-pointer"
+            className="flex items-center gap-2 sm:gap-2.5 text-xs sm:text-sm md:text-base text-black/70 hover:text-black transition-colors group cursor-pointer"
             title="Click to copy email"
           >
             <div className="p-1.5 bg-black/5 rounded-md group-hover:bg-black/10 transition-colors shrink-0">
