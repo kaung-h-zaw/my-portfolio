@@ -1,5 +1,5 @@
 import React from "react";
-import { motion } from "framer-motion"; // ← Add this import
+import { motion } from "framer-motion";
 import { Terminal, Cpu } from "lucide-react";
 import { SKILLS_DATA } from "../../data/content";
 
