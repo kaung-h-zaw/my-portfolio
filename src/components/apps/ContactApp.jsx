@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import emailjs from "@emailjs/browser";
 import {
   Mail,
   Copy,
@@ -55,22 +56,13 @@ export default function ContactApp() {
     setSending(true);
     setStatus(null);
 
-    const formData = new FormData(formRef.current);
-    const data = {
-      name: formData.get("name"),
-      email: formData.get("email"),
-      phone: formData.get("phone"),
-      message: formData.get("message"),
-    };
-
     try {
-      const response = await fetch("/api/email", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-
-      if (!response.ok) throw new Error("Failed to send");
+      await emailjs.sendForm(
+        "service_ph76too",
+        "template_7vf40oe",
+        formRef.current,
+        "XJIjjnPJ0vuApI2QB",
+      );
 
       setSending(false);
       setStatus("sent");
