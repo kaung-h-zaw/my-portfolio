@@ -22,7 +22,7 @@ export const PROJECTS_DATA = [
     desc: "Personal portfolio built with React & Tailwind.",
     image: "/kaungspace.webp",
     tags: ["React", "Tailwind"],
-    link: "https://kaung-space.pages.dev/",
+    link: "https://kaungspace.pages.dev/",
     code: "https://github.com/kaung-h-zaw/my-portfolio",
     date: "Jan 2026",
   },
