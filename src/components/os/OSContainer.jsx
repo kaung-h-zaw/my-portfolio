@@ -29,7 +29,7 @@ export default function OSContainer() {
       const width = window.innerWidth;
       if (width < 640) {
         setDeviceType("phone");
-      } else if (width < 1024) {
+      } else if (width <= 1024) {
         setDeviceType("tablet");
       } else {
         setDeviceType("desktop");

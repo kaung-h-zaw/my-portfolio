@@ -76,7 +76,7 @@ export default function SkillsApp() {
               key={category}
               className="flex items-stretch gap-2 md:gap-4 w-full"
             >
-              {/* Category Side-Label */}
+              {/* Category */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}

@@ -1,16 +1,39 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
+import { createPortal } from "react-dom";
 
 export default function LinkConfirmationModal({ linkData, onClose }) {
+  const displayUrl = linkData?.href?.replace(/^https?:\/\//, "") ?? "";
+
+  useEffect(() => {
+    if (!linkData) return undefined;
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") onClose();
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [linkData, onClose]);
+
   if (!linkData) return null;
 
-  return (
-    <div className="fixed inset-0 z-[999999] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4 pointer-events-auto">
+  const handleContinue = () => {
+    window.open(linkData.href, "_blank", "noopener,noreferrer");
+    onClose();
+  };
+
+  return createPortal(
+    <div
+      className="fixed inset-0 z-[999999] flex items-center justify-center bg-black/35 backdrop-blur-sm p-4 pointer-events-auto"
+      onClick={onClose}
+    >
       <motion.div
         initial={{ opacity: 0, scale: 0.9, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.9, y: 20 }}
-        className="w-full max-w-[320px] bg-gray-300/60 backdrop-blur-md border border-black/10 rounded-2xl shadow-[6px_6px_0px_rgba(0,0,0,0.06)] overflow-hidden"
+        onClick={(event) => event.stopPropagation()}
+        className="w-full max-w-[360px] bg-gray-300/70 backdrop-blur-md border border-black/10 rounded-2xl shadow-[6px_6px_0px_rgba(0,0,0,0.06)] overflow-hidden"
       >
         {/* Modal Header */}
         <div className="bg-white/40 backdrop-blur-md text-black px-4 py-3 flex items-center justify-between border-b border-black/10">
@@ -44,10 +67,9 @@ export default function LinkConfirmationModal({ linkData, onClose }) {
             Open {linkData.title}?
           </h2>
           <p className="text-xs text-black/60 font-mono mb-6 leading-relaxed">
-            This will open a new tab to:
-            <br />
-            <span className="text-black/50 truncate block mt-1 px-2">
-              {linkData.href}
+            Open in a new tab
+            <span className="text-black/50 break-all block mt-2 px-2">
+              {displayUrl}
             </span>
           </p>
 
@@ -59,18 +81,17 @@ export default function LinkConfirmationModal({ linkData, onClose }) {
             >
               Cancel
             </button>
-            <a
-              href={linkData.href}
-              target="_blank"
-              rel="noreferrer"
-              onClick={onClose}
+            <button
+              type="button"
+              onClick={handleContinue}
               className="flex-1 py-3 bg-black/80 border border-black/10 rounded-lg font-bold text-sm uppercase tracking-wider text-white shadow-[2px_2px_0px_rgba(0,0,0,0.06)] hover:bg-black active:translate-y-[1px] active:shadow-none transition-all text-center block"
             >
-              Continue
-            </a>
+              Open
+            </button>
           </div>
         </div>
       </motion.div>
-    </div>
+    </div>,
+    document.body,
   );
 }

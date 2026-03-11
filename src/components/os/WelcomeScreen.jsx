@@ -1,27 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
+const BOOT_LOGS = [
+  "INITIALIZING KAUNG_SPACE v2.0...",
+  "LOADING MEMORY BANKS [OK]",
+  "MOUNTING FILE SYSTEM [OK]",
+  "CONNECTING TO API NEXUS...",
+  "ESTABLISHING SECURE CONNECTION [OK]",
+  "FETCHING SKILLS.EXE [OK]",
+  "BYPASSING SECURITY PROTOCOLS...",
+  "ACCESS GRANTED.",
+  "WELCOME, GUEST.",
+];
+
 export default function WelcomeScreen({ onComplete }) {
   const [bootLogs, setBootLogs] = useState([]);
   const [isReady, setIsReady] = useState(false);
 
-  const logs = [
-    "INITIALIZING KAUNG_SPACE v2.0...",
-    "LOADING MEMORY BANKS [OK]",
-    "MOUNTING FILE SYSTEM [OK]",
-    "CONNECTING TO API NEXUS...",
-    "ESTABLISHING SECURE CONNECTION [OK]",
-    "FETCHING SKILLS.EXE [OK]",
-    "BYPASSING SECURITY PROTOCOLS...",
-    "ACCESS GRANTED.",
-    "WELCOME, GUEST.",
-  ];
-
   useEffect(() => {
     let currentLog = 0;
     const logInterval = setInterval(() => {
-      if (currentLog < logs.length) {
-        setBootLogs((prev) => [...prev, logs[currentLog]]);
+      if (currentLog < BOOT_LOGS.length) {
+        setBootLogs((prev) => [...prev, BOOT_LOGS[currentLog]]);
         currentLog++;
       } else {
         clearInterval(logInterval);
@@ -94,7 +94,8 @@ export default function WelcomeScreen({ onComplete }) {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.2 }}
                     className={`text-[10px] sm:text-xs font-mono tracking-wider ${
-                      index === logs.length - 1 || index === logs.length - 2
+                      index === BOOT_LOGS.length - 1 ||
+                      index === BOOT_LOGS.length - 2
                         ? "text-black font-bold"
                         : "text-black/60"
                     }`}

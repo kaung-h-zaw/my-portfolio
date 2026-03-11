@@ -38,7 +38,7 @@ export default function IntroductionWidget({ onOpenAbout }) {
 
     const timer = setTimeout(handleTyping, typingSpeed);
     return () => clearTimeout(timer);
-  }, [text, isDeleting, loopNum]);
+  }, [text, isDeleting, loopNum, typingSpeed]);
 
   return (
     <div className="w-full box-border flex flex-col select-none pointer-events-auto bg-white/40 backdrop-blur-md border border-black/10 rounded-2xl p-4 hover:border-black/15 transition-all duration-300">

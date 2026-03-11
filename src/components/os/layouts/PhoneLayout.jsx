@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import TopBar from "../TopBar";
 import Window from "../Window";
 import WeatherWidget from "../widgets/WeatherWidget";
@@ -106,7 +106,7 @@ export default function PhoneLayout({
 
   return (
     <div
-      className="fixed inset-0 w-full h-full overflow-hidden overscroll-none touch-none"
+      className="fixed inset-0 w-full h-full overflow-hidden overscroll-none"
       style={{
         background: "linear-gradient(180deg, #cccccc 0%, #dcdcdc 100%)",
       }}

@@ -9,6 +9,15 @@ export const DESKTOP_ICONS = [
 
 export const PROJECTS_DATA = [
   {
+    title: "JourneyHub",
+    desc: "AI-powered trip planner with day-by-day itineraries, maps, PDF export, and saved trips.",
+    image: null,
+    tags: ["React", "Tailwind", "Leaflet", "Groq API"],
+    link: "https://journeyhub-planner.vercel.app/",
+    code: "https://github.com/kaung-h-zaw/JourneyHub",
+    date: "Feb 2026",
+  },
+  {
     title: "Sendo",
     desc: "Lightweight file handoff via QR pairing. Optimized for Kobo/Kindle.",
     image: "/Sendo.webp",
@@ -24,16 +33,7 @@ export const PROJECTS_DATA = [
     tags: ["React", "Tailwind"],
     link: "https://kaungspace.pages.dev/",
     code: "https://github.com/kaung-h-zaw/my-portfolio",
-    date: "Jan 2026",
-  },
-  {
-    title: "FREE API NEXUS",
-    date: "WIP 2026",
-    desc: "A curated, open-source collection of free public APIs for developers.",
-    tags: ["REACT", "TAILWIND", "PUBLIC APIs"],
-    image: null,
-    link: "#",
-    code: "#",
+    date: "Dec 2025",
   },
 ];
 

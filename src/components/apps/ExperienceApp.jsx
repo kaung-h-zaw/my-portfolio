@@ -5,20 +5,21 @@ export default function ExperienceApp() {
   const experiences = [
     {
       id: "EXP_001",
-      role: "Capstone Developer",
+      role: "Full-Stack Developer",
       company: "The Guinea Group & QUT",
       location: "Brisbane, AU",
-      period: "Feb 2024 - Jun 2024",
+      period: "Feb 2024 - Nov 2024",
       status: "completed",
       description:
-        "Engineered responsive survey platform for 'Leadership Under Pressure' research initiative with scalable AWS infrastructure.",
+        "Delivered a two-semester capstone platform for pressure-based decision-making research, working in a four-person team across frontend development, backend features, and multimodal data workflows.",
       highlights: [
-        "Deployed scalable AWS infrastructure for high-traffic survey access",
-        "Implemented React/Tailwind design system for rapid UI development",
-        "Resolved 20% of data errors via rigorous Postman API debugging",
-        "Streamlined CI/CD and version control using GitHub and Slack integrations",
+        "Built and refined core product flows in JavaScript, React, and Tailwind, including authentication, survey selection, embedded video playback, and response interfaces",
+        "Contributed to Express and MySQL features for participant data, survey management, reporting, and export functionality",
+        "Worked with Docker and Python-based services to support audio emotion analysis, camera-based emotion capture, and eye-tracking workflows",
+        "Delivered the project using Agile planning, with weekly client discussions and fortnightly reviews with the QUT capstone supervisor",
+        "Collaborated closely within a four-person team to complete the platform across the full two-semester delivery period",
       ],
-      stack: ["AWS", "React", "Node.js", "Postman", "Tailwind"],
+      stack: ["JavaScript", "React", "Tailwind", "Express", "MySQL", "Python", "Docker", "AWS"],
     },
     {
       id: "EXP_002",
@@ -28,11 +29,11 @@ export default function ExperienceApp() {
       period: "Dec 2024 - Present",
       status: "active",
       description:
-        "Delivering pixel-perfect web solutions for diverse clients, translating designs into production-ready React applications.",
+        "Designing and building responsive frontend work for freelance projects, turning ideas and requirements into clear, usable React interfaces.",
       highlights: [
-        "Translated Figma prototypes into responsive, pixel-perfect React components",
-        "Optimized landing page performance ensuring cross-browser compatibility",
-        "Integrated complex animations using Framer Motion and ES6+ JavaScript",
+        "Built responsive interfaces with React, JavaScript, and Tailwind for landing pages, portfolio sites, and small client projects",
+        "Turned design references and rough concepts into clean, reusable components with consistent layout and styling",
+        "Improved frontend quality through performance tuning, responsive refinement, and cross-browser testing",
       ],
       stack: ["React", "Figma", "Tailwind CSS", "Framer Motion"],
     },

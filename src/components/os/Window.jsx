@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { X, Minus, Square, Maximize2 } from "lucide-react";
 
 export default function Window({
-  id,
   title,
   defaultPos = { x: 50, y: 50 },
   zIndex,
@@ -17,7 +16,6 @@ export default function Window({
   const nodeRef = useRef(null);
   const [isMaximized, setIsMaximized] = useState(true);
   const [position, setPosition] = useState(defaultPos);
-  const [isLoading, setIsLoading] = useState(true);
 
   const restoredWidth = isMobile ? window.innerWidth * 0.9 : 600;
   const restoredHeight = isMobile ? window.innerHeight * 0.6 : 450;
@@ -34,14 +32,6 @@ export default function Window({
       setPosition({ x: Math.max(0, centerX), y: Math.max(0, centerY) });
     }
   }, [isMobile]);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 400);
-
-    return () => clearTimeout(timer);
-  }, []);
 
   const bounds = {
     top: 40,
@@ -198,6 +188,7 @@ export default function Window({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.2 }}
+              className="h-full"
             >
               {children}
             </motion.div>
