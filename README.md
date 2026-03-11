@@ -59,6 +59,6 @@ This project is a personal portfolio. The source code, design, and content are p
 
 ## Contact
 
-Kaung Htet Zaw 
+Kaung Htet Zaw - [LinkedIn](https://www.linkedin.com/in/kaung-h-zaw/)
 
 Project Link: https://github.com/kaung-h-zaw/my-portfolio
