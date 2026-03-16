@@ -4,6 +4,7 @@ import TopBar from "../TopBar";
 import StatusBar from "../StatusBar";
 import Widgets from "../Widgets";
 import Window from "../Window";
+import BackgroundLayers from "../BackgroundLayers";
 
 const DesktopIcon = ({ title, icon: Icon, onClick }) => (
   <button
@@ -47,21 +48,9 @@ export default function DesktopLayout({
           right: "-100px",
         }}
       >
-        <div
-          className="absolute inset-0"
-          style={{
-            background: "linear-gradient(180deg, #cccccc 0%, #dcdcdc 100%)",
-          }}
-        />
-        <div
-          className="absolute inset-0 opacity-25"
-          style={{
-            backgroundImage: `
-        linear-gradient(to right, rgba(90,90,90,0.3) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(90,90,90,0.3) 1px, transparent 1px)
-      `,
-            backgroundSize: "60px 60px",
-          }}
+        <BackgroundLayers
+          gradient="linear-gradient(160deg, #d6d2cc 0%, #e2deda 50%, #d8d4cf 100%)"
+          showGrain={true}
         />
       </div>
 
@@ -82,7 +71,7 @@ export default function DesktopLayout({
 
       {/* 3. RIGHT WIDGETS AREA */}
       <div className="absolute z-10 top-20 right-8 pointer-events-auto transition-all duration-300">
-        <Widgets />
+        <Widgets onOpenAbout={() => openWindow("about")} />
       </div>
 
       {/* 4. FOOTER BRANDING */}

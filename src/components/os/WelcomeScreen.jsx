@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import BackgroundLayers from "./BackgroundLayers";
 
 const BOOT_LOGS = [
   "INITIALIZING KAUNG_SPACE v2.0...",
@@ -16,6 +17,7 @@ const BOOT_LOGS = [
 export default function WelcomeScreen({ onComplete }) {
   const [bootLogs, setBootLogs] = useState([]);
   const [isReady, setIsReady] = useState(false);
+  const hasCompletedRef = useRef(false);
 
   useEffect(() => {
     let currentLog = 0;
@@ -30,12 +32,28 @@ export default function WelcomeScreen({ onComplete }) {
     }, 150);
 
     const completionTimer = setTimeout(() => {
-      onComplete();
+      if (!hasCompletedRef.current) {
+        hasCompletedRef.current = true;
+        onComplete();
+      }
     }, 2200);
+
+    const handleSkip = () => {
+      if (hasCompletedRef.current) return;
+      hasCompletedRef.current = true;
+      clearInterval(logInterval);
+      clearTimeout(completionTimer);
+      onComplete();
+    };
+
+    window.addEventListener("keydown", handleSkip);
+    window.addEventListener("pointerdown", handleSkip);
 
     return () => {
       clearInterval(logInterval);
       clearTimeout(completionTimer);
+      window.removeEventListener("keydown", handleSkip);
+      window.removeEventListener("pointerdown", handleSkip);
     };
   }, [onComplete]);
 
@@ -47,24 +65,22 @@ export default function WelcomeScreen({ onComplete }) {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5, ease: "easeInOut" }}
           className="fixed inset-0 z-[9999] font-mono flex items-center justify-center"
-          style={{
-            background: "linear-gradient(180deg, #cccccc 0%, #dcdcdc 100%)",
-          }}
         >
-          {/* Grid Pattern */}
-          <div
-            className="absolute inset-0 opacity-25"
-            style={{
-              backgroundImage: `
-                linear-gradient(to right, rgba(90,90,90,0.3) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(90,90,90,0.3) 1px, transparent 1px)
-              `,
-              backgroundSize: "60px 60px",
-            }}
+          <BackgroundLayers
+            gradient="linear-gradient(160deg, #d6d2cc 0%, #e2deda 50%, #d8d4cf 100%)"
+            showGrain={true}
           />
 
           {/* Terminal-style */}
           <div className="relative z-10 w-full max-w-[92vw] sm:max-w-2xl px-6 md:px-12 flex flex-col gap-2">
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.1 }}
+              className="self-center text-[10px] sm:text-[11px] uppercase tracking-[0.35em] text-black/80 font-mono mb-2 bg-white/60 border border-black/20 px-3 py-1 rounded-md shadow-[2px_2px_0px_rgba(0,0,0,0.1)]"
+            >
+              press any key or click to skip
+            </motion.p>
             {/* Brand Header */}
             <motion.div
               initial={{ opacity: 0, y: -10 }}
@@ -86,7 +102,11 @@ export default function WelcomeScreen({ onComplete }) {
 
             {/* Terminal Log Container */}
             <div className="bg-white/30 backdrop-blur-sm border border-black/10 rounded-xl p-4 sm:p-6 shadow-[6px_6px_0px_rgba(0,0,0,0.06)]">
-              <div className="flex flex-col gap-1.5">
+              <div
+                className="flex flex-col gap-1.5"
+                role="status"
+                aria-live="polite"
+              >
                 {bootLogs.map((log, index) => (
                   <motion.div
                     key={index}

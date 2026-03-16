@@ -20,7 +20,9 @@ export default function WeatherWidget({ variant = "mobile" }) {
         const res = await fetch(
           `${apiUrl}?latitude=${lat}&longitude=${lon}&current_weather=true`,
         );
+        if (!res.ok) throw new Error("Weather request failed");
         const data = await res.json();
+        if (!data?.current_weather) throw new Error("Missing weather data");
         const current = data.current_weather;
 
         let desc = "Clear";

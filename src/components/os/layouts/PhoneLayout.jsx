@@ -7,6 +7,7 @@ import MusicWidget from "../widgets/MusicWidget";
 import LinkConfirmationModal from "../LinkConfirmationModal";
 import IntroductionWidget from "../widgets/IntroductionWidget";
 import { Github, Linkedin, Instagram } from "lucide-react";
+import BackgroundLayers from "../BackgroundLayers";
 
 const MobileAppIcon = ({ app, onClick }) => {
   const Icon = app.mobileIcon || app.icon;
@@ -116,22 +117,7 @@ export default function PhoneLayout({
         className="absolute inset-0 z-0 pointer-events-none"
         style={{ top: "-100px", bottom: "-100px" }}
       >
-        <div
-          className="absolute inset-0"
-          style={{
-            background: "linear-gradient(180deg, #cccccc 0%, #dcdcdc 100%)",
-          }}
-        />
-        <div
-          className="absolute inset-0 opacity-25"
-          style={{
-            backgroundImage: `
-        linear-gradient(to right, rgba(90,90,90,0.3) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(90,90,90,0.3) 1px, transparent 1px)
-      `,
-            backgroundSize: "60px 60px",
-          }}
-        />
+        <BackgroundLayers gradient="linear-gradient(180deg, #cccccc 0%, #dcdcdc 100%)" />
       </div>
 
       {/* 2. TOP BAR */}

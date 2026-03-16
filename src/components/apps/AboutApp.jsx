@@ -100,7 +100,7 @@ export default function AboutApp() {
               </h1>
               <div className="mt-2 md:mt-3 flex flex-wrap items-center gap-1.5 sm:gap-2">
                 <span className="inline-block text-[10px] sm:text-xs md:text-sm font-bold uppercase tracking-widest bg-black/80 text-white px-2.5 py-1 sm:px-3 md:px-4 md:py-1.5 rounded-md">
-                  Junior Developer
+                  Full-Stack Developer
                 </span>
               </div>
             </div>
@@ -150,10 +150,10 @@ export default function AboutApp() {
             <div>
               <Label>Introduction</Label>
               <p className="text-sm md:text-base leading-relaxed text-black/80">
-                Junior developer with hands-on experience building responsive
-                web apps in React, JavaScript, and Tailwind, with additional
-                work in Express, databases, and full-stack project delivery
-                through both capstone and personal projects.
+                Junior Full-Stack Developer with hands-on experience building
+                responsive web apps in React, JavaScript, and Tailwind, with
+                additional work in Express, databases, and full-stack project
+                delivery through both capstone and personal projects.
               </p>
             </div>
 

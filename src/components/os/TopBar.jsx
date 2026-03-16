@@ -18,7 +18,7 @@ export default function TopBar() {
   };
 
   return (
-    <div className="h-9 sm:h-10 bg-white/40 backdrop-blur-md border-b border-black/20 flex items-center justify-between px-4 fixed top-0 left-0 right-0 z-[9999] select-none">
+    <div className="h-9 sm:h-10 os-panel border-b flex items-center justify-between px-4 fixed top-0 left-0 right-0 z-[9999] select-none">
       {/* LEFT */}
       <div className="flex items-center gap-6">
         <div className="flex items-center gap-2 font-black text-base tracking-tight cursor-pointer hover:scale-105 transition-transform text-black/70">
@@ -54,26 +54,38 @@ export default function TopBar() {
       {/* RIGHT */}
       <div className="flex items-center gap-2.5 sm:gap-5">
         <div className="flex items-center gap-2 sm:gap-3 text-black/30">
-          <Search
-            size={14}
-            strokeWidth={2}
-            className=" hover:text-black/60 cursor-pointer transition-colors sm:w-4 sm:h-4"
-          />
-          <Volume2
-            size={14}
-            strokeWidth={2}
-            className=" hover:text-black/60 cursor-pointer transition-colors sm:w-4 sm:h-4"
-          />
-          <Wifi
-            size={14}
-            strokeWidth={2}
-            className="hover:text-black/60 cursor-pointer transition-colors sm:w-4 sm:h-4"
-          />
-          <BatteryFull
-            size={16}
-            strokeWidth={2}
-            className="hover:text-black/60 cursor-pointer transition-colors sm:w-[18px] sm:h-[18px]"
-          />
+          <button
+            type="button"
+            aria-label="Search"
+            className="hover:text-black/60 transition-colors"
+          >
+            <Search size={14} strokeWidth={2} className="sm:w-4 sm:h-4" />
+          </button>
+          <button
+            type="button"
+            aria-label="Volume"
+            className="hover:text-black/60 transition-colors"
+          >
+            <Volume2 size={14} strokeWidth={2} className="sm:w-4 sm:h-4" />
+          </button>
+          <button
+            type="button"
+            aria-label="Wi-Fi"
+            className="hover:text-black/60 transition-colors"
+          >
+            <Wifi size={14} strokeWidth={2} className="sm:w-4 sm:h-4" />
+          </button>
+          <button
+            type="button"
+            aria-label="Battery"
+            className="hover:text-black/60 transition-colors"
+          >
+            <BatteryFull
+              size={16}
+              strokeWidth={2}
+              className="sm:w-[18px] sm:h-[18px]"
+            />
+          </button>
         </div>
 
         <span className="font-medium text-[10px] sm:text-xs tracking-wider text-black/60">

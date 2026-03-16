@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import {
   ExternalLink,
@@ -12,7 +12,7 @@ import LinkConfirmationModal from "../os/LinkConfirmationModal";
 
 export default function ProjectsApp() {
   const [activeLinkData, setActiveLinkData] = useState(null);
-  const allProjects = [...PROJECTS_DATA];
+  const allProjects = useMemo(() => [...PROJECTS_DATA], []);
 
   return (
     <>
@@ -48,7 +48,7 @@ export default function ProjectsApp() {
         <div className="grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-4 sm:gap-5 md:gap-6 flex-1 w-full items-start pb-4">
           {allProjects.map((project, idx) => (
             <motion.div
-              key={idx}
+              key={project.title}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{
@@ -78,7 +78,7 @@ export default function ProjectsApp() {
                       src={project.image}
                       alt={`${project.title} project screenshot`}
                       loading="lazy"
-                      className="w-full h-full object-contain p-1.5 sm:p-2 group-hover:scale-105 group-hover:grayscale-0 transition-all duration-500 grayscale"
+                      className="w-full h-full object-contain p-1.5 sm:p-2 group-hover:scale-105 transition-all duration-500 saturate-[0.7] group-hover:saturate-100"
                     />
                   </picture>
                 ) : (

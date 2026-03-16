@@ -19,7 +19,7 @@ export default function StatusBar({
       />
 
       <div className="fixed bottom-2 left-1/2 -translate-x-1/2 z-[9999] flex items-end select-none w-max max-w-[95vw]">
-        <div className="flex items-center bg-white/40 backdrop-blur-md border border-black/20 rounded-2xl overflow-x-auto no-scrollbar px-4 py-3 gap-2">
+        <div className="flex items-center os-panel rounded-2xl overflow-x-auto no-scrollbar px-4 py-3 gap-2">
           {/* 1. OPEN APPS */}
           {openWindows.length === 0 ? (
             <div className="w-10 h-10 flex items-center justify-center">
@@ -37,8 +37,14 @@ export default function StatusBar({
                   onClick={() =>
                     isActive ? onMinimizeWindow(win.id) : onFocusWindow(win.id)
                   }
+                  type="button"
+                  aria-label={
+                    isActive
+                      ? `Minimize ${win.title} window`
+                      : `Focus ${win.title} window`
+                  }
                   className={`
-                    shrink-0 w-11 h-11 flex items-center justify-center rounded-xl transition-all
+                    relative shrink-0 w-11 h-11 flex items-center justify-center rounded-xl transition-all
                     ${
                       isActive
                         ? "bg-black/5 scale-105"
@@ -65,6 +71,9 @@ export default function StatusBar({
                       }`}
                     />
                   )}
+                  {win.minimized && (
+                    <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2.5 h-0.5 rounded-full bg-black/40" />
+                  )}
                 </button>
               );
             })
@@ -88,6 +97,8 @@ export default function StatusBar({
                       icon: Github,
                     })
                   }
+                  type="button"
+                  aria-label="Open GitHub profile"
                   className="w-11 h-11 bg-transparent flex items-center justify-center rounded-xl hover:bg-black/5 hover:scale-105 transition-all group"
                 >
                   <Github
@@ -106,6 +117,8 @@ export default function StatusBar({
                       icon: Linkedin,
                     })
                   }
+                  type="button"
+                  aria-label="Open LinkedIn profile"
                   className="w-11 h-11 bg-transparent flex items-center justify-center rounded-xl hover:bg-black/5 hover:scale-105 transition-all group"
                 >
                   <Linkedin
@@ -126,6 +139,8 @@ export default function StatusBar({
                   icon: Instagram,
                 })
               }
+              type="button"
+              aria-label="Open Instagram profile"
               className="w-11 h-11 bg-transparent flex items-center justify-center rounded-xl hover:bg-black/5 hover:scale-105 transition-all group"
             >
               <Instagram

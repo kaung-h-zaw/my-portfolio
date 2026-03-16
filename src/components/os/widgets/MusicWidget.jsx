@@ -56,6 +56,11 @@ export default function MusicWidget({ variant = "mobile" }) {
     return () => {
       clearTimeout(timeoutRef.current);
       clearInterval(intervalRef.current);
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+        audioRef.current = null;
+      }
     };
   }, []);
 

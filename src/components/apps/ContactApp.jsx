@@ -121,10 +121,14 @@ export default function ContactApp() {
               <div className="flex flex-wrap gap-5">
                 {/* Name */}
                 <div className="flex flex-col gap-2 flex-[1_1_200px]">
-                  <label className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-black/60">
+                  <label
+                    htmlFor="contact-name"
+                    className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-black/60"
+                  >
                     From: [Name]
                   </label>
                   <input
+                    id="contact-name"
                     name="name"
                     required
                     placeholder="John Doe"
@@ -134,10 +138,14 @@ export default function ContactApp() {
 
                 {/* Email */}
                 <div className="flex flex-col gap-2 flex-[1_1_200px]">
-                  <label className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-black/60">
+                  <label
+                    htmlFor="contact-email"
+                    className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-black/60"
+                  >
                     Reply-To: [Email]
                   </label>
                   <input
+                    id="contact-email"
                     name="email"
                     type="email"
                     required
@@ -149,10 +157,14 @@ export default function ContactApp() {
 
               {/* Phone */}
               <div className="flex flex-col gap-2">
-                <label className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-black/60">
+                <label
+                  htmlFor="contact-phone"
+                  className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-black/60"
+                >
                   Phone: [Optional]
                 </label>
                 <input
+                  id="contact-phone"
                   name="phone"
                   type="tel"
                   placeholder="+66 123 456 789"
@@ -162,10 +174,14 @@ export default function ContactApp() {
 
               {/* Message */}
               <div className="flex flex-col gap-2 flex-1">
-                <label className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-black/60">
+                <label
+                  htmlFor="contact-message"
+                  className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-black/60"
+                >
                   Message Body:
                 </label>
                 <textarea
+                  id="contact-message"
                   name="message"
                   required
                   rows={5}
@@ -223,7 +239,7 @@ export default function ContactApp() {
                   <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500 border border-green-700"></span>
                 </span>
                 <span className="text-xs md:text-sm font-bold uppercase tracking-wider text-black/90">
-                  Available to Hire
+                  Open to junior roles
                 </span>
               </div>
             </div>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { ArrowUpRight } from "lucide-react";
 
 const GREETINGS = [
   "HELLO",
@@ -78,11 +79,11 @@ export default function IntroductionWidget({ onOpenAbout }) {
 
         <div className="w-full flex justify-between items-center">
           <div className="inline-block bg-black/80 text-white px-2 py-1 font-mono font-medium tracking-wider text-[8px] xl:text-[9px] uppercase group-hover:bg-black/90 transition-all rounded-md">
-            Junior Developer
+            Junior Full-Stack Developer
           </div>
 
           <span className="text-[9px] font-medium uppercase opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 text-black/50 shrink-0">
-            Open <span className="text-[10px] leading-none">↗</span>
+            Open <ArrowUpRight size={12} className="text-black/50" />
           </span>
         </div>
       </button>

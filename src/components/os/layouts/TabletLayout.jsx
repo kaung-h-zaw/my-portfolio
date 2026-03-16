@@ -9,6 +9,7 @@ import WeatherWidget from "../widgets/WeatherWidget";
 import MusicWidget from "../widgets/MusicWidget";
 import LinkConfirmationModal from "../LinkConfirmationModal";
 import { Github, Linkedin } from "lucide-react";
+import BackgroundLayers from "../BackgroundLayers";
 
 const TabletIcon = ({ title, icon, onClick }) => {
   const isLucideIcon = typeof icon !== "string";
@@ -67,22 +68,7 @@ export default function TabletLayout({
     <div className="fixed inset-0 flex flex-col overflow-hidden text-black select-none bg-[#EFE5D9]">
       {/* 1. BACKGROUND */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <div
-          className="absolute inset-0"
-          style={{
-            background: "linear-gradient(180deg, #dcdcdc 0%, #cccccc 100%)",
-          }}
-        />
-        <div
-          className="absolute inset-0 opacity-25"
-          style={{
-            backgroundImage: `
-        linear-gradient(to right, rgba(90,90,90,0.3) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(90,90,90,0.3) 1px, transparent 1px)
-      `,
-            backgroundSize: "60px 60px",
-          }}
-        />
+        <BackgroundLayers gradient="linear-gradient(180deg, #dcdcdc 0%, #cccccc 100%)" />
       </div>
 
       {/* 2. TOP MENU BAR */}

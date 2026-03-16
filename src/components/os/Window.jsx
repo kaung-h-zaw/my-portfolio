@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, Suspense } from "react";
 import Draggable from "react-draggable";
 import { motion } from "framer-motion";
 import { X, Minus, Square, Maximize2 } from "lucide-react";
@@ -17,8 +17,12 @@ export default function Window({
   const [isMaximized, setIsMaximized] = useState(true);
   const [position, setPosition] = useState(defaultPos);
 
-  const restoredWidth = isMobile ? window.innerWidth * 0.9 : 600;
-  const restoredHeight = isMobile ? window.innerHeight * 0.6 : 450;
+  const restoredWidth = isMobile
+    ? window.innerWidth * 0.9
+    : Math.min(680, Math.max(520, Math.floor(window.innerWidth * 0.6)));
+  const restoredHeight = isMobile
+    ? window.innerHeight * 0.6
+    : Math.min(520, Math.max(380, Math.floor(window.innerHeight * 0.6)));
 
   useEffect(() => {
     if (isMobile) {
@@ -27,11 +31,11 @@ export default function Window({
     }
 
     if (!isMobile) {
-      const centerX = (window.innerWidth - 600) / 2;
-      const centerY = (window.innerHeight - 450) / 2;
+      const centerX = (window.innerWidth - restoredWidth) / 2;
+      const centerY = (window.innerHeight - restoredHeight) / 2;
       setPosition({ x: Math.max(0, centerX), y: Math.max(0, centerY) });
     }
-  }, [isMobile]);
+  }, [isMobile, restoredWidth, restoredHeight]);
 
   const bounds = {
     top: 40,
@@ -64,7 +68,7 @@ export default function Window({
     }
   } else {
     positionClass =
-      "absolute w-[90vw] md:w-[600px] h-[60vh] md:h-[450px] rounded-2xl border border-black/20 shadow-[6px_6px_0px_rgba(0,0,0,0.06)] bg-gray-300/80 backdrop-blur-md";
+      "absolute rounded-2xl border border-black/20 shadow-[6px_6px_0px_rgba(0,0,0,0.06)] bg-gray-300/80 backdrop-blur-md";
   }
 
   return (
@@ -81,7 +85,10 @@ export default function Window({
     >
       <div
         ref={nodeRef}
-        style={{ zIndex }}
+        style={{
+          zIndex,
+          ...(isMaximized ? {} : { width: restoredWidth, height: restoredHeight }),
+        }}
         className={`bg-gray-300/40 flex flex-col overflow-hidden ${positionClass} pointer-events-auto`}
         onMouseDown={onFocus}
       >
@@ -128,6 +135,8 @@ export default function Window({
                   e.stopPropagation();
                   onMinimize();
                 }}
+                type="button"
+                aria-label="Minimize window"
                 className="w-6 h-6 border border-black/10 bg-transparent hover:bg-black/5 flex items-center justify-center transition-colors rounded-lg cursor-pointer"
               >
                 <Minus
@@ -146,6 +155,8 @@ export default function Window({
                   e.stopPropagation();
                   if (!isMobile) toggleMaximize();
                 }}
+                type="button"
+                aria-label={isMaximized ? "Restore window" : "Maximize window"}
                 className={`w-6 h-6 border border-black/10 bg-transparent flex items-center justify-center transition-colors rounded-lg cursor-pointer ${
                   isMobile
                     ? "opacity-30 cursor-not-allowed"
@@ -176,6 +187,8 @@ export default function Window({
                   e.stopPropagation();
                   onClose();
                 }}
+                type="button"
+                aria-label="Close window"
                 className="w-6 h-6 border border-black/10 bg-[#ff6b6b]/80 hover:bg-[#ff6b6b] text-white flex items-center justify-center transition-colors rounded-lg cursor-pointer"
               >
                 <X size={13} strokeWidth={2.5} />
@@ -190,7 +203,15 @@ export default function Window({
               transition={{ duration: 0.2 }}
               className="h-full"
             >
-              {children}
+              <Suspense
+                fallback={
+                  <div className="h-full w-full flex items-center justify-center text-[10px] uppercase tracking-widest text-black/50">
+                    Loading...
+                  </div>
+                }
+              >
+                {children}
+              </Suspense>
             </motion.div>
           </div>
         </motion.div>

@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, lazy } from "react";
 import DesktopLayout from "./layouts/DesktopLayout";
 import TabletLayout from "./layouts/TabletLayout";
 import PhoneLayout from "./layouts/PhoneLayout";
-import AboutApp from "../apps/AboutApp";
-import SkillsApp from "../apps/SkillsApp";
-import ProjectsApp from "../apps/ProjectsApp";
-import ContactApp from "../apps/ContactApp";
-import ExperienceApp from "../apps/ExperienceApp";
-import EducationApp from "../apps/EducationApp";
+const AboutApp = lazy(() => import("../apps/AboutApp"));
+const SkillsApp = lazy(() => import("../apps/SkillsApp"));
+const ProjectsApp = lazy(() => import("../apps/ProjectsApp"));
+const ContactApp = lazy(() => import("../apps/ContactApp"));
+const ExperienceApp = lazy(() => import("../apps/ExperienceApp"));
+const EducationApp = lazy(() => import("../apps/EducationApp"));
 
 import {
   User,
@@ -96,21 +96,29 @@ export default function OSContainer() {
     }
 
     const app = apps[id];
-    const offset = openWindows.length * 20;
-    const defaultPos = { x: 50 + offset, y: 50 + offset };
+    const offset = openWindows.length * 24;
+    const maxX = Math.max(0, window.innerWidth - 680);
+    const maxY = Math.max(0, window.innerHeight - 520);
+    const defaultPos = {
+      x: Math.min(60 + offset, maxX),
+      y: Math.min(50 + offset, maxY),
+    };
 
-    setZTop((z) => z + 1);
-    setOpenWindows((prev) => [
-      ...prev,
-      {
-        id,
-        title: app.title,
-        icon: app.icon,
-        zIndex: zTop + 1,
-        defaultPos,
-        minimized: false,
-      },
-    ]);
+    setZTop((z) => {
+      const nextZ = z + 1;
+      setOpenWindows((prev) => [
+        ...prev,
+        {
+          id,
+          title: app.title,
+          icon: app.icon,
+          zIndex: nextZ,
+          defaultPos,
+          minimized: false,
+        },
+      ]);
+      return nextZ;
+    });
     setActiveWindowId(id);
   };
 
@@ -120,12 +128,15 @@ export default function OSContainer() {
   };
 
   const focusWindow = (id) => {
-    setZTop((z) => z + 1);
-    setOpenWindows((prev) =>
-      prev.map((w) =>
-        w.id === id ? { ...w, zIndex: zTop + 1, minimized: false } : w,
-      ),
-    );
+    setZTop((z) => {
+      const nextZ = z + 1;
+      setOpenWindows((prev) =>
+        prev.map((w) =>
+          w.id === id ? { ...w, zIndex: nextZ, minimized: false } : w,
+        ),
+      );
+      return nextZ;
+    });
     setActiveWindowId(id);
   };
 
