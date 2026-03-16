@@ -86,6 +86,14 @@ export default function PhoneLayout({
   const activeApp =
     openWindows.length > 0 ? openWindows[openWindows.length - 1] : null;
   const [pendingLink, setPendingLink] = useState(null);
+  const appOrder = [
+    "about",
+    "experience",
+    "education",
+    "skills",
+    "projects",
+    "contact",
+  ];
 
   const externalLinks = [
     {
@@ -155,11 +163,14 @@ export default function PhoneLayout({
           </div>
 
           <div className="grid grid-cols-3 gap-x-4 gap-y-4 px-6 w-full max-w-[400px] mx-auto mt-2">
-            {Object.values(apps).map((app) => (
-              <div key={app.id} className="flex justify-center w-full">
-                <MobileAppIcon app={app} onClick={() => openWindow(app.id)} />
-              </div>
-            ))}
+            {appOrder
+              .map((id) => apps[id])
+              .filter(Boolean)
+              .map((app) => (
+                <div key={app.id} className="flex justify-center w-full">
+                  <MobileAppIcon app={app} onClick={() => openWindow(app.id)} />
+                </div>
+              ))}
 
             {externalLinks.map((link) => (
               <div key={link.title} className="flex justify-center w-full">

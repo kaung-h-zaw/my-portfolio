@@ -91,7 +91,7 @@ export default function AboutApp() {
 
             {/* Name & Role */}
             <div className="flex-1 min-w-0 flex flex-col justify-center h-full pt-1">
-              <p className="text-[10px] md:text-xs uppercase tracking-widest text-black/60 mb-1 md:mb-2">
+              <p className="text-xs md:text-sm uppercase tracking-widest text-black/60 mb-1 md:mb-2">
                 › profile.exe
               </p>
               <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-black uppercase tracking-tight leading-none text-black/90">
@@ -99,7 +99,7 @@ export default function AboutApp() {
                 <span className="inline-block w-[2px] h-[1em] bg-black/60 ml-1 align-middle animate-pulse" />
               </h1>
               <div className="mt-2 md:mt-3 flex flex-wrap items-center gap-1.5 sm:gap-2">
-                <span className="inline-block text-[10px] sm:text-xs md:text-sm font-bold uppercase tracking-widest bg-black/80 text-white px-2.5 py-1 sm:px-3 md:px-4 md:py-1.5 rounded-md">
+                <span className="inline-block text-xs sm:text-sm md:text-base font-bold uppercase tracking-widest bg-black/80 text-white px-2.5 py-1 sm:px-3 md:px-4 md:py-1.5 rounded-md">
                   Full-Stack Developer
                 </span>
               </div>
@@ -128,7 +128,7 @@ export default function AboutApp() {
                 {email}
               </span>
               <span
-                className={`text-[10px] uppercase tracking-widest px-2 py-0.5 rounded transition-all duration-300 shrink-0 ${
+                className={`text-xs uppercase tracking-widest px-2 py-0.5 rounded transition-all duration-300 shrink-0 ${
                   copied
                     ? "bg-green-100 text-green-700 opacity-100 translate-x-0"
                     : "opacity-0 -translate-x-2 hidden sm:inline-block"
@@ -263,7 +263,7 @@ export default function AboutApp() {
                     />
                   </div>
                   <div className="flex-1 min-w-0 overflow-hidden">
-                    <p className="text-xs uppercase tracking-widest text-black/50 mb-0.5">
+                    <p className="text-sm uppercase tracking-widest text-black/50 mb-0.5">
                       Github
                     </p>
                     <p className="text-sm text-black/80 truncate font-medium">
@@ -295,7 +295,7 @@ export default function AboutApp() {
                     />
                   </div>
                   <div className="flex-1 min-w-0 overflow-hidden">
-                    <p className="text-xs uppercase tracking-widest text-black/50 mb-0.5">
+                    <p className="text-sm uppercase tracking-widest text-black/50 mb-0.5">
                       LinkedIn
                     </p>
                     <p className="text-sm text-black/80 truncate font-medium">
@@ -313,7 +313,7 @@ export default function AboutApp() {
         </div>
 
         {/* FOOTER */}
-        <div className="border-t border-black/10 pt-4 mt-auto flex justify-between items-center text-[10px] md:text-xs uppercase tracking-widest text-black/40">
+        <div className="border-t border-black/10 pt-4 mt-auto flex justify-between items-center text-xs md:text-sm uppercase tracking-widest text-black/40">
           <span>© 2026 Kaung Htet Zaw</span>
           <span>v2.0</span>
         </div>
@@ -324,7 +324,7 @@ export default function AboutApp() {
 
 function Label({ children }) {
   return (
-    <p className="text-xs md:text-sm uppercase tracking-widest text-black/50 mb-3 md:mb-4 border-b border-black/10 pb-2">
+    <p className="text-sm md:text-base uppercase tracking-widest text-black/50 mb-3 md:mb-4 border-b border-black/10 pb-2">
       {children}
     </p>
   );

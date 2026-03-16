@@ -48,7 +48,7 @@ export default function ExperienceApp() {
             <Briefcase size={16} strokeWidth={2} className="text-black/70" />
           </div>
           <div className="flex flex-col">
-            <p className="text-[10px] md:text-xs uppercase tracking-widest text-black/60">
+            <p className="text-xs md:text-sm uppercase tracking-widest text-black/60">
               › experience.sys
             </p>
             <h1 className="text-lg md:text-xl font-black uppercase tracking-tight leading-none text-black/90 mt-1">
@@ -68,12 +68,12 @@ export default function ExperienceApp() {
               {/* LEFT*/}
               <div className="flex flex-col gap-3 flex-[1_1_250px] shrink-0">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] md:text-xs font-bold font-mono text-black/40">
+                  <span className="text-xs md:text-sm font-bold font-mono text-black/40">
                     [{exp.id}]
                   </span>
                   {/* Status Badge */}
                   <span
-                    className={`text-[9px] md:text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded ${
+                    className={`text-xs md:text-sm font-bold uppercase tracking-widest px-2.5 py-1 rounded ${
                       exp.status === "active"
                         ? "bg-black text-white"
                         : "bg-black/10 text-black/50"
@@ -87,18 +87,18 @@ export default function ExperienceApp() {
                   <h2 className="text-base md:text-xl font-black uppercase tracking-tight leading-tight text-black/90">
                     {exp.role}
                   </h2>
-                  <p className="text-xs md:text-sm text-black/60 font-bold uppercase tracking-widest mt-1">
+                  <p className="text-sm md:text-base text-black/60 font-bold uppercase tracking-widest mt-1">
                     @ {exp.company}
                   </p>
                 </div>
 
                 {/* Location & Time */}
                 <div className="flex flex-col gap-1.5 mt-2 pt-3 border-t border-black/10">
-                  <div className="flex items-center gap-2 text-[10px] md:text-xs text-black/60 font-medium">
+                  <div className="flex items-center gap-2 text-xs md:text-sm text-black/60 font-medium">
                     <Calendar size={13} strokeWidth={2} />
                     <span>{exp.period}</span>
                   </div>
-                  <div className="flex items-center gap-2 text-[10px] md:text-xs text-black/60 font-medium">
+                  <div className="flex items-center gap-2 text-xs md:text-sm text-black/60 font-medium">
                     <MapPin size={13} strokeWidth={2} />
                     <span>{exp.location}</span>
                   </div>
@@ -112,14 +112,14 @@ export default function ExperienceApp() {
                 </p>
 
                 <div className="flex flex-col gap-2">
-                  <p className="text-[10px] md:text-xs uppercase tracking-widest text-black/50 font-bold mb-1">
+                  <p className="text-xs md:text-sm uppercase tracking-widest text-black/50 font-bold mb-1">
                     Key Contributions
                   </p>
                   <ul className="space-y-2.5">
                     {exp.highlights.map((item, i) => (
                       <li
                         key={i}
-                        className="flex items-start gap-2.5 text-xs md:text-sm text-black/70 leading-relaxed"
+                        className="flex items-start gap-2.5 text-sm md:text-base text-black/70 leading-relaxed"
                       >
                         <ArrowRight
                           size={14}
@@ -138,7 +138,7 @@ export default function ExperienceApp() {
                     {exp.stack.map((tech) => (
                       <span
                         key={tech}
-                        className="text-[10px] md:text-xs font-bold uppercase tracking-wide px-2.5 py-1 bg-black/5 text-black/60 rounded border border-black/5 group-hover:bg-black/10 group-hover:text-black/80 transition-colors"
+                        className="text-xs md:text-sm font-bold uppercase tracking-wide px-2.5 py-1 bg-black/5 text-black/60 rounded border border-black/5 group-hover:bg-black/10 group-hover:text-black/80 transition-colors"
                       >
                         {tech}
                       </span>
@@ -156,7 +156,7 @@ export default function ExperienceApp() {
       </div>
 
       {/* FOOTER */}
-      <div className="border-t border-black/10 pt-4 mt-auto text-[10px] md:text-xs uppercase tracking-widest text-black/40 flex justify-between items-center">
+      <div className="border-t border-black/10 pt-4 mt-auto text-xs md:text-sm uppercase tracking-widest text-black/40 flex justify-between items-center">
         <span>2024 - Present</span>
         <span>Remote · AU</span>
       </div>

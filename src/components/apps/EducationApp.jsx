@@ -64,7 +64,7 @@ export default function EducationApp() {
               />
             </div>
             <div className="flex flex-col">
-              <p className="text-[10px] md:text-xs uppercase tracking-widest text-black/60">
+              <p className="text-xs md:text-sm uppercase tracking-widest text-black/60">
                 › education.log
               </p>
               <h1 className="text-lg md:text-xl font-black uppercase tracking-tight leading-none text-black/90 mt-1">
@@ -90,7 +90,7 @@ export default function EducationApp() {
                 {/* Content */}
                 <div className="flex flex-col gap-2">
                   {/* Period */}
-                  <span className="text-[10px] md:text-xs font-bold uppercase tracking-widest px-2.5 py-1 bg-black/80 text-white rounded w-fit">
+                  <span className="text-xs md:text-sm font-bold uppercase tracking-widest px-2.5 py-1 bg-black/80 text-white rounded w-fit">
                     {edu.period}
                   </span>
 
@@ -115,7 +115,7 @@ export default function EducationApp() {
                     {edu.skills.map((skill) => (
                       <span
                         key={skill}
-                        className="text-[10px] md:text-xs font-bold uppercase tracking-wide px-2 py-1 bg-black/5 text-black/70 rounded border border-black/5 hover:bg-black/10 hover:text-black/90 transition-colors"
+                        className="text-xs md:text-sm font-bold uppercase tracking-wide px-2 py-1 bg-black/5 text-black/70 rounded border border-black/5 hover:bg-black/10 hover:text-black/90 transition-colors"
                       >
                         {skill}
                       </span>
@@ -144,7 +144,7 @@ export default function EducationApp() {
                       {cert.name}
                     </h4>
 
-                    <div className="flex justify-between items-center text-[10px] md:text-xs font-medium uppercase tracking-widest text-black/60 border-t border-black/10 pt-2.5">
+                    <div className="flex justify-between items-center text-xs md:text-sm font-medium uppercase tracking-widest text-black/60 border-t border-black/10 pt-2.5">
                       <span>{cert.issuer}</span>
                       <span>{cert.date}</span>
                     </div>
@@ -185,7 +185,7 @@ export default function EducationApp() {
                     <span className="text-xs md:text-sm font-bold uppercase text-black/90">
                       {lang.name}
                     </span>
-                    <span className="text-[10px] md:text-xs text-black/60 font-bold uppercase tracking-widest bg-white/50 px-2 py-0.5 rounded">
+                    <span className="text-xs md:text-sm text-black/60 font-bold uppercase tracking-widest bg-white/50 px-2 py-0.5 rounded">
                       {lang.level}
                     </span>
                   </div>
@@ -196,7 +196,7 @@ export default function EducationApp() {
         </div>
 
         {/* FOOTER */}
-        <div className="border-t border-black/10 pt-4 mt-auto text-[10px] md:text-xs uppercase tracking-widest text-black/40 flex justify-between items-center">
+        <div className="border-t border-black/10 pt-4 mt-auto text-xs md:text-sm uppercase tracking-widest text-black/40 flex justify-between items-center">
           <span>MM · AU</span>
           <span>2019 - 2024</span>
         </div>
@@ -209,7 +209,7 @@ function Label({ children, icon }) {
   return (
     <div className="flex items-center gap-2 mb-3 md:mb-4 border-b border-black/10 pb-2">
       {icon && <span className="text-black/60">{icon}</span>}
-      <p className="text-xs md:text-sm uppercase tracking-widest text-black/50 font-medium">
+      <p className="text-sm md:text-base uppercase tracking-widest text-black/50 font-medium">
         {children}
       </p>
     </div>
