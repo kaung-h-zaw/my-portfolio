@@ -71,15 +71,16 @@ export default function WelcomeScreen({ onComplete }) {
             showGrain={true}
           />
 
-          {/* Terminal-style */}
+          {/* Terminal*/}
           <div className="relative z-10 w-full max-w-[92vw] sm:max-w-2xl px-6 md:px-12 flex flex-col gap-2">
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.1 }}
-              className="self-center text-[10px] sm:text-[11px] uppercase tracking-[0.35em] text-black/80 font-mono mb-2 bg-white/60 border border-black/20 px-3 py-1 rounded-md shadow-[2px_2px_0px_rgba(0,0,0,0.1)]"
+              className="self-center text-[9px] sm:text-[10px] uppercase tracking-[0.3em] text-black/60 font-mono mb-2 px-2 py-1 rounded border border-black/10 bg-white/30"
             >
-              press any key or click to skip
+              <span className="md:hidden">tap to skip</span>
+              <span className="hidden md:inline">press any key to skip</span>
             </motion.p>
             {/* Brand Header */}
             <motion.div
