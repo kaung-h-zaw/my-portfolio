@@ -89,7 +89,7 @@ export default function ContactApp() {
         onClose={() => setActiveLinkData(null)}
       />
 
-      <div className="font-mono text-black min-h-full flex flex-col gap-6 p-4 md:p-6 overflow-y-auto overflow-x-hidden">
+      <div className="font-mono text-black min-h-full flex flex-col gap-5 xl:gap-6 p-3 lg:p-4 xl:p-6 overflow-y-auto overflow-x-hidden">
         {/* HEADER */}
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-2.5">
@@ -97,10 +97,10 @@ export default function ContactApp() {
               <Mail size={16} strokeWidth={2} className="text-black/70" />
             </div>
             <div className="flex flex-col">
-              <p className="text-[10px] md:text-xs uppercase tracking-widest text-black/60">
+              <p className="text-[10px] lg:text-[11px] xl:text-xs uppercase tracking-widest text-black/60">
                 › contact.msg
               </p>
-              <h1 className="text-lg md:text-xl font-black uppercase tracking-tight leading-none text-black/90 mt-1">
+              <h1 className="text-lg lg:text-xl xl:text-2xl font-black uppercase tracking-tight leading-none text-black/90 mt-1">
                 Get In Touch
               </h1>
             </div>
@@ -110,20 +110,20 @@ export default function ContactApp() {
         <div className="border-t border-black/10" />
 
         {/* MAIN GRID */}
-        <div className="flex flex-wrap gap-6 md:gap-8 flex-1">
+        <div className="flex flex-wrap gap-5 lg:gap-6 xl:gap-8 flex-1">
           {/* LEFT */}
-          <div className="flex flex-col flex-[2_1_400px]">
+          <div className="flex flex-col flex-[2_1_360px] xl:flex-[2_1_400px]">
             <form
               ref={formRef}
               onSubmit={handleSubmit}
-              className="flex flex-col gap-5"
+              className="flex flex-col gap-4 lg:gap-5"
             >
-              <div className="flex flex-wrap gap-5">
+                <div className="flex flex-wrap gap-4 lg:gap-5">
                 {/* Name */}
                 <div className="flex flex-col gap-2 flex-[1_1_200px]">
                   <label
                     htmlFor="contact-name"
-                    className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-black/60"
+                    className="text-[10px] lg:text-[11px] xl:text-xs font-bold uppercase tracking-widest text-black/60"
                   >
                     From: [Name]
                   </label>
@@ -132,7 +132,7 @@ export default function ContactApp() {
                     name="name"
                     required
                     placeholder="John Doe"
-                    className="w-full border-2 border-black/10 bg-black/5 px-3 py-3 text-sm font-medium focus:outline-none focus:border-black/40 focus:bg-white rounded-lg placeholder:text-black/30 transition-all"
+                    className="w-full border-2 border-black/10 bg-black/5 px-3 py-3 text-sm lg:text-[15px] xl:text-sm font-medium focus:outline-none focus:border-black/40 focus:bg-white rounded-lg placeholder:text-black/30 transition-all"
                   />
                 </div>
 
@@ -140,7 +140,7 @@ export default function ContactApp() {
                 <div className="flex flex-col gap-2 flex-[1_1_200px]">
                   <label
                     htmlFor="contact-email"
-                    className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-black/60"
+                    className="text-[10px] lg:text-[11px] xl:text-xs font-bold uppercase tracking-widest text-black/60"
                   >
                     Reply-To: [Email]
                   </label>
@@ -150,7 +150,7 @@ export default function ContactApp() {
                     type="email"
                     required
                     placeholder="john@example.com"
-                    className="w-full border-2 border-black/10 bg-black/5 px-3 py-3 text-sm font-medium focus:outline-none focus:border-black/40 focus:bg-white rounded-lg placeholder:text-black/30 transition-all"
+                    className="w-full border-2 border-black/10 bg-black/5 px-3 py-3 text-sm lg:text-[15px] xl:text-sm font-medium focus:outline-none focus:border-black/40 focus:bg-white rounded-lg placeholder:text-black/30 transition-all"
                   />
                 </div>
               </div>
@@ -159,7 +159,7 @@ export default function ContactApp() {
               <div className="flex flex-col gap-2">
                 <label
                   htmlFor="contact-phone"
-                  className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-black/60"
+                  className="text-[10px] lg:text-[11px] xl:text-xs font-bold uppercase tracking-widest text-black/60"
                 >
                   Phone: [Optional]
                 </label>
@@ -168,7 +168,7 @@ export default function ContactApp() {
                   name="phone"
                   type="tel"
                   placeholder="+66 123 456 789"
-                  className="w-full border-2 border-black/10 bg-black/5 px-3 py-3 text-sm font-medium focus:outline-none focus:border-black/40 focus:bg-white rounded-lg placeholder:text-black/30 transition-all"
+                  className="w-full border-2 border-black/10 bg-black/5 px-3 py-3 text-sm lg:text-[15px] xl:text-sm font-medium focus:outline-none focus:border-black/40 focus:bg-white rounded-lg placeholder:text-black/30 transition-all"
                 />
               </div>
 
@@ -176,7 +176,7 @@ export default function ContactApp() {
               <div className="flex flex-col gap-2 flex-1">
                 <label
                   htmlFor="contact-message"
-                  className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-black/60"
+                  className="text-[10px] lg:text-[11px] xl:text-xs font-bold uppercase tracking-widest text-black/60"
                 >
                   Message Body:
                 </label>
@@ -186,19 +186,19 @@ export default function ContactApp() {
                   required
                   rows={5}
                   placeholder="Type your message..."
-                  className="w-full border-2 border-black/10 bg-black/5 px-3 py-3 text-sm font-medium focus:outline-none focus:border-black/40 focus:bg-white resize-none rounded-lg placeholder:text-black/30 min-h-[120px] transition-all"
+                  className="w-full border-2 border-black/10 bg-black/5 px-3 py-3 text-sm lg:text-[15px] xl:text-sm font-medium focus:outline-none focus:border-black/40 focus:bg-white resize-none rounded-lg placeholder:text-black/30 min-h-[120px] transition-all"
                 />
               </div>
 
               {/* Status Messages */}
               {status === "sent" && (
-                <div className="text-xs md:text-sm px-4 py-3 font-bold flex items-center gap-2 bg-green-500 text-white rounded-lg border border-green-600 shadow-[2px_2px_0px_rgba(0,0,0,0.2)]">
+                <div className="text-xs lg:text-[13px] xl:text-sm px-4 py-3 font-bold flex items-center gap-2 bg-green-500 text-white rounded-lg border border-green-600 shadow-[2px_2px_0px_rgba(0,0,0,0.2)]">
                   <Check size={16} strokeWidth={2.5} /> Message sent
                   successfully!
                 </div>
               )}
               {status === "error" && (
-                <div className="text-xs md:text-sm px-4 py-3 font-bold flex items-center gap-2 bg-red-500 text-white rounded-lg border border-red-600 shadow-[2px_2px_0px_rgba(0,0,0,0.2)]">
+                <div className="text-xs lg:text-[13px] xl:text-sm px-4 py-3 font-bold flex items-center gap-2 bg-red-500 text-white rounded-lg border border-red-600 shadow-[2px_2px_0px_rgba(0,0,0,0.2)]">
                   Failed to send message. Please try again.
                 </div>
               )}
@@ -207,7 +207,7 @@ export default function ContactApp() {
               <button
                 type="submit"
                 disabled={sending}
-                className="w-full py-3.5 font-black uppercase text-xs md:text-sm tracking-widest flex items-center justify-center gap-2 bg-black text-white rounded-lg hover:bg-black/80 hover:shadow-[4px_4px_0px_rgba(0,0,0,0.2)] hover:-translate-y-0.5 active:translate-y-0 active:shadow-none transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-none disabled:hover:translate-y-0 mt-2"
+                className="w-full py-3.5 font-black uppercase text-xs lg:text-[13px] xl:text-sm tracking-widest flex items-center justify-center gap-2 bg-black text-white rounded-lg hover:bg-black/80 hover:shadow-[4px_4px_0px_rgba(0,0,0,0.2)] hover:-translate-y-0.5 active:translate-y-0 active:shadow-none transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-none disabled:hover:translate-y-0 mt-2"
               >
                 {sending ? (
                   <>
@@ -229,16 +229,16 @@ export default function ContactApp() {
           </div>
 
           {/* RIGHT */}
-          <div className="flex flex-col gap-8 flex-[1_1_250px]">
+          <div className="flex flex-col gap-6 lg:gap-7 xl:gap-8 flex-[1_1_230px] xl:flex-[1_1_250px]">
             {/* Work Status */}
             <div>
               <Label>Status</Label>
-              <div className="flex items-center gap-3 p-3.5 bg-black/5 rounded-lg border border-black/10">
+              <div className="flex items-center gap-3 p-3 lg:p-3.5 bg-black/5 rounded-lg border border-black/10">
                 <span className="relative flex h-3 w-3">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500 border border-green-700"></span>
                 </span>
-                <span className="text-xs md:text-sm font-bold uppercase tracking-wider text-black/90">
+                <span className="text-xs lg:text-[13px] xl:text-sm font-bold uppercase tracking-wider text-black/90">
                   Open to junior roles
                 </span>
               </div>
@@ -249,9 +249,9 @@ export default function ContactApp() {
               <Label>Direct Email</Label>
               <button
                 onClick={handleCopyEmail}
-                className="w-full flex items-center justify-between p-3.5 bg-black/5 rounded-lg border border-black/10 hover:border-black/30 hover:bg-black/10 transition-all group"
+                className="w-full flex items-center justify-between p-3 lg:p-3.5 bg-black/5 rounded-lg border border-black/10 hover:border-black/30 hover:bg-black/10 transition-all group"
               >
-                <span className="text-xs md:text-sm font-bold text-black/80 truncate">
+                <span className="text-xs lg:text-[13px] xl:text-sm font-bold text-black/80 truncate">
                   {email}
                 </span>
                 <div className="p-1.5 bg-black/5 group-hover:bg-white rounded transition-colors shrink-0">

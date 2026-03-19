@@ -67,12 +67,12 @@ export default function AboutApp() {
         onClose={() => setActiveLinkData(null)}
       />
 
-      <div className="font-mono text-black min-h-full flex flex-col gap-4 sm:gap-6 p-3 sm:p-4 md:p-6 overflow-y-auto overflow-x-hidden">
+      <div className="font-mono text-black min-h-full flex flex-col gap-4 sm:gap-5 xl:gap-6 p-3 sm:p-4 lg:p-4 xl:p-6 overflow-y-auto overflow-x-hidden">
         {/* HEADER */}
         <div className="flex flex-col gap-5">
-          <div className="flex items-start gap-4 md:gap-6">
+          <div className="flex items-start gap-4 lg:gap-5 xl:gap-6">
             <div className="shrink-0 relative">
-              <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 rounded-lg overflow-hidden border border-black/10 bg-white/30">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-22 lg:h-22 xl:w-28 xl:h-28 rounded-lg overflow-hidden border border-black/10 bg-white/30">
                 <picture>
                   <source srcSet="/me-nb.webp" type="image/webp" />
                   <img
@@ -91,15 +91,15 @@ export default function AboutApp() {
 
             {/* Name & Role */}
             <div className="flex-1 min-w-0 flex flex-col justify-center h-full pt-1">
-              <p className="text-xs md:text-sm uppercase tracking-widest text-black/60 mb-1 md:mb-2">
+              <p className="text-xs lg:text-[13px] xl:text-sm uppercase tracking-widest text-black/60 mb-1 lg:mb-1.5 xl:mb-2">
                 › profile.exe
               </p>
-              <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-black uppercase tracking-tight leading-none text-black/90">
+              <h1 className="text-lg sm:text-xl lg:text-2xl xl:text-4xl font-black uppercase tracking-tight leading-none text-black/90">
                 {text}
                 <span className="inline-block w-[2px] h-[1em] bg-black/60 ml-1 align-middle animate-pulse" />
               </h1>
-              <div className="mt-2 md:mt-3 flex flex-wrap items-center gap-1.5 sm:gap-2">
-                <span className="inline-block text-xs sm:text-sm md:text-base font-bold uppercase tracking-widest bg-black/80 text-white px-2.5 py-1 sm:px-3 md:px-4 md:py-1.5 rounded-md">
+              <div className="mt-2 lg:mt-2.5 xl:mt-3 flex flex-wrap items-center gap-1.5 sm:gap-2">
+                <span className="inline-block text-xs sm:text-sm lg:text-sm xl:text-base font-bold uppercase tracking-widest bg-black/80 text-white px-2.5 py-1 sm:px-3 lg:px-3 xl:px-4 lg:py-1.5 rounded-md">
                   Full-Stack Developer
                 </span>
               </div>
@@ -143,13 +143,13 @@ export default function AboutApp() {
         <div className="border-t border-black/10" />
 
         {/* MAIN GRID */}
-        <div className="flex flex-wrap gap-6 md:gap-8 flex-1">
+        <div className="flex flex-wrap gap-5 lg:gap-6 xl:gap-8 flex-1">
           {/* LEFT */}
-          <div className="flex flex-col gap-6 md:gap-8 flex-[1_1_350px]">
+          <div className="flex flex-col gap-5 lg:gap-6 xl:gap-8 flex-[1_1_320px] xl:flex-[1_1_350px]">
             {/* Bio text */}
             <div>
               <Label>Introduction</Label>
-              <p className="text-sm md:text-base leading-relaxed text-black/80">
+              <p className="text-sm lg:text-[15px] xl:text-base leading-relaxed text-black/80">
                 Junior Full-Stack Developer with hands-on experience building
                 responsive web apps in React, JavaScript, and Tailwind, with
                 additional work in Express, databases, and full-stack project
@@ -163,17 +163,17 @@ export default function AboutApp() {
               <div className="space-y-4">
                 <div className="group">
                   <div className="flex items-start justify-between gap-2 mb-1">
-                    <h3 className="text-sm md:text-base font-bold text-black/90">
+                    <h3 className="text-sm lg:text-[15px] xl:text-base font-bold text-black/90">
                       Full-Stack Developer
                     </h3>
-                    <span className="text-xs md:text-sm text-black/50 whitespace-nowrap mt-0.5">
+                    <span className="text-xs lg:text-[13px] xl:text-sm text-black/50 whitespace-nowrap mt-0.5">
                       2024
                     </span>
                   </div>
-                  <p className="text-xs md:text-sm font-medium text-black/60 mb-2 uppercase tracking-wide">
+                  <p className="text-xs lg:text-[13px] xl:text-sm font-medium text-black/60 mb-2 uppercase tracking-wide">
                     QUT Capstone Project · Guinea Group
                   </p>
-                  <p className="text-sm md:text-base leading-relaxed text-black/80">
+                  <p className="text-sm lg:text-[15px] xl:text-base leading-relaxed text-black/80">
                     Worked in a four-person capstone team to build a video and
                     survey platform for research, contributing across React and
                     Tailwind frontend work, plus Express and MySQL features for
@@ -182,10 +182,10 @@ export default function AboutApp() {
                 </div>
 
                 <div className="border-t border-black/5 pt-4 group">
-                  <h3 className="text-sm md:text-base font-bold text-black/90 mb-2">
+                  <h3 className="text-sm lg:text-[15px] xl:text-base font-bold text-black/90 mb-2">
                     Current Focus
                   </h3>
-                  <p className="text-sm md:text-base leading-relaxed text-black/80">
+                  <p className="text-sm lg:text-[15px] xl:text-base leading-relaxed text-black/80">
                     Building stronger full-stack projects, improving frontend
                     polish and UX quality, and getting more confident with
                     backend development, APIs, and real-world product workflows.
@@ -196,7 +196,7 @@ export default function AboutApp() {
           </div>
 
           {/* RIGHT */}
-          <div className="flex flex-col gap-6 md:gap-8 flex-[1_1_350px]">
+          <div className="flex flex-col gap-5 lg:gap-6 xl:gap-8 flex-[1_1_320px] xl:flex-[1_1_350px]">
             {/* Stack */}
             <div>
               <Label>Core Stack</Label>
@@ -204,7 +204,7 @@ export default function AboutApp() {
                 {STACK.map((tech) => (
                   <div
                     key={tech}
-                    className="flex items-center gap-2 md:gap-3 text-sm md:text-base text-black/80"
+                    className="flex items-center gap-2 lg:gap-2.5 xl:gap-3 text-sm lg:text-[15px] xl:text-base text-black/80"
                   >
                     <span className="w-1.5 h-1.5 rounded-full bg-black/40 shrink-0" />
                     {tech}
@@ -223,10 +223,10 @@ export default function AboutApp() {
                   icon: Download,
                 })
               }
-              className="flex items-center justify-between px-4 md:px-5 py-3 md:py-4 bg-black/5 border border-black/10 rounded hover:bg-black/10 hover:border-black/20 transition-all group"
+              className="flex items-center justify-between px-4 lg:px-4.5 xl:px-5 py-3 lg:py-3.5 xl:py-4 bg-black/5 border border-black/10 rounded hover:bg-black/10 hover:border-black/20 transition-all group"
             >
               <div>
-                <div className="text-sm md:text-base font-bold uppercase tracking-wider text-black/90">
+                <div className="text-sm lg:text-[15px] xl:text-base font-bold uppercase tracking-wider text-black/90">
                   Download CV
                 </div>
                 <div className="text-xs text-black/50 mt-1 uppercase tracking-widest">
@@ -253,7 +253,7 @@ export default function AboutApp() {
                       icon: Github,
                     })
                   }
-                  className="flex flex-[1_1_200px] items-center gap-3 p-3 border border-black/10 rounded hover:border-black/30 hover:bg-black/5 transition-all group min-w-0"
+                  className="flex flex-[1_1_180px] xl:flex-[1_1_200px] items-center gap-3 p-3 lg:p-2.5 xl:p-3 border border-black/10 rounded hover:border-black/30 hover:bg-black/5 transition-all group min-w-0"
                 >
                   <div className="p-1.5 bg-black/5 rounded group-hover:bg-[#0077b5]/10 transition-colors shrink-0">
                     <Github

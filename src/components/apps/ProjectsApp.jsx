@@ -21,7 +21,7 @@ export default function ProjectsApp() {
         onClose={() => setActiveLinkData(null)}
       />
 
-      <div className="font-mono text-black min-h-full flex flex-col p-3 sm:p-4 md:p-6 overflow-y-auto overflow-x-hidden">
+      <div className="font-mono text-black min-h-full flex flex-col p-3 sm:p-4 lg:p-4 xl:p-6 overflow-y-auto overflow-x-hidden">
         {/* HEADER */}
         <div className="flex flex-col gap-3 sm:gap-4 mb-5 sm:mb-6">
           <div className="flex items-center gap-2 sm:gap-2.5">
@@ -33,10 +33,10 @@ export default function ProjectsApp() {
               />
             </div>
             <div className="flex flex-col">
-              <p className="text-[9px] sm:text-[10px] md:text-xs uppercase tracking-widest text-black/60">
+              <p className="text-[9px] sm:text-[10px] lg:text-[11px] xl:text-xs uppercase tracking-widest text-black/60">
                 › projects.dir
               </p>
-              <h1 className="text-base sm:text-lg md:text-xl lg:text-2xl font-black uppercase tracking-tight leading-none text-black/90 mt-0.5 sm:mt-1">
+              <h1 className="text-base sm:text-lg lg:text-xl xl:text-2xl font-black uppercase tracking-tight leading-none text-black/90 mt-0.5 sm:mt-1">
                 Project Archive
               </h1>
             </div>
@@ -45,7 +45,7 @@ export default function ProjectsApp() {
 
         <div className="border-t border-black/10 mb-5 sm:mb-8" />
 
-        <div className="grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-4 sm:gap-5 md:gap-6 flex-1 w-full items-start pb-4">
+        <div className="grid grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(250px,1fr))] xl:grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-4 sm:gap-5 lg:gap-5 xl:gap-6 flex-1 w-full items-start pb-4">
           {allProjects.map((project, idx) => (
             <motion.div
               key={project.title}
@@ -56,7 +56,7 @@ export default function ProjectsApp() {
                 duration: 0.5,
                 ease: "easeOut",
               }}
-              className={`flex flex-col h-full p-3.5 sm:p-4 md:p-5 rounded-lg border border-black/10 transition-colors group
+              className={`flex flex-col h-full p-3.5 sm:p-4 lg:p-4 xl:p-5 rounded-lg border border-black/10 transition-colors group
               ${
                 project.isLocked
                   ? "bg-black/[0.02] border-dashed opacity-70"
@@ -104,7 +104,7 @@ export default function ProjectsApp() {
               <div className="flex flex-col flex-1">
                 {/* Title */}
                 <div className="flex items-start justify-between gap-2 mb-2 sm:mb-3">
-                  <h3 className="text-sm sm:text-base md:text-lg font-black uppercase tracking-tight text-black/90 truncate">
+                  <h3 className="text-sm sm:text-base lg:text-[17px] xl:text-lg font-black uppercase tracking-tight text-black/90 truncate">
                     {project.title}
                   </h3>
                   <span
@@ -121,7 +121,7 @@ export default function ProjectsApp() {
                 </div>
 
                 {/* Description */}
-                <p className="text-[11px] sm:text-xs leading-relaxed text-black/70 mb-4 sm:mb-5 line-clamp-3">
+                <p className="text-[11px] sm:text-xs lg:text-[12px] leading-relaxed text-black/70 mb-4 sm:mb-5 line-clamp-3">
                   {project.desc}
                 </p>
 

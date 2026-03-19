@@ -11,6 +11,9 @@ import LinkConfirmationModal from "../LinkConfirmationModal";
 import { Github, Linkedin } from "lucide-react";
 import BackgroundLayers from "../BackgroundLayers";
 
+const formatTabletTitle = (title = "") =>
+  title.replace(/_/g, " ");
+
 const TabletIcon = ({ title, icon, onClick }) => {
   const isLucideIcon = typeof icon !== "string";
 
@@ -34,8 +37,8 @@ const TabletIcon = ({ title, icon, onClick }) => {
           />
         )}
       </div>
-      <span className="font-mono font-medium text-xs text-black/70 tracking-widest uppercase text-center leading-tight bg-white/40 backdrop-blur-md px-3 py-1 rounded-md border border-black/10">
-        {title}
+      <span className="font-mono font-medium text-xs text-black/70 tracking-[0.14em] uppercase text-center leading-tight bg-white/40 backdrop-blur-md px-3 py-1 rounded-md border border-black/10 whitespace-normal break-words">
+        {formatTabletTitle(title)}
       </span>
     </button>
   );
@@ -43,6 +46,9 @@ const TabletIcon = ({ title, icon, onClick }) => {
 
 export default function TabletLayout({
   apps,
+  appOrder,
+  navDirection,
+  navigationMode,
   openWindows,
   openWindow,
   closeWindow,
@@ -89,7 +95,7 @@ export default function TabletLayout({
           </div>
 
           <div className="grid grid-cols-4 gap-x-6 gap-y-10 w-full mt-5 px-2">
-            {Object.values(apps).map((app) => (
+            {appOrder.map((id) => apps[id]).filter(Boolean).map((app) => (
               <div key={app.id} className="flex justify-center w-full">
                 <TabletIcon
                   title={app.title}
@@ -116,29 +122,47 @@ export default function TabletLayout({
       <div className="absolute bottom-0 left-0 right-0">
         <StatusBar
           apps={apps}
+          appOrder={appOrder}
           openWindows={openWindows}
           activeWindowId={
             openWindows.length > 0
               ? openWindows[openWindows.length - 1].id
               : null
           }
+          onOpenApp={openWindow}
           onFocusWindow={focusWindow}
           onMinimizeWindow={minimizeWindow}
           isTablet={true}
         />
       </div>
 
-      {/* 5. WINDOWS LAYER */}
+      {/* 5. FOOTER BRANDING */}
+      <div className="absolute bottom-6 lg:bottom-7 xl:bottom-8 right-4 lg:right-6 xl:right-10 z-10 text-right opacity-50 mix-blend-multiply pointer-events-none select-none origin-bottom-right">
+        <div className="text-2xl lg:text-3xl xl:text-4xl font-black tracking-tighter text-black leading-none drop-shadow-sm">
+          KAUNG_OS
+        </div>
+        <div className="text-[9px] lg:text-[10px] xl:text-xs font-bold tracking-[0.3em] uppercase mt-1 text-gray-800">
+          v2.0 • SYSTEM READY
+        </div>
+      </div>
+
+      {/* 6. WINDOWS LAYER */}
       <div className="absolute inset-0 z-50 pointer-events-none">
         <AnimatePresence>
           {openWindows.map((win) => {
             if (win.minimized) return null;
             const AppComp = apps[win.id].component;
             return (
-              <div key={win.id} className="pointer-events-auto relative">
+              <div key="active-window" className="pointer-events-auto relative">
                 <Window
                   id={win.id}
                   title={win.title}
+                  apps={apps}
+                  currentAppId={win.id}
+                  appOrder={appOrder}
+                  navDirection={navDirection}
+                  navigationMode={navigationMode}
+                  onNavigate={openWindow}
                   defaultPos={{ x: 0, y: 0 }}
                   zIndex={win.zIndex}
                   onClose={() => closeWindow(win.id)}
@@ -154,7 +178,7 @@ export default function TabletLayout({
         </AnimatePresence>
       </div>
 
-      {/* 6. LINK CONFIRMATION MODAL */}
+      {/* 7. LINK CONFIRMATION MODAL */}
       <AnimatePresence>
         {pendingLink && (
           <div className="pointer-events-auto relative z-[99999]">

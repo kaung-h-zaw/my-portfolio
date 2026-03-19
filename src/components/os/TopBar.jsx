@@ -20,8 +20,8 @@ export default function TopBar() {
   return (
     <div className="h-9 sm:h-10 os-panel border-b flex items-center justify-between px-4 fixed top-0 left-0 right-0 z-[9999] select-none">
       {/* LEFT */}
-      <div className="flex items-center gap-6">
-        <div className="flex items-center gap-2 font-black text-base tracking-tight cursor-pointer hover:scale-105 transition-transform text-black/70">
+      <div className="flex items-center gap-3 xl:gap-6 min-w-0">
+        <div className="flex items-center gap-2 font-black text-sm xl:text-base tracking-tight cursor-pointer hover:scale-105 transition-transform text-black/70 min-w-0">
           <picture>
             <source srcSet="/me2.webp" type="image/webp" />
             <img
@@ -32,10 +32,10 @@ export default function TopBar() {
             />
           </picture>
 
-          <span>KAUNG_SPACE</span>
+          <span className="truncate">KAUNG_SPACE</span>
         </div>
 
-        <div className="hidden md:flex items-center gap-1">
+        <div className="hidden xl:flex items-center gap-1">
           <button className="px-2.5 py-1 text-xs font-medium hover:bg-black/5 rounded-md transition-colors cursor-pointer uppercase tracking-wider text-black/50 hover:text-black/80">
             File
           </button>

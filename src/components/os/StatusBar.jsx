@@ -3,13 +3,17 @@ import LinkConfirmationModal from "./LinkConfirmationModal";
 import { Github, Linkedin, Instagram } from "lucide-react";
 
 export default function StatusBar({
+  apps = {},
+  appOrder = [],
   openWindows,
   activeWindowId,
+  onOpenApp,
   onFocusWindow,
   onMinimizeWindow,
   isTablet = false,
 }) {
   const [activeLinkData, setActiveLinkData] = useState(null);
+  const openWindowIds = new Set(openWindows.map((win) => win.id));
 
   return (
     <>
@@ -20,67 +24,87 @@ export default function StatusBar({
 
       <div className="fixed bottom-2 left-1/2 -translate-x-1/2 z-[9999] flex items-end select-none w-max max-w-[95vw]">
         <div className="flex items-center os-panel rounded-2xl overflow-x-auto no-scrollbar px-4 py-3 gap-2">
-          {/* 1. OPEN APPS */}
-          {openWindows.length === 0 ? (
-            <div className="w-10 h-10 flex items-center justify-center">
-              <div className="w-1.5 h-1.5 bg-black/30 rounded-full animate-pulse"></div>
-            </div>
-          ) : (
-            openWindows.map((win) => {
-              const isActive = win.id === activeWindowId;
-              const Icon = win.icon;
-              const isLucideIcon = typeof Icon !== "string";
+          {/* 1. APPS */}
+          {appOrder.map((appId) => {
+            const app = apps[appId];
+            if (!app) return null;
 
-              return (
-                <button
-                  key={win.id}
-                  onClick={() =>
-                    isActive ? onMinimizeWindow(win.id) : onFocusWindow(win.id)
+            const isActive = appId === activeWindowId;
+            const isOpen = openWindowIds.has(appId);
+            const Icon = app.icon;
+            const isLucideIcon = typeof Icon !== "string";
+
+            return (
+              <button
+                key={app.id}
+                onClick={() => {
+                  if (isActive) {
+                    onMinimizeWindow(app.id);
+                    return;
                   }
-                  type="button"
-                  aria-label={
-                    isActive
-                      ? `Minimize ${win.title} window`
-                      : `Focus ${win.title} window`
+
+                  if (isOpen) {
+                    onFocusWindow(app.id);
+                    return;
                   }
-                  className={`
-                    relative shrink-0 w-11 h-11 flex items-center justify-center rounded-xl transition-all
-                    ${
+
+                  onOpenApp?.(app.id);
+                }}
+                type="button"
+                aria-label={
+                  isActive
+                    ? `Minimize ${app.title} window`
+                    : isOpen
+                      ? `Focus ${app.title} window`
+                      : `Open ${app.title} window`
+                }
+                title={app.title}
+                className={`relative shrink-0 w-12 h-12 flex items-center justify-center rounded-xl transition-all ${
+                  isActive
+                    ? "bg-black/5 scale-105"
+                    : "bg-transparent hover:bg-black/5 hover:scale-105"
+                }`}
+              >
+                {isLucideIcon ? (
+                  <Icon
+                    size={24}
+                    strokeWidth={2}
+                    className={`transition-all ${
                       isActive
-                        ? "bg-black/5 scale-105"
-                        : "bg-transparent hover:bg-black/5 hover:scale-105"
-                    }
-                  `}
-                >
-                  {isLucideIcon ? (
-                    <Icon
-                      size={28}
-                      strokeWidth={2}
-                      className={`transition-all ${
-                        isActive
-                          ? "text-black/80"
+                        ? "text-black/80"
+                        : isOpen
+                          ? "text-black/55"
                           : "text-black/30 group-hover:text-black/60"
-                      }`}
-                    />
-                  ) : (
-                    <img
-                      src={Icon}
-                      alt={win.title}
-                      className={`w-7 h-7 object-contain transition-all ${
-                        isActive ? "opacity-80" : "opacity-30 hover:opacity-60"
-                      }`}
-                    />
-                  )}
-                  {win.minimized && (
-                    <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2.5 h-0.5 rounded-full bg-black/40" />
-                  )}
-                </button>
-              );
-            })
-          )}
+                    }`}
+                  />
+                ) : (
+                  <img
+                    src={Icon}
+                    alt={app.title}
+                    className={`w-6 h-6 object-contain transition-all ${
+                      isActive
+                        ? "opacity-80"
+                      : isOpen
+                          ? "opacity-55"
+                          : "opacity-30 hover:opacity-60"
+                    }`}
+                  />
+                )}
+
+                {isOpen && (
+                  <span
+                    className={`absolute -bottom-1 left-1/2 -translate-x-1/2 rounded-full ${
+                      isActive ? "w-3 h-0.5 bg-black/60" : "w-2.5 h-0.5 bg-black/40"
+                    }`}
+                  />
+                )}
+
+              </button>
+            );
+          })}
 
           {/* DIVIDER */}
-          {openWindows.length > 0 && (
+          {appOrder.length > 0 && (
             <div className="h-6 w-[1px] bg-black/10 mx-1 shrink-0"></div>
           )}
 

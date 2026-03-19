@@ -23,13 +23,26 @@ export default function OSContainer() {
   const [openWindows, setOpenWindows] = useState([]);
   const [activeWindowId, setActiveWindowId] = useState(null);
   const [zTop, setZTop] = useState(20);
+  const [navDirection, setNavDirection] = useState(0);
+  const [navigationMode, setNavigationMode] = useState("open");
+  const appOrder = [
+    "about",
+    "projects",
+    "experience",
+    "skills",
+    "education",
+    "contact",
+  ];
 
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
+      const height = window.innerHeight;
+      const isLandscape = width > height;
+
       if (width < 640) {
         setDeviceType("phone");
-      } else if (width <= 1024) {
+      } else if (width <= 1024 && !isLandscape) {
         setDeviceType("tablet");
       } else {
         setDeviceType("desktop");
@@ -89,7 +102,25 @@ export default function OSContainer() {
     [],
   );
 
-  const openWindow = (id) => {
+  const openWindow = (id, options = {}) => {
+    const { source = "open" } = options;
+    const currentWindowId = openWindows[0]?.id || activeWindowId;
+    const currentIndex = appOrder.indexOf(currentWindowId);
+    const nextIndex = appOrder.indexOf(id);
+
+    if (
+      source === "arrow" &&
+      currentIndex >= 0 &&
+      nextIndex >= 0 &&
+      currentIndex !== nextIndex
+    ) {
+      setNavDirection(nextIndex > currentIndex ? 1 : -1);
+      setNavigationMode("swap");
+    } else {
+      setNavDirection(0);
+      setNavigationMode("open");
+    }
+
     if (openWindows.find((w) => w.id === id)) {
       focusWindow(id);
       return;
@@ -106,8 +137,7 @@ export default function OSContainer() {
 
     setZTop((z) => {
       const nextZ = z + 1;
-      setOpenWindows((prev) => [
-        ...prev,
+      setOpenWindows([
         {
           id,
           title: app.title,
@@ -149,6 +179,9 @@ export default function OSContainer() {
 
   const layoutProps = {
     apps,
+    appOrder,
+    navDirection,
+    navigationMode,
     openWindows,
     activeWindowId,
     openWindow,

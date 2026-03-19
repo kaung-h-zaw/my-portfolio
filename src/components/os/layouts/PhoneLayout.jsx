@@ -79,6 +79,9 @@ const MobileLinkIcon = ({ title, icon, onClick }) => {
 
 export default function PhoneLayout({
   apps,
+  appOrder,
+  navDirection,
+  navigationMode,
   openWindows,
   openWindow,
   closeWindow,
@@ -86,15 +89,6 @@ export default function PhoneLayout({
   const activeApp =
     openWindows.length > 0 ? openWindows[openWindows.length - 1] : null;
   const [pendingLink, setPendingLink] = useState(null);
-  const appOrder = [
-    "about",
-    "experience",
-    "education",
-    "skills",
-    "projects",
-    "contact",
-  ];
-
   const externalLinks = [
     {
       title: "GitHub",
@@ -191,6 +185,12 @@ export default function PhoneLayout({
           <Window
             id={activeApp.id}
             title={activeApp.title}
+            apps={apps}
+            currentAppId={activeApp.id}
+            appOrder={appOrder}
+            navDirection={navDirection}
+            navigationMode={navigationMode}
+            onNavigate={openWindow}
             zIndex={50}
             onClose={() => closeWindow(activeApp.id)}
             isMobile={true}

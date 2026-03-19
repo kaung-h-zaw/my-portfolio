@@ -52,7 +52,7 @@ export default function EducationApp() {
         onClose={() => setActiveLinkData(null)}
       />
 
-      <div className="font-mono text-black min-h-full flex flex-col gap-6 p-4 md:p-6 overflow-y-auto overflow-x-hidden">
+      <div className="font-mono text-black min-h-full flex flex-col gap-5 md:gap-6 xl:gap-6 p-3 md:p-4 lg:p-4 xl:p-6 overflow-y-auto overflow-x-hidden">
         {/* HEADER */}
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-2.5">
@@ -64,10 +64,10 @@ export default function EducationApp() {
               />
             </div>
             <div className="flex flex-col">
-              <p className="text-xs md:text-sm uppercase tracking-widest text-black/60">
+              <p className="text-xs md:text-[13px] lg:text-[13px] xl:text-sm uppercase tracking-widest text-black/60">
                 › education.log
               </p>
-              <h1 className="text-lg md:text-xl font-black uppercase tracking-tight leading-none text-black/90 mt-1">
+              <h1 className="text-lg md:text-xl lg:text-xl xl:text-2xl font-black uppercase tracking-tight leading-none text-black/90 mt-1">
                 Academic History
               </h1>
             </div>
@@ -77,9 +77,9 @@ export default function EducationApp() {
         <div className="border-t border-black/10" />
 
         {/* MAIN GRID */}
-        <div className="flex flex-wrap gap-6 md:gap-8 flex-1">
+        <div className="flex flex-wrap gap-5 md:gap-6 lg:gap-6 xl:gap-8 flex-1">
           {/* LEFT */}
-          <div className="flex flex-col gap-8 flex-[2_1_400px]">
+          <div className="flex flex-col gap-7 md:gap-8 lg:gap-8 flex-[2_1_360px] xl:flex-[2_1_400px]">
             {education.map((edu, idx) => (
               <div key={idx} className="relative pl-6 group">
                 <div className="absolute left-0 top-1.5 w-2.5 h-2.5 rounded-full bg-black/40 border-2 border-white/50 group-hover:bg-black/80 transition-colors" />
@@ -90,23 +90,23 @@ export default function EducationApp() {
                 {/* Content */}
                 <div className="flex flex-col gap-2">
                   {/* Period */}
-                  <span className="text-xs md:text-sm font-bold uppercase tracking-widest px-2.5 py-1 bg-black/80 text-white rounded w-fit">
+                  <span className="text-xs md:text-[13px] lg:text-[13px] xl:text-sm font-bold uppercase tracking-widest px-2.5 py-1 bg-black/80 text-white rounded w-fit">
                     {edu.period}
                   </span>
 
                   {/* Degree */}
-                  <h3 className="text-base md:text-lg font-black uppercase tracking-tight leading-tight text-black/90 mt-1">
+                  <h3 className="text-base md:text-[17px] lg:text-[17px] xl:text-lg font-black uppercase tracking-tight leading-tight text-black/90 mt-1">
                     {edu.degree}
                   </h3>
 
                   {/* School & Location */}
-                  <p className="text-xs md:text-sm text-black/60 font-semibold uppercase tracking-wide">
+                  <p className="text-xs md:text-[13px] lg:text-[13px] xl:text-sm text-black/60 font-semibold uppercase tracking-wide">
                     {edu.school} <span className="text-black/30 mx-1">·</span>{" "}
                     {edu.location}
                   </p>
 
                   {/* Description */}
-                  <p className="text-sm md:text-base leading-relaxed text-black/80 mt-1.5">
+                  <p className="text-sm md:text-[15px] lg:text-[15px] xl:text-base leading-relaxed text-black/80 mt-1.5">
                     {edu.description}
                   </p>
 
@@ -115,7 +115,7 @@ export default function EducationApp() {
                     {edu.skills.map((skill) => (
                       <span
                         key={skill}
-                        className="text-xs md:text-sm font-bold uppercase tracking-wide px-2 py-1 bg-black/5 text-black/70 rounded border border-black/5 hover:bg-black/10 hover:text-black/90 transition-colors"
+                        className="text-xs md:text-[13px] lg:text-[13px] xl:text-sm font-bold uppercase tracking-wide px-2 py-1 bg-black/5 text-black/70 rounded border border-black/5 hover:bg-black/10 hover:text-black/90 transition-colors"
                       >
                         {skill}
                       </span>
@@ -127,7 +127,7 @@ export default function EducationApp() {
           </div>
 
           {/* RIGHT */}
-          <div className="flex flex-col gap-6 md:gap-8 flex-[1_1_250px]">
+          <div className="flex flex-col gap-5 md:gap-6 lg:gap-6 xl:gap-8 flex-[1_1_230px] xl:flex-[1_1_250px]">
             {/* Certifications */}
             <div>
               <Label icon={<Award size={14} strokeWidth={2} />}>
@@ -138,13 +138,13 @@ export default function EducationApp() {
                 {certifications.map((cert, idx) => (
                   <div
                     key={idx}
-                    className="p-3.5 bg-black/5 rounded border border-black/10 hover:border-black/30 hover:bg-black/10 transition-all group relative overflow-hidden"
+                    className="p-3 md:p-3.5 lg:p-3.5 bg-black/5 rounded border border-black/10 hover:border-black/30 hover:bg-black/10 transition-all group relative overflow-hidden"
                   >
-                    <h4 className="text-xs md:text-sm font-bold uppercase leading-snug mb-2 text-black/90 pr-6">
+                    <h4 className="text-xs md:text-[13px] lg:text-[13px] xl:text-sm font-bold uppercase leading-snug mb-2 text-black/90 pr-6">
                       {cert.name}
                     </h4>
 
-                    <div className="flex justify-between items-center text-xs md:text-sm font-medium uppercase tracking-widest text-black/60 border-t border-black/10 pt-2.5">
+                    <div className="flex justify-between items-center text-xs md:text-[13px] lg:text-[13px] xl:text-sm font-medium uppercase tracking-widest text-black/60 border-t border-black/10 pt-2.5">
                       <span>{cert.issuer}</span>
                       <span>{cert.date}</span>
                     </div>
@@ -180,12 +180,12 @@ export default function EducationApp() {
                 {languages.map((lang, idx) => (
                   <div
                     key={idx}
-                    className="flex justify-between items-center px-3.5 py-3 bg-black/5 rounded border border-black/10 hover:border-black/30 hover:bg-black/10 transition-all"
+                    className="flex justify-between items-center px-3 md:px-3.5 lg:px-3.5 py-3 bg-black/5 rounded border border-black/10 hover:border-black/30 hover:bg-black/10 transition-all"
                   >
-                    <span className="text-xs md:text-sm font-bold uppercase text-black/90">
+                    <span className="text-xs md:text-[13px] lg:text-[13px] xl:text-sm font-bold uppercase text-black/90">
                       {lang.name}
                     </span>
-                    <span className="text-xs md:text-sm text-black/60 font-bold uppercase tracking-widest bg-white/50 px-2 py-0.5 rounded">
+                    <span className="text-xs md:text-[13px] lg:text-[13px] xl:text-sm text-black/60 font-bold uppercase tracking-widest bg-white/50 px-2 py-0.5 rounded">
                       {lang.level}
                     </span>
                   </div>
@@ -196,7 +196,7 @@ export default function EducationApp() {
         </div>
 
         {/* FOOTER */}
-        <div className="border-t border-black/10 pt-4 mt-auto text-xs md:text-sm uppercase tracking-widest text-black/40 flex justify-between items-center">
+        <div className="border-t border-black/10 pt-4 mt-auto text-xs md:text-[13px] lg:text-[13px] xl:text-sm uppercase tracking-widest text-black/40 flex justify-between items-center">
           <span>MM · AU</span>
           <span>2019 - 2024</span>
         </div>
@@ -207,9 +207,9 @@ export default function EducationApp() {
 
 function Label({ children, icon }) {
   return (
-    <div className="flex items-center gap-2 mb-3 md:mb-4 border-b border-black/10 pb-2">
+    <div className="flex items-center gap-2 mb-3 lg:mb-3.5 xl:mb-4 border-b border-black/10 pb-2">
       {icon && <span className="text-black/60">{icon}</span>}
-      <p className="text-sm md:text-base uppercase tracking-widest text-black/50 font-medium">
+      <p className="text-sm lg:text-[15px] xl:text-base uppercase tracking-widest text-black/50 font-medium">
         {children}
       </p>
     </div>
