@@ -22,13 +22,13 @@ async function visit(page) {
   await expect(page.getByRole("button", { name: "View Projects", exact: true })).toBeVisible();
 }
 
-test("boots as IMKAUNG and opens one About window", async ({ page }) => {
+test("boots as KAUNG OS and opens one About window", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByRole("heading", { name: "IMKAUNG", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "KAUNG OS", exact: true })).toBeVisible();
   await expect(page.getByText(/KAUNG_SPACE/)).toHaveCount(0);
   await expect(page.getByRole("button", { name: "View Projects", exact: true })).toBeVisible();
   await expect(page.getByRole("region", { name: / window$/ })).toHaveCount(1);
-  await expect(page.getByRole("region", { name: / window$/ }).getByText("IMKAUNG OS · v2.0", { exact: true })).toBeVisible();
+  await expect(page.getByRole("region", { name: / window$/ }).getByText("KAUNG OS · v2.0", { exact: true })).toBeVisible();
 });
 
 test("delayed app loading never blinks or overlaps the window", async ({ page }) => {
@@ -123,4 +123,18 @@ test("phone keeps a compact status bar and Home through rotation", async ({ page
     expect((await page.locator(".os-titlebar").boundingBox()).height).toBe(36);
     await expect(page.getByRole("region", { name: / window$/ })).toHaveCount(1);
   }
+});
+
+test("tech stack shows the requested languages and databases without hover", async ({ page }) => {
+  await visit(page);
+  await page.getByRole("button", { name: "View Projects", exact: true }).click();
+  await page.getByRole("button", { name: "Choose section, current: Projects", exact: true }).click();
+  await page.getByRole("region", { name: / window$/ }).getByRole("button", { name: /^Skills/ }).click();
+  await expect(page.getByRole("heading", { name: "Tech Stack", exact: true })).toBeVisible();
+  const frontend = page.getByRole("region", { name: "Frontend", exact: true });
+  for (const name of ["TypeScript", "Next.js"]) await expect(frontend.getByText(name, { exact: true })).toBeVisible();
+  const databases = page.getByRole("region", { name: "Databases", exact: true });
+  for (const name of ["MongoDB", "PostgreSQL", "MySQL", "SQLite"]) await expect(databases.getByText(name, { exact: true })).toBeVisible();
+  await expect(databases.getByRole("listitem")).toHaveCount(4);
+  expect(await page.locator(".os-content").evaluate((element) => element.scrollWidth <= element.clientWidth + 1)).toBe(true);
 });

@@ -86,21 +86,28 @@ export const PROJECTS_DATA = [
 
 export const SKILLS_DATA = {
   Frontend: [
-    { name: "React", size: "LIB" },
-    { name: "JavaScript", size: "ES6" },
-    { name: "Tailwind", size: "CSS" },
-    { name: "HTML5", size: "XML" },
-    { name: "Figma", size: "APP" },
+    { name: "React", type: "UI library" },
+    { name: "Next.js", type: "React framework" },
+    { name: "JavaScript", type: "Language" },
+    { name: "TypeScript", type: "Language" },
+    { name: "Tailwind CSS", type: "Styling" },
+    { name: "HTML5", type: "Markup" },
   ],
   Backend: [
-    { name: "Node.js", size: "ENV" },
-    { name: "Express", size: "FW" },
-    { name: "MongoDB", size: "DB" },
-    { name: "Firebase", size: "BAAS" },
+    { name: "Node.js", type: "Runtime" },
+    { name: "Express", type: "API framework" },
+    { name: "Firebase", type: "Backend service" },
+  ],
+  Databases: [
+    { name: "MongoDB", type: "Document database" },
+    { name: "PostgreSQL", type: "Relational database" },
+    { name: "MySQL", type: "Relational database" },
+    { name: "SQLite", type: "Embedded database" },
   ],
   Tools: [
-    { name: "Git", size: "VCS" },
-    { name: "GitHub", size: "HUB" },
-    { name: "Agile", size: "METH" },
+    { name: "Git", type: "Version control" },
+    { name: "GitHub", type: "Code collaboration" },
+    { name: "Figma", type: "Interface design" },
+    { name: "Agile", type: "Delivery method" },
   ],
 };

@@ -508,7 +508,7 @@ export default function Window({
             </div>
           </div>
           <footer className="flex h-6 shrink-0 items-center justify-between gap-2 border-t border-black/10 bg-white/25 px-3 text-[10px] text-black/65">
-            <span className="whitespace-nowrap font-medium">IMKAUNG OS · v2.0</span>
+            <span className="whitespace-nowrap font-medium">KAUNG OS · v2.0</span>
             <span className="truncate">{isMobile ? "Home shows all apps" : "Use the dock below to switch apps"}</span>
           </footer>
         </div>

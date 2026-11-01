@@ -136,7 +136,7 @@ export default function TabletLayout({
       {/* 5. FOOTER BRANDING */}
       <div className="absolute bottom-6 lg:bottom-7 xl:bottom-8 right-4 lg:right-6 xl:right-10 z-10 text-right opacity-50 mix-blend-multiply pointer-events-none select-none origin-bottom-right">
         <div className="text-2xl lg:text-3xl xl:text-4xl font-black tracking-tighter text-black leading-none drop-shadow-sm">
-          IMKAUNG OS
+          KAUNG OS
         </div>
         <div className="text-[9px] lg:text-[10px] xl:text-xs font-bold tracking-[0.3em] uppercase mt-1 text-gray-800">
           v2.0 • SYSTEM READY
