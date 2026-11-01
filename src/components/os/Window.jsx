@@ -41,7 +41,7 @@ export default function Window({
   const reducedMotion = useReducedMotion();
   const pickerRef = useRef(null);
   const searchInputRef = useRef(null);
-  const [isMaximized, setIsMaximized] = useState(isMobile);
+  const [isMaximized, setIsMaximized] = useState(true);
   const [position, setPosition] = useState(defaultPos);
   const [isPickerOpen, setIsPickerOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
