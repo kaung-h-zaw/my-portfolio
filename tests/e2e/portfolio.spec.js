@@ -187,3 +187,30 @@ test("contact form handles failed and successful submissions without sending rea
   await expect(page.getByRole("button", { name: "Send Message", exact: true })).toBeEnabled();
   expect(requests).toBe(2);
 });
+
+test("short laptop layouts keep actions reachable and restored windows stack columns", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "laptop", "Laptop layout regression coverage");
+  await visit(page);
+  for (const viewport of [{ width: 1440, height: 650 }, { width: 1366, height: 768 }, { width: 1280, height: 600 }]) {
+    await page.setViewportSize(viewport);
+    await openApp(page, "About_Me");
+    await expect(page.getByRole("button", { name: "View Projects", exact: true })).toBeInViewport({ ratio: 1 });
+    await expect(page.locator('.app-page a[download]')).toBeInViewport({ ratio: 1 });
+    expect(await page.locator(".app-page").evaluate((e) => e.getBoundingClientRect().width)).toBeLessThanOrEqual(1160);
+    await openApp(page, "Contact");
+    const email = await page.locator('.app-page a[href^="mailto:"]').boundingBox();
+    const copy = await page.getByRole("button", { name: "Copy email address", exact: true }).boundingBox();
+    expect(copy.y).toBeGreaterThanOrEqual(email.y + email.height);
+    expect(await page.locator(".os-content").evaluate((e) => e.scrollWidth <= e.clientWidth + 1)).toBe(true);
+    const submit = page.getByRole("button", { name: "Send Message", exact: true });
+    await submit.scrollIntoViewIfNeeded();
+    await expect(submit).toBeInViewport({ ratio: 1 });
+  }
+  await page.getByRole("button", { name: "Restore window", exact: true }).click();
+  for (const app of ["About_Me", "Projects", "Experience", "Skills", "Education", "Contact"]) {
+    await openApp(page, app);
+    expect(await page.locator(".os-content").evaluate((e) => e.scrollWidth <= e.clientWidth + 1)).toBe(true);
+    const grid = page.locator('.app-split, .app-grid-two, .app-experience-grid').first();
+    expect(await grid.evaluate((e) => getComputedStyle(e).gridTemplateColumns.split(' ').length)).toBe(1);
+  }
+});

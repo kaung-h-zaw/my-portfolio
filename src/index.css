@@ -45,6 +45,7 @@ a {
 }
 
 .os-content {
+  container: app-window / inline-size;
   overscroll-behavior: contain;
   scrollbar-gutter: stable;
   scrollbar-width: thin;
@@ -77,7 +78,7 @@ a {
 }
 
 @layer components {
-  .app-page { @apply font-mono text-black min-h-full flex flex-col gap-5 p-3 sm:p-4 xl:p-6; }
+  .app-page { @apply w-full max-w-[1200px] mx-auto font-mono text-black min-h-full flex flex-col gap-5 p-3 sm:p-4 xl:p-6; }
   .app-panel { @apply rounded-xl border border-black/15 bg-white/20 p-4 sm:p-5; }
   .app-tile { @apply rounded-lg border border-black/10 bg-white/20 p-3; }
   .app-eyebrow { @apply text-xs uppercase tracking-widest text-black/65; }
@@ -87,4 +88,44 @@ a {
   .app-action { @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-black px-4 py-2.5 text-sm font-bold text-white transition-colors hover:bg-black/80 disabled:opacity-50 disabled:cursor-not-allowed; }
   .app-action-secondary { @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-black/20 bg-white/20 px-4 py-2.5 text-sm font-medium text-black/85 transition-colors hover:bg-white/40 hover:border-black/30; }
   .app-field { @apply w-full rounded-lg border border-black/20 bg-white/25 px-3 py-3 font-sans text-base text-black placeholder:text-black/40 transition-colors focus:bg-white/50; }
+}
+
+/* Columns follow the app window, including when a desktop window is restored. */
+.app-split, .app-grid-two, .app-experience-grid, .app-detail-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+}
+.app-skill-list, .app-form-grid, .app-social-grid { grid-template-columns: minmax(0, 1fr); }
+.app-detail-sidebar-links { display: none; }
+@container app-window (min-width: 600px) {
+  .app-skill-list, .app-form-grid, .app-social-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@container app-window (min-width: 900px) {
+  .app-split { grid-template-columns: minmax(0, 1.5fr) minmax(280px, 1fr); }
+  .app-grid-two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .app-experience-grid { grid-template-columns: 220px minmax(0, 1fr); }
+  .app-detail-grid { grid-template-columns: minmax(0, 1fr) 240px; gap: 1.5rem; }
+  .app-detail-mobile-links { display: none; }
+  .app-detail-sidebar-links { display: block; }
+  .app-detail-sidebar { position: sticky; top: 0; }
+}
+.app-project-card { container: project-card / inline-size; }
+@container project-card (min-width: 480px) {
+  .app-project-summary { grid-template-columns: minmax(0, 1fr) 140px; }
+  .app-project-summary .app-project-image { order: 1; }
+}
+/* Laptop browser chrome leaves less height: reduce decoration, keep readable text
+   and 44px controls, and leave scrolling inside the app above the OS dock. */
+@media (min-width: 1025px) and (max-height: 800px) {
+  .app-page { max-width: 1160px; padding: 12px 16px; gap: 14px; }
+  .app-page .app-header { padding-bottom: 12px; }
+  .app-panel { padding: 16px; }
+  .app-page .mb-5 { margin-bottom: 16px; }
+  .app-page .mb-4 { margin-bottom: 12px; }
+  .app-page .mt-4 { margin-top: 12px; }
+  .app-page .space-y-5 > :not([hidden]) ~ :not([hidden]) { margin-top: 16px; }
+  .app-page .app-profile-image { height: 64px; width: 64px; }
+  .app-field { padding-top: 10px; padding-bottom: 10px; }
+  .app-page .app-body { line-height: 1.5; }
 }

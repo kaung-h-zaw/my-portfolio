@@ -52,7 +52,7 @@ export default function EducationApp() {
       <div className="app-page">
         <AppHeader icon={GraduationCap} file="education.log" title="Academic History" badge={`${education.length} qualifications`} />
         <p className="app-body">Education, certifications, and languages.</p>
-        <div className="grid gap-4 sm:gap-5 lg:grid-cols-[minmax(0,1.5fr)_minmax(260px,1fr)]">
+        <div className="app-split">
           <div className="space-y-4 sm:space-y-5">
             {education.map((item) => (
               <article key={item.degree} className="app-panel">

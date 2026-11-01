@@ -37,9 +37,9 @@ export default function ProjectsApp() {
           <div className="app-panel mb-5">
             <AppHeader icon={FolderOpen} file={`projects.dir / ${selected.category}`} title={selected.title} badge={selected.date} focusable />
             <p className="app-body mt-4 max-w-3xl">{selected.desc}</p>
-            <div className="lg:hidden mt-4"><ProjectLinks project={selected} /></div>
+            <div className="app-detail-mobile-links mt-4"><ProjectLinks project={selected} /></div>
           </div>
-          <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_240px]">
+          <div className="app-detail-grid">
             <div className="space-y-6">
               <section className="app-panel" aria-labelledby="project-purpose">
                 <SectionTitle id="project-purpose">The project</SectionTitle>
@@ -92,7 +92,7 @@ export default function ProjectsApp() {
                 </section>
               )}
             </div>
-            <aside className="app-panel space-y-5 self-start lg:sticky lg:top-0">
+            <aside className="app-panel app-detail-sidebar space-y-5 self-start">
               <dl className="space-y-4 text-sm">
                 {[["Type", selected.category], ["Date", selected.date], ["Role", selected.role], ["Team", selected.team], ["Context", selected.context]].filter(([, value]) => value).map(([label, value]) => (
                   <div key={label}>
@@ -105,7 +105,7 @@ export default function ProjectsApp() {
                 <SectionTitle>Technologies</SectionTitle>
                 <TechList project={selected} />
               </div>
-              <div className="hidden lg:block"><ProjectLinks project={selected} /></div>
+              <div className="app-detail-sidebar-links"><ProjectLinks project={selected} /></div>
             </aside>
           </div>
         </article>
@@ -113,10 +113,10 @@ export default function ProjectsApp() {
         <>
           <AppHeader icon={FolderOpen} file="projects.dir" title="Project Archive" badge={`${PROJECTS_DATA.length} projects`} />
           <p className="app-body max-w-2xl">Explore the apps, their features, and the technical decisions behind them.</p>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5 items-stretch">
+          <div className="app-grid-two items-stretch">
             {PROJECTS_DATA.map((project) => (
               <article key={project.id} aria-labelledby={`project-${project.id}`}
-                className={`app-panel flex flex-col ${project.featured ? "border-black/30 bg-white/30" : ""}`}>
+                className={`app-panel app-project-card flex flex-col ${project.featured ? "border-black/30 bg-white/30" : ""}`}>
                 <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
                   <span className={project.featured ? "rounded-full bg-black px-3 py-1.5 text-xs font-medium text-white" : "app-badge"}>
                     {project.featured ? "Featured · " : ""}{project.category}
@@ -124,10 +124,10 @@ export default function ProjectsApp() {
                   <span className="text-xs text-black/65">{project.date}</span>
                 </div>
                 <h2 id={`project-${project.id}`} className="text-xl font-bold leading-snug mb-3">{project.title}</h2>
-                <div className={`grid gap-4 mb-4 ${project.image ? "sm:grid-cols-[minmax(0,1fr)_160px]" : ""}`}>
+                <div className={`grid gap-4 mb-4 ${project.image ? "app-project-summary" : ""}`}>
                   <p className="app-body">{project.desc}</p>
                   {project.image && <img src={project.image} alt={`${project.title} application screenshot`} loading="lazy" width="1440" height="900"
-                    className="order-first sm:order-last w-full aspect-[16/10] object-cover object-top rounded-lg border border-black/15 bg-white/20" />}
+                    className="order-first app-project-image w-full aspect-[16/10] object-cover object-top rounded-lg border border-black/15 bg-white/20" />}
                 </div>
                 {project.team && <p className="text-xs text-black/65 mb-4">{project.team}</p>}
                 <ul className="list-disc pl-5 space-y-1 font-sans text-sm leading-relaxed text-black/75 mb-4">

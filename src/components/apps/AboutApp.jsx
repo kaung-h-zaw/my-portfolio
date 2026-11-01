@@ -26,13 +26,13 @@ export default function AboutApp({ onOpenApp }) {
   return (
     <div className="app-page">
       <AppHeader icon={User} file="profile.exe" title="Kaung Htet Zaw" badge="Open to junior roles" />
-      <div className="grid gap-4 sm:gap-5 lg:grid-cols-[minmax(0,1.6fr)_minmax(260px,1fr)]">
+      <div className="app-split app-about-grid">
         <section className="app-panel">
           <div className="flex items-center gap-3 sm:gap-4 mb-5">
             <picture className="shrink-0">
               <source srcSet="/me-nb.webp" type="image/webp" />
               <img src="/me-nb.png" alt="Kaung Htet Zaw profile illustration" width="88" height="88"
-                className="h-14 w-14 sm:h-24 sm:w-24 rounded-xl border border-black/15 bg-white/25 object-cover grayscale" />
+                className="app-profile-image h-14 w-14 sm:h-24 sm:w-24 rounded-xl border border-black/15 bg-white/25 object-cover grayscale" />
             </picture>
             <div>
               <p className="app-eyebrow mb-2">Hello, I’m Kaung</p>
@@ -83,7 +83,7 @@ export default function AboutApp({ onOpenApp }) {
           </section>
         </div>
       </div>
-      <div className="grid gap-4 sm:gap-5 lg:grid-cols-2">
+      <div className="app-grid-two">
         <section className="app-panel">
           <PanelTitle icon={Briefcase}>Recent experience</PanelTitle>
           <div className="flex flex-wrap justify-between gap-2 mb-2">

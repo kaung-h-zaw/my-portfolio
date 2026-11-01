@@ -2,7 +2,7 @@ import React from "react";
 
 export function AppHeader({ icon: Icon, file, title, badge, focusable = false }) {
   return (
-    <header className="flex flex-wrap items-center justify-between gap-4 border-b border-black/15 pb-4">
+    <header className="app-header flex flex-wrap items-center justify-between gap-4 border-b border-black/15 pb-4">
       <div className="flex items-center gap-3">
         <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-black/15 bg-white/25">
           <Icon size={22} aria-hidden="true" />

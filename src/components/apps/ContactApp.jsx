@@ -86,12 +86,12 @@ export default function ContactApp() {
       <div className="app-page">
         <AppHeader icon={Mail} file="contact.msg" title="Get In Touch" badge="Open to junior roles" />
         <p className="app-body max-w-2xl">For junior frontend or full-stack opportunities, or a conversation about my projects, send a message below.</p>
-        <div className="grid gap-4 sm:gap-5 lg:grid-cols-[minmax(0,1.5fr)_minmax(260px,1fr)]">
+        <div className="app-split">
           <section className="app-panel">
             <PanelTitle icon={Send}>Send a message</PanelTitle>
             <p className="font-sans text-sm text-black/65 mb-5">Required fields are marked *.</p>
             <form ref={formRef} onSubmit={handleSubmit} aria-busy={sending} className="space-y-4">
-              <div className="grid gap-4 sm:grid-cols-2">
+              <div className="app-form-grid grid gap-4">
                 <div>
                   <label htmlFor="contact-name" className="block text-xs font-bold uppercase tracking-wide mb-2">Name *</label>
                   <input id="contact-name" name="name" autoComplete="name" required placeholder="Your name" className="app-field" />
@@ -107,7 +107,7 @@ export default function ContactApp() {
               </div>
               <div>
                 <label htmlFor="contact-message" className="block text-xs font-bold uppercase tracking-wide mb-2">Message *</label>
-                <textarea id="contact-message" name="message" required rows={6} placeholder="Tell me about the opportunity or your question" className="app-field resize-y min-h-[140px]" />
+                <textarea id="contact-message" name="message" required rows={4} placeholder="Tell me about the opportunity or your question" className="app-field resize-y min-h-[112px]" />
               </div>
               {status === "sent" && <p role="status" className="app-tile flex items-center gap-2 font-sans text-sm"><Check size={17} aria-hidden="true" /> Message sent successfully!</p>}
               {status === "error" && <p role="alert" className="app-tile font-sans text-sm leading-relaxed">Message could not be sent. Please try again or <a className="underline" href={`mailto:${email}`}>email me directly</a>.</p>}
@@ -120,7 +120,7 @@ export default function ContactApp() {
           <div className="space-y-4 sm:space-y-5">
             <section className="app-panel">
               <PanelTitle icon={Mail}>Direct email</PanelTitle>
-              <a href={`mailto:${email}`} className="font-sans text-sm break-all underline underline-offset-4">{email}</a>
+              <a href={`mailto:${email}`} className="block w-fit font-sans text-sm break-all underline underline-offset-4">{email}</a>
               <button type="button" onClick={handleCopyEmail} aria-label={copied ? "Email copied" : "Copy email address"} className="app-action-secondary mt-4">
                 {copied ? <Check size={15} aria-hidden="true" /> : <Copy size={15} aria-hidden="true" />}{copied ? "Copied" : "Copy email"}
               </button>
@@ -128,7 +128,7 @@ export default function ContactApp() {
             </section>
             <section className="app-panel">
               <PanelTitle icon={MessageCircle}>Elsewhere</PanelTitle>
-              <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1">
+              <div className="app-social-grid grid gap-2">
                 {socials.map((social) => (
                   <button key={social.name} type="button" onClick={() => setActiveLinkData({ title: social.name, href: social.href, icon: social.icon })}
                     className="app-tile flex min-h-11 items-center gap-3 text-left text-sm hover:bg-white/40 transition-colors">

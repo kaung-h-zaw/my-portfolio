@@ -47,7 +47,7 @@ export default function ExperienceApp() {
       <div className="space-y-4 sm:space-y-5">
         {experiences.map((experience) => (
           <article key={experience.id} className="app-panel">
-            <div className="grid gap-5 lg:grid-cols-[240px_minmax(0,1fr)]">
+            <div className="app-experience-grid">
               <div className="app-tile self-start">
                 <span className="app-badge inline-block mb-4">{experience.status === "active" ? "Active · Freelance" : "Completed · Capstone"}</span>
                 <h2 className="text-lg font-bold leading-tight mb-2">{experience.role}</h2>

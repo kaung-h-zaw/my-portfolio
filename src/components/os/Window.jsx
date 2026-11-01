@@ -494,7 +494,7 @@ export default function Window({
             )}
           </div>
 
-          <div className="os-content @container relative z-0 min-h-0 flex-1 overflow-auto border-t border-black/10 bg-gray-300/60 backdrop-blur-sm p-1 sm:p-3">
+          <div className="os-content relative z-0 min-h-0 flex-1 overflow-auto border-t border-black/10 bg-gray-300/60 backdrop-blur-sm p-1 sm:p-3">
             <div key={currentAppId || title} className="h-full">
               <Suspense
                 fallback={
