@@ -22,7 +22,7 @@ export default function StatusBar({
         onClose={() => setActiveLinkData(null)}
       />
 
-      <div className="fixed bottom-2 left-1/2 -translate-x-1/2 z-[9999] flex items-end select-none w-max max-w-[95vw]">
+      <div role="navigation" aria-label="App dock" className="fixed bottom-2 left-1/2 -translate-x-1/2 z-[9999] flex items-end select-none w-max max-w-[95vw]">
         <div className="flex items-center os-panel rounded-2xl overflow-x-auto no-scrollbar px-4 py-3 gap-2">
           {/* 1. APPS */}
           {appOrder.map((appId) => {

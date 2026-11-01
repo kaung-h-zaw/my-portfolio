@@ -3,6 +3,8 @@ import Draggable from "react-draggable";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   X,
+  House,
+  Monitor,
   Minus,
   Square,
   Maximize2,
@@ -392,7 +394,11 @@ export default function Window({
           >
             {isCompactHeader ? (
               <div className="no-drag flex w-full items-center gap-2">
-                <div className="w-2 h-2 bg-black/30 rounded-full animate-pulse pointer-events-none shrink-0" />
+                <button type="button" onClick={onMinimize}
+                  aria-label="Go to home screen" title="Return to all apps"
+                  className="flex h-7 shrink-0 items-center gap-1 rounded-md px-1 text-[11px] font-medium text-black/75 hover:bg-black/5">
+                  <House size={12} aria-hidden="true" /> Home
+                </button>
                 {currentApp && (
                   <div ref={pickerRef} className="min-w-0 flex-1">
                     {renderPicker("compact")}
@@ -405,6 +411,7 @@ export default function Window({
                   }}
                   type="button"
                   aria-label="Close window"
+                  title={isMobile ? "Close app and go home" : "Close window and show desktop"}
                   className="h-7 w-7 shrink-0 border border-black/12 bg-[#ff6b6b]/85 text-white flex items-center justify-center transition-colors rounded-lg cursor-pointer hover:bg-[#ff6b6b]"
                 >
                   <X size={14} strokeWidth={2.4} />
@@ -412,12 +419,11 @@ export default function Window({
               </div>
             ) : (
               <div className="flex items-center justify-between gap-3 min-w-0 h-full">
-                <div className="flex items-center gap-3 min-w-0 flex-1">
-                  <div className="w-2 h-2 bg-black/30 rounded-full animate-pulse pointer-events-none" />
-                  <span className="font-medium text-xs tracking-wider uppercase truncate max-w-[140px] text-black/60">
-                    {viewportWidth >= 1180 ? title : "KAUNG_OS"}
-                  </span>
-                </div>
+                <button type="button" onClick={onMinimize}
+                  aria-label="Show desktop" title="Minimize this window and explore the desktop"
+                  className="no-drag flex h-7 shrink-0 items-center gap-1.5 rounded-md px-1.5 text-xs font-medium text-black/75 hover:bg-black/5">
+                  <Monitor size={13} aria-hidden="true" /> Desktop
+                </button>
 
                 {currentApp && (
                   <div
@@ -436,6 +442,7 @@ export default function Window({
                     }}
                     type="button"
                     aria-label="Minimize window"
+                    title="Minimize to the dock"
                     className="w-6 h-6 border border-black/10 bg-transparent hover:bg-black/5 flex items-center justify-center transition-colors rounded-lg cursor-pointer"
                   >
                     <Minus
@@ -452,6 +459,7 @@ export default function Window({
                     }}
                     type="button"
                     aria-label={isMaximized ? "Restore window" : "Maximize window"}
+                    title={isMaximized ? "Make this window smaller" : "Expand window"}
                     className="w-6 h-6 border border-black/10 bg-transparent flex items-center justify-center transition-colors rounded-lg cursor-pointer hover:bg-black/5"
                   >
                     {isMaximized ? (
@@ -476,6 +484,7 @@ export default function Window({
                     }}
                     type="button"
                     aria-label="Close window"
+                  title={isMobile ? "Close app and go home" : "Close window and show desktop"}
                     className="w-6 h-6 border border-black/10 bg-[#ff6b6b]/80 hover:bg-[#ff6b6b] text-white flex items-center justify-center transition-colors rounded-lg cursor-pointer"
                   >
                     <X size={13} strokeWidth={2.5} />
@@ -498,6 +507,10 @@ export default function Window({
               </Suspense>
             </div>
           </div>
+          <footer className="flex h-6 shrink-0 items-center justify-between gap-2 border-t border-black/10 bg-white/25 px-3 text-[10px] text-black/65">
+            <span className="whitespace-nowrap font-medium">IMKAUNG OS · v2.0</span>
+            <span className="truncate">{isMobile ? "Home shows all apps" : "Use the dock below to switch apps"}</span>
+          </footer>
         </div>
       </div>
     </Draggable>

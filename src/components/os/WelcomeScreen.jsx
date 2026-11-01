@@ -3,13 +3,13 @@ import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import BackgroundLayers from "./BackgroundLayers";
 
 const BOOT_LOGS = [
-  "INITIALIZING KAUNG_SPACE v2.0...",
+  "INITIALIZING IMKAUNG v2.0...",
   "LOADING MEMORY BANKS [OK]",
   "MOUNTING FILE SYSTEM [OK]",
   "CONNECTING TO API NEXUS...",
   "ESTABLISHING SECURE CONNECTION [OK]",
   "FETCHING SKILLS.EXE [OK]",
-  "BYPASSING SECURITY PROTOCOLS...",
+  "PREPARING DESKTOP [OK]",
   "ACCESS GRANTED.",
   "WELCOME, GUEST.",
 ];
@@ -97,12 +97,12 @@ export default function WelcomeScreen({ onComplete }) {
               className="text-center mb-6"
             >
               <h1 className="text-3xl sm:text-5xl font-black tracking-tighter text-black/70 leading-none">
-                KAUNG_SPACE
+                IMKAUNG
               </h1>
               <div className="flex items-center justify-center gap-2 mt-2">
                 <div className="h-1 w-8 bg-black/60 rounded-full" />
                 <span className="text-[9px] sm:text-[10px] font-bold tracking-[0.3em] uppercase text-gray-800">
-                  v2.0
+                  IMKAUNG OS · v2.0
                 </span>
                 <div className="h-1 w-8 bg-black/60 rounded-full" />
               </div>
