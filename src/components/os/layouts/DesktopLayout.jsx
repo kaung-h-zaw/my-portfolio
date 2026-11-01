@@ -60,7 +60,7 @@ export default function DesktopLayout({
       </div>
 
       {/* 2. TOP BAR */}
-      <TopBar />
+      <TopBar onOpenApp={openWindow} />
 
       {/* 3. LEFT ICONS AREA — fixed from top bar to above dock */}
       <div className="absolute z-10 top-14 lg:top-16 xl:top-16 left-8 grid grid-flow-col grid-rows-4 content-start gap-4 lg:gap-6 pointer-events-none px-4 pb-4 transition-transform duration-300">

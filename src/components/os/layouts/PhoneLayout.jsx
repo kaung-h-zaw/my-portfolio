@@ -125,13 +125,13 @@ export default function PhoneLayout({
 
       {/* 2. TOP BAR */}
       <div
-        className="absolute top-0 left-0 right-0 h-[50px] z-50 border-b-2 border-black/10 backdrop-blur-md"
+        className="absolute top-0 left-0 right-0 h-[50px] z-[10000] border-b-2 border-black/10 backdrop-blur-md"
         style={{
           paddingTop: "env(safe-area-inset-top)",
           background: "rgba(255, 255, 255, 0.4)",
         }}
       >
-        <TopBar />
+        <TopBar onOpenApp={openWindow} />
       </div>
 
       {/* 3. HOME SCREEN CONTENT */}

@@ -79,8 +79,8 @@ export default function TabletLayout({
       </div>
 
       {/* 2. TOP MENU BAR */}
-      <div className="absolute top-0 left-0 right-0 z-50">
-        <TopBar />
+      <div className="absolute top-0 left-0 right-0 z-[10000]">
+        <TopBar onOpenApp={openWindow} />
       </div>
 
       {/* 3. MAIN DASHBOARD CONTENT */}
