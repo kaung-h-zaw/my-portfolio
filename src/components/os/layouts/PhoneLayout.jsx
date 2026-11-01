@@ -181,27 +181,27 @@ export default function PhoneLayout({
       )}
 
       {/* 4. APP WINDOW */}
-      <AnimatePresence>
-        {activeApp && (
-          <Window
-            id={activeApp.id}
-            title={activeApp.title}
-            apps={apps}
-            currentAppId={activeApp.id}
-            appOrder={appOrder}
-            navDirection={navDirection}
-            navigationMode={navigationMode}
-            onNavigate={openWindow}
-            zIndex={50}
-            onClose={() => closeWindow(activeApp.id)}
-            isMobile={true}
-            onFocus={() => {}}
-            onMinimize={() => minimizeWindow(activeApp.id)}
-          >
-            {React.createElement(apps[activeApp.id].component, { onOpenApp: openWindow })}
-          </Window>
-        )}
-      </AnimatePresence>
+      {/* Window handles content transitions; unmount closed shells immediately. */}
+      {activeApp && (
+        <Window
+          key="active-window"
+          id={activeApp.id}
+          title={activeApp.title}
+          apps={apps}
+          currentAppId={activeApp.id}
+          appOrder={appOrder}
+          navDirection={navDirection}
+          navigationMode={navigationMode}
+          onNavigate={openWindow}
+          zIndex={50}
+          onClose={() => closeWindow(activeApp.id)}
+          isMobile={true}
+          onFocus={() => {}}
+          onMinimize={() => minimizeWindow(activeApp.id)}
+        >
+          {React.createElement(apps[activeApp.id].component, { onOpenApp: openWindow })}
+        </Window>
+      )}
 
       {/* 6. LINK CONFIRMATION MODAL */}
       <AnimatePresence>

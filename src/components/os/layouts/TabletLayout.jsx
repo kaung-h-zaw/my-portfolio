@@ -144,35 +144,34 @@ export default function TabletLayout({
       </div>
 
       {/* 6. WINDOWS LAYER */}
+      {/* Window handles content transitions; unmount closed shells immediately. */}
       <div className="absolute inset-0 z-50 pointer-events-none">
-        <AnimatePresence>
-          {openWindows.map((win) => {
-            if (win.minimized) return null;
-            const AppComp = apps[win.id].component;
-            return (
-              <div key="active-window" className="pointer-events-auto relative">
-                <Window
-                  id={win.id}
-                  title={win.title}
-                  apps={apps}
-                  currentAppId={win.id}
-                  appOrder={appOrder}
-                  navDirection={navDirection}
-                  navigationMode={navigationMode}
-                  onNavigate={openWindow}
-                  defaultPos={{ x: 0, y: 0 }}
-                  zIndex={win.zIndex}
-                  onClose={() => closeWindow(win.id)}
-                  onFocus={() => focusWindow(win.id)}
-                  onMinimize={() => minimizeWindow(win.id)}
-                  isMobile={false}
-                >
-                  <AppComp onOpenApp={openWindow} />
-                </Window>
-              </div>
-            );
-          })}
-        </AnimatePresence>
+        {openWindows.map((win) => {
+          if (win.minimized) return null;
+          const AppComp = apps[win.id].component;
+          return (
+            <div key="active-window" className="pointer-events-auto relative">
+              <Window
+                id={win.id}
+                title={win.title}
+                apps={apps}
+                currentAppId={win.id}
+                appOrder={appOrder}
+                navDirection={navDirection}
+                navigationMode={navigationMode}
+                onNavigate={openWindow}
+                defaultPos={{ x: 0, y: 0 }}
+                zIndex={win.zIndex}
+                onClose={() => closeWindow(win.id)}
+                onFocus={() => focusWindow(win.id)}
+                onMinimize={() => minimizeWindow(win.id)}
+                isMobile={false}
+              >
+                <AppComp onOpenApp={openWindow} />
+              </Window>
+            </div>
+          );
+        })}
       </div>
 
       {/* 7. LINK CONFIRMATION MODAL */}
