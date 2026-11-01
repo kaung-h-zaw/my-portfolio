@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, Suspense } from "react";
 import Draggable from "react-draggable";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   X,
   Minus,
@@ -25,8 +25,6 @@ export default function Window({
   apps = {},
   currentAppId,
   appOrder = [],
-  navDirection = 0,
-  navigationMode = "open",
   onNavigate,
   title,
   defaultPos = { x: 50, y: 50 },
@@ -38,7 +36,6 @@ export default function Window({
   isMobile,
 }) {
   const nodeRef = useRef(null);
-  const reducedMotion = useReducedMotion();
   const pickerRef = useRef(null);
   const searchInputRef = useRef(null);
   const [isMaximized, setIsMaximized] = useState(true);
@@ -57,6 +54,7 @@ export default function Window({
   const nextApp = nextAppId ? apps[nextAppId] : null;
   const currentLabel = currentApp?.title || title;
   const isCompactHeader = isMobile;
+  const isSmallScreen = viewportWidth <= 1024;
   const isPhoneHeader = isMobile;
   const isTabletViewport = !isMobile && viewportWidth < 1180;
   const filteredApps = appOrder
@@ -164,8 +162,8 @@ export default function Window({
     const isCompact = mode !== "desktop";
     const isCompactMobile = isCompact && isMobile;
     const arrowButtonClass = isCompact
-      ? "flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-black/16 bg-[#f7f4ef] text-black/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.36)] transition-colors hover:bg-white hover:text-black disabled:cursor-not-allowed disabled:opacity-30"
-      : "flex h-8 w-8 items-center justify-center rounded-lg border border-black/18 bg-white/70 text-black/75 shadow-[inset_0_1px_0_rgba(255,255,255,0.35)] transition-colors hover:bg-white hover:text-black disabled:cursor-not-allowed disabled:opacity-30";
+      ? "flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-black/16 bg-[#f7f4ef] text-black/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.36)] transition-colors hover:bg-white hover:text-black disabled:cursor-not-allowed disabled:opacity-30"
+      : `flex ${isSmallScreen ? "h-7 w-7" : "h-8 w-8"} items-center justify-center rounded-lg border border-black/18 bg-white/70 text-black/75 shadow-[inset_0_1px_0_rgba(255,255,255,0.35)] transition-colors hover:bg-white hover:text-black disabled:cursor-not-allowed disabled:opacity-30`;
     const pickerBaseClass = isCompact
       ? `relative ${isPhoneHeader ? "min-w-0 flex-1" : "min-w-[240px] max-w-[340px] flex-1"}`
       : "relative";
@@ -173,11 +171,11 @@ export default function Window({
       ? "min-w-[240px]"
       : "min-w-[300px]";
     const closedButtonClass = isCompact
-      ? `flex items-center justify-between rounded-xl border border-black/18 bg-[#f5f3ef] px-3 py-2 text-[11px] text-black/85 shadow-[inset_0_1px_0_rgba(255,255,255,0.32)] transition-colors hover:bg-[#faf8f4] ${isPhoneHeader ? "w-full min-w-0" : "min-w-[240px]"}`
-      : `flex ${desktopPickerWidthClass} items-center justify-between rounded-xl border border-black/18 bg-[#f5f3ef] px-3 py-1.5 text-[11px] text-black/85 shadow-[inset_0_1px_0_rgba(255,255,255,0.32)] transition-colors hover:bg-[#faf8f4]`;
+      ? `flex items-center justify-between rounded-xl border border-black/18 bg-[#f5f3ef] h-7 px-2 text-[11px] text-black/85 shadow-[inset_0_1px_0_rgba(255,255,255,0.32)] transition-colors hover:bg-[#faf8f4] ${isPhoneHeader ? "w-full min-w-0" : "min-w-[240px]"}`
+      : `flex ${desktopPickerWidthClass} items-center justify-between rounded-xl border border-black/18 bg-[#f5f3ef] px-3 ${isSmallScreen ? "py-1" : "py-1.5"} text-[11px] text-black/85 shadow-[inset_0_1px_0_rgba(255,255,255,0.32)] transition-colors hover:bg-[#faf8f4]`;
     const openShellClass = isCompact
-      ? `relative z-20 flex items-center justify-between rounded-t-xl rounded-b-md border border-black/22 border-b-transparent bg-[#f5f3ef] px-3 py-2 text-[11px] text-black/85 shadow-[0_10px_22px_rgba(0,0,0,0.12)] ${isPhoneHeader ? "w-full min-w-0" : "min-w-[240px]"}`
-      : `relative z-20 flex ${desktopPickerWidthClass} items-center justify-between rounded-t-xl rounded-b-md border border-black/22 border-b-transparent bg-[#f5f3ef] px-3 py-1.5 text-[11px] text-black/85 shadow-[0_10px_22px_rgba(0,0,0,0.12)]`;
+      ? `relative z-20 flex items-center justify-between rounded-t-xl rounded-b-md border border-black/22 border-b-transparent bg-[#f5f3ef] h-7 px-2 text-[11px] text-black/85 shadow-[0_10px_22px_rgba(0,0,0,0.12)] ${isPhoneHeader ? "w-full min-w-0" : "min-w-[240px]"}`
+      : `relative z-20 flex ${desktopPickerWidthClass} items-center justify-between rounded-t-xl rounded-b-md border border-black/22 border-b-transparent bg-[#f5f3ef] px-3 ${isSmallScreen ? "py-1" : "py-1.5"} text-[11px] text-black/85 shadow-[0_10px_22px_rgba(0,0,0,0.12)]`;
     const pickerItems = isCompactMobile
       ? appOrder.map((id) => apps[id]).filter(Boolean)
       : filteredApps;
@@ -243,7 +241,7 @@ export default function Window({
               <button
                 type="button"
                 onClick={() => setIsPickerOpen(false)}
-                className="ml-2 flex h-8 w-8 items-center justify-center rounded-md text-black/55 transition-colors hover:bg-black/5 hover:text-black/80"
+                className="ml-2 flex h-6 w-6 items-center justify-center rounded-md text-black/55 transition-colors hover:bg-black/5 hover:text-black/80"
                 aria-label="Close app search"
               >
                 <ChevronDown
@@ -349,7 +347,7 @@ export default function Window({
   if (isMaximized) {
     if (isMobile) {
       positionClass =
-        "fixed top-[50px] left-2 right-2 bottom-[calc(env(safe-area-inset-bottom)+8px)] z-50 !transform-none border border-black/20 rounded-2xl bg-gray-300/80 backdrop-blur-md";
+        "fixed top-[calc(env(safe-area-inset-top)+36px)] left-2 right-2 bottom-[calc(env(safe-area-inset-bottom)+8px)] z-50 !transform-none border border-black/20 rounded-2xl bg-gray-300/80 backdrop-blur-md";
     } else {
       positionClass =
         "fixed top-11 left-3 right-3 xl:left-1 xl:right-1 bottom-[88px] z-50 rounded-2xl !transform-none border border-black/20 bg-gray-300/80 backdrop-blur-md";
@@ -385,29 +383,11 @@ export default function Window({
         className={`outline-none bg-gray-300/40 flex flex-col overflow-hidden ${positionClass} pointer-events-auto`}
         onMouseDown={onFocus}
       >
-        <motion.div
-          initial={reducedMotion ? false : { scale: 0.97, y: 10, opacity: 0, filter: "blur(6px)" }}
-          animate={{ scale: 1, y: 0, opacity: 1, filter: "blur(0px)" }}
-          exit={reducedMotion ? { opacity: 0 } : {
-            scale: 0.985,
-            y: 6,
-            opacity: 0,
-            filter: "blur(5px)",
-            transition: { duration: 0.14, ease: "easeOut" },
-          }}
-          transition={{
-            duration: reducedMotion ? 0 : undefined,
-            type: reducedMotion ? "tween" : "spring",
-            stiffness: 360,
-            damping: 30,
-            mass: 0.95,
-          }}
-          className="flex flex-col h-full rounded-2xl"
-        >
+        <div className="flex flex-col h-full rounded-2xl">
           {/* TITLE BAR */}
           <div
             className={`os-titlebar relative z-20 shrink-0 select-none bg-[#f1efea] ${
-              isCompactHeader ? "h-14 px-2 flex items-center" : "h-10 px-3"
+              isCompactHeader ? "h-9 px-2 flex items-center" : isSmallScreen ? "h-9 px-3" : "h-10 px-3"
             } cursor-grab active:cursor-grabbing`}
           >
             {isCompactHeader ? (
@@ -425,7 +405,7 @@ export default function Window({
                   }}
                   type="button"
                   aria-label="Close window"
-                  className="h-11 w-11 shrink-0 border border-black/12 bg-[#ff6b6b]/85 text-white flex items-center justify-center transition-colors rounded-xl cursor-pointer hover:bg-[#ff6b6b]"
+                  className="h-7 w-7 shrink-0 border border-black/12 bg-[#ff6b6b]/85 text-white flex items-center justify-center transition-colors rounded-lg cursor-pointer hover:bg-[#ff6b6b]"
                 >
                   <X size={14} strokeWidth={2.4} />
                 </button>
@@ -442,7 +422,7 @@ export default function Window({
                 {currentApp && (
                   <div
                     ref={pickerRef}
-                    className="no-drag absolute left-1/2 top-1/2 z-30 hidden -translate-x-1/2 -translate-y-1/2 md:flex items-center"
+                    className="no-drag absolute left-1/2 top-1/2 z-30 flex -translate-x-1/2 -translate-y-1/2 items-center"
                   >
                     {renderPicker("desktop")}
                   </div>
@@ -506,73 +486,19 @@ export default function Window({
           </div>
 
           <div className="os-content @container relative z-0 min-h-0 flex-1 overflow-auto border-t border-black/10 bg-gray-300/60 backdrop-blur-sm p-1 sm:p-3">
-            <AnimatePresence mode="wait" initial={false} custom={navDirection}>
-              <motion.div
-                key={currentAppId || title}
-                custom={navDirection}
-                variants={reducedMotion ? { enter: { opacity: 1 }, center: { opacity: 1 }, exit: { opacity: 1 } } : {
-                  enter: (direction) =>
-                    navigationMode === "swap"
-                      ? {
-                          x: direction > 0 ? 10 : direction < 0 ? -10 : 0,
-                          y: 2,
-                          opacity: 0,
-                          filter: "blur(4px)",
-                          scale: 0.998,
-                        }
-                      : {
-                          x: 0,
-                          y: 8,
-                          opacity: 0,
-                          filter: "blur(6px)",
-                          scale: 0.992,
-                        },
-                  center: {
-                    x: 0,
-                    y: 0,
-                    opacity: 1,
-                    filter: "blur(0px)",
-                    scale: 1,
-                  },
-                  exit: (direction) =>
-                    navigationMode === "swap"
-                      ? {
-                          x: direction > 0 ? -8 : direction < 0 ? 8 : 0,
-                          y: -2,
-                          opacity: 0,
-                          filter: "blur(3px)",
-                          scale: 0.999,
-                        }
-                      : {
-                          x: 0,
-                          y: -5,
-                          opacity: 0,
-                          filter: "blur(4px)",
-                          scale: 0.995,
-                        },
-                }}
-                initial={reducedMotion ? false : "enter"}
-                animate="center"
-                exit="exit"
-                transition={{
-                  duration: reducedMotion ? 0 : navigationMode === "swap" ? 0.14 : 0.2,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-                className="h-full"
+            <div key={currentAppId || title} className="h-full">
+              <Suspense
+                fallback={
+                  <div className="h-full w-full flex items-center justify-center text-[10px] uppercase tracking-widest text-black/50">
+                    Loading...
+                  </div>
+                }
               >
-                <Suspense
-                  fallback={
-                    <div className="h-full w-full flex items-center justify-center text-[10px] uppercase tracking-widest text-black/50">
-                      Loading...
-                    </div>
-                  }
-                >
-                  {children}
-                </Suspense>
-              </motion.div>
-            </AnimatePresence>
+                {children}
+              </Suspense>
+            </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </Draggable>
   );

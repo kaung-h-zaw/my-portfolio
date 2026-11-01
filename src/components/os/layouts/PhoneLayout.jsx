@@ -124,14 +124,8 @@ export default function PhoneLayout({
       </div>
 
       {/* 2. TOP BAR */}
-      <div
-        className="absolute top-0 left-0 right-0 h-[50px] z-[10000] border-b-2 border-black/10 backdrop-blur-md"
-        style={{
-          paddingTop: "env(safe-area-inset-top)",
-          background: "rgba(255, 255, 255, 0.4)",
-        }}
-      >
-        <TopBar onOpenApp={openWindow} />
+      <div className="absolute top-0 left-0 right-0 z-[10000]">
+        <TopBar isPhone onOpenApp={openWindow} />
       </div>
 
       {/* 3. HOME SCREEN CONTENT */}
@@ -139,7 +133,7 @@ export default function PhoneLayout({
         <div
           className="absolute left-0 right-0 z-10 overflow-y-auto pt-0 custom-scrollbar"
           style={{
-            top: "50px",
+            top: "calc(env(safe-area-inset-top) + 32px)",
             bottom: "0",
             paddingBottom: "calc(env(safe-area-inset-bottom) + 2rem)",
           }}
