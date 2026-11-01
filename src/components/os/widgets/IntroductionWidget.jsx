@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useReducedMotion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 
 const GREETINGS = [
@@ -11,14 +12,21 @@ const GREETINGS = [
 ];
 
 export default function IntroductionWidget({ onOpenAbout }) {
+  const reducedMotion = useReducedMotion();
   const [text, setText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
   const [loopNum, setLoopNum] = useState(0);
   const [typingSpeed, setTypingSpeed] = useState(150);
 
   useEffect(() => {
+    if (reducedMotion) return undefined;
     const i = loopNum % GREETINGS.length;
     const fullText = GREETINGS[i];
+
+    if (!isDeleting && text === fullText) {
+      const pause = setTimeout(() => setIsDeleting(true), 2500);
+      return () => clearTimeout(pause);
+    }
 
     const handleTyping = () => {
       if (isDeleting) {
@@ -29,9 +37,7 @@ export default function IntroductionWidget({ onOpenAbout }) {
         setTypingSpeed(120);
       }
 
-      if (!isDeleting && text === fullText) {
-        setTimeout(() => setIsDeleting(true), 2500);
-      } else if (isDeleting && text === "") {
+      if (isDeleting && text === "") {
         setIsDeleting(false);
         setLoopNum(loopNum + 1);
       }
@@ -39,7 +45,7 @@ export default function IntroductionWidget({ onOpenAbout }) {
 
     const timer = setTimeout(handleTyping, typingSpeed);
     return () => clearTimeout(timer);
-  }, [text, isDeleting, loopNum, typingSpeed]);
+  }, [text, isDeleting, loopNum, typingSpeed, reducedMotion]);
 
   return (
     <div className="w-full box-border flex flex-col select-none pointer-events-auto bg-white/40 backdrop-blur-md border border-black/10 rounded-2xl p-3 md:p-4 xl:p-4 hover:border-black/15 transition-all duration-300">
@@ -52,8 +58,8 @@ export default function IntroductionWidget({ onOpenAbout }) {
 
           {/* Greeting text */}
           <h1 className="font-black tracking-tight text-black/80 uppercase leading-none text-2xl md:text-3xl lg:text-2xl xl:text-3xl 2xl:text-4xl h-7 md:h-8 lg:h-7 xl:h-9 flex items-center whitespace-nowrap">
-            {text}
-            <span className="w-1.5 h-[0.75em] xl:w-2 bg-black/60 animate-pulse ml-1.5 block shrink-0"></span>
+            {reducedMotion ? GREETINGS[0] : text}
+            {!reducedMotion && <span aria-hidden="true" className="w-1.5 h-[0.75em] xl:w-2 bg-black/60 animate-pulse ml-1.5 block shrink-0"></span>}
           </h1>
         </div>
 

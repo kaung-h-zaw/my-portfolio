@@ -67,8 +67,8 @@ export default function MusicWidget({ variant = "mobile" }) {
   if (variant === "desktop") {
     return (
       <div
-        className="w-full box-border bg-white/40 border border-black/10 backdrop-blur-md hover:border-black/15 relative transition-all !p-0 overflow-hidden cursor-pointer group rounded-2xl flex flex-col"
         onClick={togglePlay}
+        className="w-full box-border bg-white/40 border border-black/10 backdrop-blur-md hover:border-black/15 relative transition-all !p-0 overflow-hidden cursor-pointer group rounded-2xl flex flex-col"
       >
         <div className="p-3 xl:p-3.5 2xl:p-4 bg-black/90 text-white flex justify-between items-center">
           <div className="flex gap-2 items-center w-full overflow-hidden">
@@ -108,7 +108,8 @@ export default function MusicWidget({ variant = "mobile" }) {
           </div>
           <div className="flex gap-1.5">
             <button
-              className="hover:bg-black/5 p-1 rounded-lg transition-colors"
+              aria-label={isPlaying ? "Pause music" : "Play music"}
+              className="min-h-11 min-w-11 flex items-center justify-center hover:bg-black/5 p-1 rounded-lg transition-colors"
               onClick={(e) => {
                 e.stopPropagation();
                 togglePlay();
@@ -120,7 +121,7 @@ export default function MusicWidget({ variant = "mobile" }) {
                 <Play className="w-3 h-3 xl:w-3.5 xl:h-3.5" fill="black" />
               )}
             </button>
-            <button className="hover:bg-black/5 p-1 rounded-lg opacity-30 cursor-not-allowed">
+            <button disabled aria-label="Next track unavailable" className="min-h-11 min-w-11 flex items-center justify-center p-1 rounded-lg opacity-30 cursor-not-allowed">
               <SkipForward className="w-3 h-3 xl:w-3.5 xl:h-3.5" fill="black" />
             </button>
           </div>
@@ -132,6 +133,16 @@ export default function MusicWidget({ variant = "mobile" }) {
   return (
     <div
       onClick={togglePlay}
+      role="button"
+      tabIndex={0}
+      aria-label={isPlaying ? "Pause music" : "Play music"}
+      aria-pressed={isPlaying}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          togglePlay();
+        }
+      }}
       className="w-full box-border bg-white/40 backdrop-blur-md border border-black/10 p-3 md:p-4 rounded-2xl flex flex-col h-full relative active:scale-[0.99] transition-all cursor-pointer hover:border-black/15"
     >
       <div className="flex justify-between items-center border-b border-black/10 pb-2 md:pb-3 mb-2 md:mb-3">

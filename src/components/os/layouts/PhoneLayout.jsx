@@ -85,9 +85,10 @@ export default function PhoneLayout({
   openWindows,
   openWindow,
   closeWindow,
+  minimizeWindow,
 }) {
   const activeApp =
-    openWindows.length > 0 ? openWindows[openWindows.length - 1] : null;
+    openWindows.length > 0 ? openWindows.find((win) => !win.minimized) : null;
   const [pendingLink, setPendingLink] = useState(null);
   const externalLinks = [
     {
@@ -195,9 +196,9 @@ export default function PhoneLayout({
             onClose={() => closeWindow(activeApp.id)}
             isMobile={true}
             onFocus={() => {}}
-            onMinimize={() => closeWindow(activeApp.id)}
+            onMinimize={() => minimizeWindow(activeApp.id)}
           >
-            {React.createElement(apps[activeApp.id].component)}
+            {React.createElement(apps[activeApp.id].component, { onOpenApp: openWindow })}
           </Window>
         )}
       </AnimatePresence>

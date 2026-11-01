@@ -115,7 +115,7 @@ export default function DesktopLayout({
                   onMinimize={() => minimizeWindow(win.id)}
                   isMobile={false}
                 >
-                  <AppComp />
+                  <AppComp onOpenApp={openWindow} />
                 </Window>
               </div>
             );

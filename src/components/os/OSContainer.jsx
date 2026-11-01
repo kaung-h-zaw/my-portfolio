@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, lazy } from "react";
+import React, { useState, useEffect, useMemo, useRef, lazy } from "react";
 import DesktopLayout from "./layouts/DesktopLayout";
 import TabletLayout from "./layouts/TabletLayout";
 import PhoneLayout from "./layouts/PhoneLayout";
@@ -19,10 +19,14 @@ import {
 } from "lucide-react";
 
 export default function OSContainer() {
-  const [deviceType, setDeviceType] = useState("desktop");
-  const [openWindows, setOpenWindows] = useState([]);
-  const [activeWindowId, setActiveWindowId] = useState(null);
-  const [zTop, setZTop] = useState(20);
+  const [deviceType, setDeviceType] = useState(() =>
+    window.innerWidth < 640 ? "phone" : window.innerWidth <= 1024 ? "tablet" : "desktop",
+  );
+  const [openWindows, setOpenWindows] = useState([
+    { id: "about", title: "About_Me", icon: User, zIndex: 21, minimized: false },
+  ]);
+  const [activeWindowId, setActiveWindowId] = useState("about");
+  const zTop = useRef(21);
   const [navDirection, setNavDirection] = useState(0);
   const [navigationMode, setNavigationMode] = useState("open");
   const appOrder = [
@@ -37,12 +41,10 @@ export default function OSContainer() {
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
-      const height = window.innerHeight;
-      const isLandscape = width > height;
 
       if (width < 640) {
         setDeviceType("phone");
-      } else if (width <= 1024 && !isLandscape) {
+      } else if (width <= 1024) {
         setDeviceType("tablet");
       } else {
         setDeviceType("desktop");
@@ -127,6 +129,7 @@ export default function OSContainer() {
     }
 
     const app = apps[id];
+    if (!app) return;
     const offset = openWindows.length * 24;
     const maxX = Math.max(0, window.innerWidth - 680);
     const maxY = Math.max(0, window.innerHeight - 520);
@@ -135,20 +138,11 @@ export default function OSContainer() {
       y: Math.min(50 + offset, maxY),
     };
 
-    setZTop((z) => {
-      const nextZ = z + 1;
-      setOpenWindows([
-        {
-          id,
-          title: app.title,
-          icon: app.icon,
-          zIndex: nextZ,
-          defaultPos,
-          minimized: false,
-        },
-      ]);
-      return nextZ;
-    });
+    zTop.current += 1;
+    setOpenWindows([{
+      id, title: app.title, icon: app.icon,
+      zIndex: zTop.current, defaultPos, minimized: false,
+    }]);
     setActiveWindowId(id);
   };
 
@@ -158,15 +152,11 @@ export default function OSContainer() {
   };
 
   const focusWindow = (id) => {
-    setZTop((z) => {
-      const nextZ = z + 1;
-      setOpenWindows((prev) =>
-        prev.map((w) =>
-          w.id === id ? { ...w, zIndex: nextZ, minimized: false } : w,
-        ),
-      );
-      return nextZ;
-    });
+    zTop.current += 1;
+    const nextZ = zTop.current;
+    setOpenWindows((prev) => prev.map((w) =>
+      w.id === id ? { ...w, zIndex: nextZ, minimized: false } : w,
+    ));
     setActiveWindowId(id);
   };
 
@@ -191,7 +181,7 @@ export default function OSContainer() {
   };
 
   return (
-    <div className="fixed inset-0 w-screen h-screen overflow-hidden font-mono text-slate-900 selection:bg-black selection:text-white">
+    <div className="fixed inset-0 w-screen h-[100dvh] overflow-hidden font-mono text-slate-900 selection:bg-black selection:text-white">
       {deviceType === "desktop" && <DesktopLayout {...layoutProps} />}
       {deviceType === "tablet" && <TabletLayout {...layoutProps} />}
       {deviceType === "phone" && <PhoneLayout {...layoutProps} />}

@@ -10,6 +10,7 @@ export default function LinkConfirmationModal({ linkData, onClose }) {
   useEffect(() => {
     if (!linkData) return undefined;
 
+    const previousFocus = document.activeElement;
     const handleKeyDown = (event) => {
       if (event.key === "Escape") onClose();
       if (event.key === "Tab") {
@@ -26,7 +27,10 @@ export default function LinkConfirmationModal({ linkData, onClose }) {
 
     window.addEventListener("keydown", handleKeyDown);
     cancelRef.current?.focus();
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      if (previousFocus?.isConnected) previousFocus.focus({ preventScroll: true });
+    };
   }, [linkData, onClose]);
 
   if (!linkData) return null;

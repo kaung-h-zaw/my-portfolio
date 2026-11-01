@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import BackgroundLayers from "./BackgroundLayers";
 
 const BOOT_LOGS = [
@@ -15,11 +15,17 @@ const BOOT_LOGS = [
 ];
 
 export default function WelcomeScreen({ onComplete }) {
+  const reducedMotion = useReducedMotion();
   const [bootLogs, setBootLogs] = useState([]);
   const [isReady, setIsReady] = useState(false);
   const hasCompletedRef = useRef(false);
 
   useEffect(() => {
+    if (reducedMotion) {
+      onComplete();
+      return undefined;
+    }
+    let readyTimer;
     let currentLog = 0;
     const logInterval = setInterval(() => {
       if (currentLog < BOOT_LOGS.length) {
@@ -27,7 +33,7 @@ export default function WelcomeScreen({ onComplete }) {
         currentLog++;
       } else {
         clearInterval(logInterval);
-        setTimeout(() => setIsReady(true), 400);
+        readyTimer = setTimeout(() => setIsReady(true), 400);
       }
     }, 150);
 
@@ -51,11 +57,12 @@ export default function WelcomeScreen({ onComplete }) {
 
     return () => {
       clearInterval(logInterval);
+      clearTimeout(readyTimer);
       clearTimeout(completionTimer);
       window.removeEventListener("keydown", handleSkip);
       window.removeEventListener("pointerdown", handleSkip);
     };
-  }, [onComplete]);
+  }, [onComplete, reducedMotion]);
 
   return (
     <AnimatePresence>

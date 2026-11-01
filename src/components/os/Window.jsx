@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, Suspense } from "react";
 import Draggable from "react-draggable";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import {
   X,
   Minus,
@@ -38,9 +38,10 @@ export default function Window({
   isMobile,
 }) {
   const nodeRef = useRef(null);
+  const reducedMotion = useReducedMotion();
   const pickerRef = useRef(null);
   const searchInputRef = useRef(null);
-  const [isMaximized, setIsMaximized] = useState(true);
+  const [isMaximized, setIsMaximized] = useState(isMobile);
   const [position, setPosition] = useState(defaultPos);
   const [isPickerOpen, setIsPickerOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -54,15 +55,7 @@ export default function Window({
   const previousApp = previousAppId ? apps[previousAppId] : null;
   const currentApp = currentAppId ? apps[currentAppId] : null;
   const nextApp = nextAppId ? apps[nextAppId] : null;
-  const previousLabel =
-    previousAppId && APP_SHORT_LABELS[previousAppId]
-      ? APP_SHORT_LABELS[previousAppId]
-      : previousApp?.title;
   const currentLabel = currentApp?.title || title;
-  const nextLabel =
-    nextAppId && APP_SHORT_LABELS[nextAppId]
-      ? APP_SHORT_LABELS[nextAppId]
-      : nextApp?.title;
   const isCompactHeader = isMobile;
   const isPhoneHeader = isMobile;
   const isTabletViewport = !isMobile && viewportWidth < 1180;
@@ -79,19 +72,15 @@ export default function Window({
       );
     });
 
-  const restoredWidth = isMobile
-    ? window.innerWidth * 0.9
-    : window.innerWidth < 1366
-      ? Math.min(760, Math.max(560, Math.floor(window.innerWidth * 0.68)))
-      : Math.min(680, Math.max(520, Math.floor(window.innerWidth * 0.6)));
-  const restoredHeight = isMobile
-    ? window.innerHeight * 0.6
-    : window.innerWidth < 1366
-      ? Math.min(580, Math.max(420, Math.floor(window.innerHeight * 0.68)))
-      : Math.min(520, Math.max(380, Math.floor(window.innerHeight * 0.6)));
+  const restoredWidth = Math.min(860, viewportWidth - 32);
+  const [viewportHeight, setViewportHeight] = useState(() => window.innerHeight);
+  const restoredHeight = Math.min(680, viewportHeight - 160);
 
   useEffect(() => {
-    const handleResize = () => setViewportWidth(window.innerWidth);
+    const handleResize = () => {
+      setViewportWidth(window.innerWidth);
+      setViewportHeight(window.innerHeight);
+    };
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -105,7 +94,7 @@ export default function Window({
 
     if (!isMobile) {
       const centerX = (window.innerWidth - restoredWidth) / 2;
-      const centerY = (window.innerHeight - restoredHeight) / 2;
+      const centerY = Math.max(44, (window.innerHeight - restoredHeight - 40) / 2);
       setPosition({ x: Math.max(0, centerX), y: Math.max(0, centerY) });
     }
   }, [isMobile, restoredWidth, restoredHeight]);
@@ -124,8 +113,18 @@ export default function Window({
       }
     };
 
+    const handleEscape = (event) => {
+      if (event.key === "Escape") {
+        setIsPickerOpen(false);
+        pickerRef.current?.querySelector("button")?.focus();
+      }
+    };
+    window.addEventListener("keydown", handleEscape);
     window.addEventListener("pointerdown", handlePointerDown);
-    return () => window.removeEventListener("pointerdown", handlePointerDown);
+    return () => {
+      window.removeEventListener("keydown", handleEscape);
+      window.removeEventListener("pointerdown", handlePointerDown);
+    };
   }, [isPickerOpen]);
 
   useEffect(() => {
@@ -134,6 +133,10 @@ export default function Window({
       searchInputRef.current?.select();
     }
   }, [isPickerOpen, isMobile]);
+
+  useEffect(() => {
+    nodeRef.current?.focus({ preventScroll: true });
+  }, [currentAppId]);
 
   const bounds = {
     top: 40,
@@ -148,7 +151,7 @@ export default function Window({
 
     if (isMaximized) {
       const centerX = (window.innerWidth - restoredWidth) / 2;
-      const centerY = (window.innerHeight - restoredHeight) / 2;
+      const centerY = Math.max(44, (window.innerHeight - restoredHeight - 40) / 2);
       setPosition({ x: Math.max(0, centerX), y: Math.max(0, centerY) });
     } else {
       setPosition({ x: 0, y: 0 });
@@ -161,8 +164,8 @@ export default function Window({
     const isCompact = mode !== "desktop";
     const isCompactMobile = isCompact && isMobile;
     const arrowButtonClass = isCompact
-      ? "flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-black/16 bg-[#f7f4ef] text-black/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.36)] transition-colors hover:bg-white hover:text-black disabled:cursor-not-allowed disabled:opacity-30"
-      : "flex h-8 w-8 items-center justify-center rounded-lg border border-black/18 bg-white/70 text-black/75 shadow-[inset_0_1px_0_rgba(255,255,255,0.35)] transition-colors hover:bg-white hover:text-black disabled:cursor-not-allowed disabled:opacity-30";
+      ? "flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-black/16 bg-[#f7f4ef] text-black/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.36)] transition-colors hover:bg-white hover:text-black disabled:cursor-not-allowed disabled:opacity-30"
+      : "flex h-11 w-11 items-center justify-center rounded-lg border border-black/18 bg-white/70 text-black/75 shadow-[inset_0_1px_0_rgba(255,255,255,0.35)] transition-colors hover:bg-white hover:text-black disabled:cursor-not-allowed disabled:opacity-30";
     const pickerBaseClass = isCompact
       ? `relative ${isPhoneHeader ? "min-w-0 flex-1" : "min-w-[240px] max-w-[340px] flex-1"}`
       : "relative";
@@ -231,6 +234,7 @@ export default function Window({
                         onNavigate?.(filteredApps[0].id, { source: "open" });
                       }
                     }}
+                    aria-label="Search portfolio sections"
                     placeholder={currentLabel}
                     className="w-full min-w-0 bg-transparent text-[12px] font-medium text-black outline-none placeholder:text-black/50"
                   />
@@ -239,7 +243,7 @@ export default function Window({
               <button
                 type="button"
                 onClick={() => setIsPickerOpen(false)}
-                className="ml-2 flex h-5 w-5 items-center justify-center rounded-md text-black/55 transition-colors hover:bg-black/5 hover:text-black/80"
+                className="ml-2 flex h-8 w-8 items-center justify-center rounded-md text-black/55 transition-colors hover:bg-black/5 hover:text-black/80"
                 aria-label="Close app search"
               >
                 <ChevronDown
@@ -256,6 +260,8 @@ export default function Window({
                 e.stopPropagation();
                 setIsPickerOpen(true);
               }}
+              aria-expanded={isPickerOpen}
+              aria-label={`Choose section, current: ${currentLabel.replace(/_/g, " ")}`}
               className={closedButtonClass}
             >
               <span className="flex min-w-0 items-center gap-2 truncate">
@@ -285,7 +291,7 @@ export default function Window({
                 transition={{ duration: 0.14, ease: "easeOut" }}
               className="absolute left-0 right-0 top-full z-30 -mt-px overflow-hidden rounded-b-2xl rounded-t-md border border-black/22 bg-[#f3f1ec] shadow-[0_18px_28px_rgba(0,0,0,0.16)]"
             >
-              <div className="max-h-64 overflow-y-auto p-1.5">
+              <div className="max-h-[min(24rem,55dvh)] overflow-y-auto p-1.5">
                 {pickerItems.length > 0 ? (
                   pickerItems.map((app) => {
                     const isCurrent = app.id === currentAppId;
@@ -295,12 +301,13 @@ export default function Window({
                       <button
                           key={app.id}
                           type="button"
-                          onClick={() =>
-                            onNavigate?.(app.id, { source: "open" })
-                          }
+                          onClick={() => {
+                            setIsPickerOpen(false);
+                            onNavigate?.(app.id, { source: "open" });
+                          }}
                         className={`flex w-full items-center ${
                           isCompactMobile ? "justify-start" : "justify-between"
-                        } rounded-xl px-3 py-2 text-left transition-colors ${
+                        } min-h-11 rounded-xl px-3 py-2 text-left transition-colors ${
                           isCurrent
                             ? "bg-black text-white"
                             : isSingleMatch
@@ -342,7 +349,7 @@ export default function Window({
   if (isMaximized) {
     if (isMobile) {
       positionClass =
-        "fixed top-[50px] left-1 right-2 bottom-[calc(env(safe-area-inset-bottom)+8px)] z-50 !transform-none border border-black/20 rounded-2xl bg-gray-300/80 backdrop-blur-md";
+        "fixed top-[50px] left-2 right-2 bottom-[calc(env(safe-area-inset-bottom)+8px)] z-50 !transform-none border border-black/20 rounded-2xl bg-gray-300/80 backdrop-blur-md";
     } else {
       positionClass =
         "fixed top-11 left-3 right-3 xl:left-1 xl:right-1 bottom-[88px] z-50 rounded-2xl !transform-none border border-black/20 bg-gray-300/80 backdrop-blur-md";
@@ -366,19 +373,22 @@ export default function Window({
     >
       <div
         ref={nodeRef}
+        role="region"
+        aria-label={`${title.replace(/_/g, " ")} window`}
+        tabIndex={-1}
         style={{
           zIndex,
           ...(isMaximized
             ? {}
             : { width: restoredWidth, height: restoredHeight }),
         }}
-        className={`bg-gray-300/40 flex flex-col overflow-hidden ${positionClass} pointer-events-auto`}
+        className={`outline-none bg-gray-300/40 flex flex-col overflow-hidden ${positionClass} pointer-events-auto`}
         onMouseDown={onFocus}
       >
         <motion.div
-          initial={{ scale: 0.97, y: 10, opacity: 0, filter: "blur(6px)" }}
+          initial={reducedMotion ? false : { scale: 0.97, y: 10, opacity: 0, filter: "blur(6px)" }}
           animate={{ scale: 1, y: 0, opacity: 1, filter: "blur(0px)" }}
-          exit={{
+          exit={reducedMotion ? { opacity: 0 } : {
             scale: 0.985,
             y: 6,
             opacity: 0,
@@ -386,7 +396,8 @@ export default function Window({
             transition: { duration: 0.14, ease: "easeOut" },
           }}
           transition={{
-            type: "spring",
+            duration: reducedMotion ? 0 : undefined,
+            type: reducedMotion ? "tween" : "spring",
             stiffness: 360,
             damping: 30,
             mass: 0.95,
@@ -396,7 +407,7 @@ export default function Window({
           {/* TITLE BAR */}
           <div
             className={`os-titlebar relative z-20 shrink-0 select-none bg-[#f1efea] ${
-              isCompactHeader ? "h-12 px-3 flex items-center" : "h-10 px-3"
+              isCompactHeader ? "h-14 px-2 flex items-center" : "h-12 px-3"
             } cursor-grab active:cursor-grabbing`}
           >
             {isCompactHeader ? (
@@ -412,13 +423,9 @@ export default function Window({
                     e.stopPropagation();
                     onClose();
                   }}
-                  onTouchEnd={(e) => {
-                    e.stopPropagation();
-                    onClose();
-                  }}
                   type="button"
                   aria-label="Close window"
-                  className="h-8 w-8 shrink-0 border border-black/12 bg-[#ff6b6b]/85 text-white flex items-center justify-center transition-colors rounded-xl cursor-pointer hover:bg-[#ff6b6b]"
+                  className="h-11 w-11 shrink-0 border border-black/12 bg-[#ff6b6b]/85 text-white flex items-center justify-center transition-colors rounded-xl cursor-pointer hover:bg-[#ff6b6b]"
                 >
                   <X size={14} strokeWidth={2.4} />
                 </button>
@@ -427,8 +434,8 @@ export default function Window({
               <div className="flex items-center justify-between gap-3 min-w-0 h-full">
                 <div className="flex items-center gap-3 min-w-0 flex-1">
                   <div className="w-2 h-2 bg-black/30 rounded-full animate-pulse pointer-events-none" />
-                  <span className="font-medium text-xs tracking-wider uppercase truncate max-w-[200px] md:max-w-md text-black/60">
-                    {title}
+                  <span className="font-medium text-xs tracking-wider uppercase truncate max-w-[140px] text-black/60">
+                    {viewportWidth >= 1180 ? title : "KAUNG_OS"}
                   </span>
                 </div>
 
@@ -447,13 +454,9 @@ export default function Window({
                       e.stopPropagation();
                       onMinimize();
                     }}
-                    onTouchEnd={(e) => {
-                      e.stopPropagation();
-                      onMinimize();
-                    }}
                     type="button"
                     aria-label="Minimize window"
-                    className="w-6 h-6 border border-black/10 bg-transparent hover:bg-black/5 flex items-center justify-center transition-colors rounded-lg cursor-pointer"
+                    className="w-11 h-11 border border-black/10 bg-transparent hover:bg-black/5 flex items-center justify-center transition-colors rounded-lg cursor-pointer"
                   >
                     <Minus
                       size={12}
@@ -467,13 +470,9 @@ export default function Window({
                       e.stopPropagation();
                       toggleMaximize();
                     }}
-                    onTouchEnd={(e) => {
-                      e.stopPropagation();
-                      toggleMaximize();
-                    }}
                     type="button"
                     aria-label={isMaximized ? "Restore window" : "Maximize window"}
-                    className="w-6 h-6 border border-black/10 bg-transparent flex items-center justify-center transition-colors rounded-lg cursor-pointer hover:bg-black/5"
+                    className="w-11 h-11 border border-black/10 bg-transparent flex items-center justify-center transition-colors rounded-lg cursor-pointer hover:bg-black/5"
                   >
                     {isMaximized ? (
                       <Maximize2
@@ -495,13 +494,9 @@ export default function Window({
                       e.stopPropagation();
                       onClose();
                     }}
-                    onTouchEnd={(e) => {
-                      e.stopPropagation();
-                      onClose();
-                    }}
                     type="button"
                     aria-label="Close window"
-                    className="w-6 h-6 border border-black/10 bg-[#ff6b6b]/80 hover:bg-[#ff6b6b] text-white flex items-center justify-center transition-colors rounded-lg cursor-pointer"
+                    className="w-11 h-11 border border-black/10 bg-[#ff6b6b]/80 hover:bg-[#ff6b6b] text-white flex items-center justify-center transition-colors rounded-lg cursor-pointer"
                   >
                     <X size={13} strokeWidth={2.5} />
                   </button>
@@ -510,12 +505,12 @@ export default function Window({
             )}
           </div>
 
-          <div className="@container relative z-0 flex-1 overflow-auto border-t border-black/10 bg-gray-300/60 backdrop-blur-sm p-4">
+          <div className="os-content @container relative z-0 min-h-0 flex-1 overflow-auto border-t border-black/10 bg-gray-300/60 backdrop-blur-sm p-1 sm:p-3">
             <AnimatePresence mode="wait" initial={false} custom={navDirection}>
               <motion.div
                 key={currentAppId || title}
                 custom={navDirection}
-                variants={{
+                variants={reducedMotion ? { enter: { opacity: 1 }, center: { opacity: 1 }, exit: { opacity: 1 } } : {
                   enter: (direction) =>
                     navigationMode === "swap"
                       ? {
@@ -556,11 +551,11 @@ export default function Window({
                           scale: 0.995,
                         },
                 }}
-                initial="enter"
+                initial={reducedMotion ? false : "enter"}
                 animate="center"
                 exit="exit"
                 transition={{
-                  duration: navigationMode === "swap" ? 0.14 : 0.2,
+                  duration: reducedMotion ? 0 : navigationMode === "swap" ? 0.14 : 0.2,
                   ease: [0.22, 1, 0.36, 1],
                 }}
                 className="h-full"

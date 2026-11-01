@@ -26,7 +26,7 @@ To get a local copy up and running, follow these simple steps.
 
 ### Prerequisites
 
-Ensure you have Node.js installed (Version 20.x recommended).
+Use Node.js 22.22.2, as pinned in `.node-version`. The project supports Node.js 22.12+ and 24.x.
 
 ### Installation
 
@@ -50,6 +50,17 @@ npm install
 ```
 npm run dev
 ```
+
+## Cloudflare Pages build
+
+- Production branch: `main`
+- Build command: `npm run build`
+- Build output directory: `dist`
+- Root directory: repository root
+- Node.js version: `22.22.2` (set in `.node-version`)
+
+If the dashboard defines `NODE_VERSION`, set it to `22.22.2` to match the repository.
+Verify a clean build locally with `npm ci`, `npm run lint`, and `npm run build`.
 
 ## License
 

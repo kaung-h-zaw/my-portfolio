@@ -11,6 +11,7 @@ export const PROJECTS_DATA = [
   {
     title: "JourneyHub",
     desc: "AI-powered trip planner with day-by-day itineraries, maps, PDF export, and saved trips.",
+    features: ["Day-by-day itineraries", "Interactive maps", "PDF export", "Saved trips"],
     image: null,
     tags: ["React", "Tailwind", "Leaflet", "Groq API"],
     link: "https://journeyhub-planner.vercel.app/",
@@ -20,9 +21,10 @@ export const PROJECTS_DATA = [
   {
     title: "Sendo",
     desc: "Lightweight file handoff via QR pairing. Optimized for Kobo/Kindle.",
+    features: ["QR pairing for file handoff", "Optimized for Kobo and Kindle"],
     image: "/Sendo.webp",
     tags: ["Node.js", "Express", "ES5"],
-    link: "https://sendo-ebook.vercel.app/",
+    link: "https://send-book.vercel.app/",
     code: "https://github.com/kaung-h-zaw/SENDO/",
     date: "Oct 2024",
   },

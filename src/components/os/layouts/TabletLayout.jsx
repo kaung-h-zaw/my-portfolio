@@ -50,6 +50,7 @@ export default function TabletLayout({
   navDirection,
   navigationMode,
   openWindows,
+  activeWindowId,
   openWindow,
   closeWindow,
   focusWindow,
@@ -124,11 +125,7 @@ export default function TabletLayout({
           apps={apps}
           appOrder={appOrder}
           openWindows={openWindows}
-          activeWindowId={
-            openWindows.length > 0
-              ? openWindows[openWindows.length - 1].id
-              : null
-          }
+          activeWindowId={activeWindowId}
           onOpenApp={openWindow}
           onFocusWindow={focusWindow}
           onMinimizeWindow={minimizeWindow}
@@ -170,7 +167,7 @@ export default function TabletLayout({
                   onMinimize={() => minimizeWindow(win.id)}
                   isMobile={false}
                 >
-                  <AppComp />
+                  <AppComp onOpenApp={openWindow} />
                 </Window>
               </div>
             );
