@@ -1,3 +1,4 @@
+import { ContactIcon } from "../os/AppIcons";
 import React, { useEffect, useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import { Mail, Copy, Check, Github, Linkedin, Instagram, Facebook, MessageCircle, Send, LoaderCircle, ArrowUpRight } from "lucide-react";
@@ -84,7 +85,7 @@ export default function ContactApp() {
     <>
       <LinkConfirmationModal linkData={activeLinkData} onClose={() => setActiveLinkData(null)} />
       <div className="app-page">
-        <AppHeader icon={Mail} file="contact.msg" title="Get In Touch" badge="Open to junior roles" />
+        <AppHeader icon={ContactIcon} file="contact.msg" title="Get In Touch" badge="Open to junior roles" />
         <p className="app-body max-w-2xl">For junior frontend or full-stack opportunities, or a conversation about my projects, send a message below.</p>
         <div className="app-split">
           <section className="app-panel">

@@ -1,3 +1,4 @@
+import { SkillsIcon } from "../os/AppIcons";
 import React from "react";
 import { Cpu, PanelsTopLeft, Server, Database, Wrench, Users } from "lucide-react";
 import {
@@ -41,7 +42,7 @@ export default function SkillsApp() {
 
   return (
     <div className="app-page">
-      <AppHeader icon={Cpu} file="skills.exe" title="Tech Stack" badge={`${total} skills & tools · ${categories.length} areas`} />
+      <AppHeader icon={SkillsIcon} file="skills.exe" title="Tech Stack" badge={`${total} skills & tools · ${categories.length} areas`} />
 
       <p className="font-sans text-base leading-relaxed text-black/75 max-w-2xl">
         The tools I use to build interfaces, APIs, and applications that work with data.

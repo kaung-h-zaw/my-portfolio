@@ -1,5 +1,6 @@
+import { ProfileIcon } from "../os/AppIcons";
 import React, { useEffect, useRef, useState } from "react";
-import { User, ArrowUpRight, FolderGit2, Download, Check, Mail, Github, Linkedin, Briefcase, Code2, Target } from "lucide-react";
+import { ArrowUpRight, FolderGit2, FileText, Check, Mail, Github, Linkedin, Briefcase, Code2, Target } from "lucide-react";
 import { AppHeader, AppFooter, PanelTitle, Tags } from "./AppLayout";
 
 const STACK = ["React", "Next.js", "JavaScript", "TypeScript", "Tailwind CSS", "Node.js", "Express", "MongoDB"];
@@ -25,7 +26,7 @@ export default function AboutApp({ onOpenApp }) {
 
   return (
     <div className="app-page">
-      <AppHeader icon={User} file="profile.exe" title="Kaung Htet Zaw" badge="Open to junior roles" />
+      <AppHeader icon={ProfileIcon} file="profile.exe" title="Kaung Htet Zaw" badge="Open to junior roles" />
       <div className="app-split app-about-grid">
         <section className="app-panel">
           <div className="flex items-center gap-3 sm:gap-4 mb-5">
@@ -48,9 +49,9 @@ export default function AboutApp({ onOpenApp }) {
             <button type="button" onClick={() => onOpenApp?.("projects")} className="app-action">
               <FolderGit2 size={17} aria-hidden="true" /> View Projects
             </button>
-            <a href="/resume.pdf" download="Kaung-Htet-Zaw-CV.pdf" className="app-action-secondary">
-              <Download size={17} aria-hidden="true" /> Download CV
-            </a>
+            <button type="button" onClick={() => onOpenApp?.("cv")} className="app-action-secondary">
+              <FileText size={17} aria-hidden="true" /> View CV
+            </button>
           </div>
           <div className="flex flex-wrap gap-2">
             <a href="https://github.com/kaung-h-zaw" target="_blank" rel="noopener noreferrer" className="app-action-secondary px-3 text-xs">

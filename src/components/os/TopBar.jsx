@@ -89,10 +89,10 @@ export default function TopBar({ onOpenApp, isPhone = false }) {
               {item.title}
             </button>
           ))}
-          <a href="/resume.pdf" download="Kaung-Htet-Zaw-CV.pdf" onClick={() => setMenuOpen(false)}
+          <button type="button" onClick={() => openApp("cv")}
             className="min-h-11 px-3 py-2 text-xs font-medium uppercase tracking-wider text-black/70 hover:bg-black/5 hover:text-black rounded-md transition-colors lg:min-h-0 lg:px-2.5 lg:py-1">
-            Download CV
-          </a>
+            View CV
+          </button>
         </nav>
       </div>
 

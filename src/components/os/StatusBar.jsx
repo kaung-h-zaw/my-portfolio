@@ -67,7 +67,7 @@ export default function StatusBar({
               >
                 {isLucideIcon ? (
                   <Icon
-                    size={24}
+                    size={30}
                     strokeWidth={2}
                     className={`transition-all ${
                       isActive
@@ -126,7 +126,7 @@ export default function StatusBar({
                   className="w-11 h-11 bg-transparent flex items-center justify-center rounded-xl hover:bg-black/5 hover:scale-105 transition-all group"
                 >
                   <Github
-                    size={24}
+                    size={30}
                     strokeWidth={2}
                     className="text-black/30 group-hover:text-black/60 transition-all"
                   />
@@ -146,7 +146,7 @@ export default function StatusBar({
                   className="w-11 h-11 bg-transparent flex items-center justify-center rounded-xl hover:bg-black/5 hover:scale-105 transition-all group"
                 >
                   <Linkedin
-                    size={24}
+                    size={30}
                     strokeWidth={2}
                     className="text-black/30 group-hover:text-black/60 transition-all"
                   />
@@ -168,7 +168,7 @@ export default function StatusBar({
               className="w-11 h-11 bg-transparent flex items-center justify-center rounded-xl hover:bg-black/5 hover:scale-105 transition-all group"
             >
               <Instagram
-                size={24}
+                size={30}
                 strokeWidth={2}
                 className="text-black/30 group-hover:text-black/60 transition-all"
               />

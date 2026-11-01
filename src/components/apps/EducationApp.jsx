@@ -1,5 +1,6 @@
+import { EducationIcon } from "../os/AppIcons";
 import React, { useState } from "react";
-import { GraduationCap, Award, BookOpen, ExternalLink, MapPin } from "lucide-react";
+import { Award, BookOpen, ExternalLink, MapPin } from "lucide-react";
 import LinkConfirmationModal from "../os/LinkConfirmationModal";
 import { AppHeader, AppFooter, PanelTitle, Tags } from "./AppLayout";
 
@@ -50,7 +51,7 @@ export default function EducationApp() {
     <>
       <LinkConfirmationModal linkData={activeLinkData} onClose={() => setActiveLinkData(null)} />
       <div className="app-page">
-        <AppHeader icon={GraduationCap} file="education.log" title="Academic History" badge={`${education.length} qualifications`} />
+        <AppHeader icon={EducationIcon} file="education.log" title="Academic History" badge={`${education.length} qualifications`} />
         <p className="app-body">Education, certifications, and languages.</p>
         <div className="app-split">
           <div className="space-y-4 sm:space-y-5">

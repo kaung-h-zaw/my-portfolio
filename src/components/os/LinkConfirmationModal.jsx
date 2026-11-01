@@ -1,126 +1,64 @@
-import React, { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import React, { useEffect, useId, useRef } from "react";
+import { ExternalLink, X } from "lucide-react";
 import { createPortal } from "react-dom";
 
 export default function LinkConfirmationModal({ linkData, onClose }) {
-  const displayUrl = linkData?.href?.replace(/^https?:\/\//, "") ?? "";
+  const titleId = useId();
+  const descriptionId = useId();
+  const dialogRef = useRef(null);
   const cancelRef = useRef(null);
-  const openRef = useRef(null);
+  const displayUrl = linkData?.href?.replace(/^https?:\/\//, "") ?? "";
 
   useEffect(() => {
     if (!linkData) return undefined;
-
     const previousFocus = document.activeElement;
+    const root = document.getElementById("root");
+    const wasInert = root?.inert;
+    if (root) root.inert = true;
     const handleKeyDown = (event) => {
-      if (event.key === "Escape") onClose();
+      if (event.key === "Escape") { event.preventDefault(); onClose(); }
       if (event.key === "Tab") {
-        const focusables = [cancelRef.current, openRef.current].filter(Boolean);
-        if (focusables.length === 0) return;
-        const currentIndex = focusables.indexOf(document.activeElement);
-        const nextIndex = event.shiftKey
-          ? (currentIndex - 1 + focusables.length) % focusables.length
-          : (currentIndex + 1) % focusables.length;
-        focusables[nextIndex]?.focus();
+        const focusables = [...dialogRef.current.querySelectorAll('button, a[href]')];
+        const index = focusables.indexOf(document.activeElement);
+        const next = (index + (event.shiftKey ? -1 : 1) + focusables.length) % focusables.length;
+        focusables[next]?.focus();
         event.preventDefault();
       }
     };
-
     window.addEventListener("keydown", handleKeyDown);
     cancelRef.current?.focus();
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
+      if (root) root.inert = wasInert;
       if (previousFocus?.isConnected) previousFocus.focus({ preventScroll: true });
     };
   }, [linkData, onClose]);
 
   if (!linkData) return null;
-
-  const handleContinue = () => {
-    window.open(linkData.href, "_blank", "noopener,noreferrer");
-    onClose();
-  };
+  const Icon = linkData.icon || ExternalLink;
 
   return createPortal(
-    <div
-      className="fixed inset-0 z-[999999] flex items-center justify-center bg-black/35 backdrop-blur-sm p-4 pointer-events-auto"
-      onClick={onClose}
-    >
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9, y: 20 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.9, y: 20 }}
+    <div className="fixed inset-0 z-[999999] flex items-center justify-center bg-black/30 p-4 font-mono text-neutral-900" onClick={onClose}>
+      <section ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby={titleId} aria-describedby={descriptionId}
         onClick={(event) => event.stopPropagation()}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="link-modal-title"
-        aria-describedby="link-modal-desc"
-        className="w-full max-w-[360px] bg-gray-300/70 backdrop-blur-md border border-black/10 rounded-2xl shadow-[6px_6px_0px_rgba(0,0,0,0.06)] overflow-hidden"
-      >
-        {/* Modal Header */}
-        <div className="bg-white/40 backdrop-blur-md text-black px-4 py-3 flex items-center justify-between border-b border-black/10">
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-black/30 rounded-full animate-pulse"></div>
-            <span className="font-bold font-mono uppercase text-xs tracking-wider text-black/80">
-              Leaving OS
-            </span>
+        className="w-full max-w-[440px] max-h-[calc(100dvh-32px)] overflow-y-auto rounded-2xl border border-black/20 bg-[#f3f1ed] shadow-[0_24px_80px_rgba(0,0,0,0.22)]">
+        <div className="flex items-center justify-between border-b border-black/10 pl-5 pr-2 py-1">
+          <span className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-widest text-black/60"><ExternalLink size={13} aria-hidden="true" />External link</span>
+          <button type="button" onClick={onClose} aria-label="Close link dialog" className="flex h-11 w-11 items-center justify-center rounded-lg hover:bg-black/5"><X size={17} /></button>
+        </div>
+        <div className="p-5 sm:p-6">
+          <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl border border-black/15 bg-white/65">
+            {typeof Icon === "string" ? <img src={Icon} alt="" className="h-7 w-7 object-contain" /> : <Icon size={25} strokeWidth={1.8} aria-hidden="true" />}
+          </div>
+          <h2 id={titleId} className="font-mono text-xl font-bold leading-snug tracking-tight break-words">Open {linkData.title}?</h2>
+          <p id={descriptionId} className="mt-2 font-sans text-sm leading-relaxed text-black/65">This link opens in a new tab. Your portfolio stays open here.</p>
+          <p className="mt-4 rounded-lg border border-black/10 bg-white/50 px-3 py-3 font-mono text-xs leading-relaxed break-all text-black/70">{displayUrl}</p>
+          <div className="mt-5 grid grid-cols-2 gap-3">
+            <button type="button" onClick={onClose} ref={cancelRef} className="app-action-secondary font-mono">Cancel</button>
+            <a href={linkData.href} target="_blank" rel="noopener noreferrer" onClick={onClose} className="app-action font-mono">Open link<ExternalLink size={15} aria-hidden="true" /></a>
           </div>
         </div>
-
-        {/* Modal Body */}
-        <div className="p-6 flex flex-col items-center text-center">
-          <div className="w-16 h-16 bg-white/40 backdrop-blur-sm border border-black/10 rounded-xl shadow-[2px_2px_0px_rgba(0,0,0,0.06)] mb-4 flex items-center justify-center overflow-hidden p-2">
-            {typeof linkData.icon === "string" ? (
-              <img
-                src={linkData.icon}
-                alt={linkData.title}
-                className="w-full h-full object-contain"
-              />
-            ) : (
-              React.createElement(linkData.icon, {
-                size: 32,
-                strokeWidth: 2,
-                className: "text-black/60",
-              })
-            )}
-          </div>
-
-          <h2
-            id="link-modal-title"
-            className="text-xl font-black text-black/80 mb-2 leading-tight uppercase tracking-tight"
-          >
-            Open {linkData.title}?
-          </h2>
-          <p
-            id="link-modal-desc"
-            className="text-xs text-black/60 font-mono mb-6 leading-relaxed"
-          >
-            Open in a new tab
-            <span className="text-black/50 break-all block mt-2 px-2">
-              {displayUrl}
-            </span>
-          </p>
-
-          {/* Action Buttons */}
-          <div className="flex gap-3 w-full">
-            <button
-              onClick={onClose}
-              ref={cancelRef}
-              className="flex-1 py-3 bg-white/60 backdrop-blur-sm border border-black/10 rounded-lg font-bold text-sm uppercase tracking-wider text-black/80 shadow-[2px_2px_0px_rgba(0,0,0,0.06)] hover:bg-white/80 hover:border-black/20 active:translate-y-[1px] active:shadow-none transition-all"
-            >
-              Cancel
-            </button>
-            <button
-              type="button"
-              onClick={handleContinue}
-              ref={openRef}
-              className="flex-1 py-3 bg-black/80 border border-black/10 rounded-lg font-bold text-sm uppercase tracking-wider text-white shadow-[2px_2px_0px_rgba(0,0,0,0.06)] hover:bg-black active:translate-y-[1px] active:shadow-none transition-all text-center block"
-            >
-              Open
-            </button>
-          </div>
-        </div>
-      </motion.div>
-    </div>,
-    document.body,
+      </section>
+    </div>, document.body,
   );
 }

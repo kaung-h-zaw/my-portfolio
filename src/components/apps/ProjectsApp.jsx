@@ -1,3 +1,4 @@
+import { ProjectsIcon } from "../os/AppIcons";
 import React, { useLayoutEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowUpRight, ExternalLink, Github, FolderOpen } from "lucide-react";
 import { AppHeader, AppFooter, PanelTitle, Tags } from "./AppLayout";
@@ -35,7 +36,7 @@ export default function ProjectsApp() {
             <ArrowLeft size={15} aria-hidden="true" /> Back to projects
           </button>
           <div className="app-panel mb-5">
-            <AppHeader icon={FolderOpen} file={`projects.dir / ${selected.category}`} title={selected.title} badge={selected.date} focusable />
+            <AppHeader icon={ProjectsIcon} file={`projects.dir / ${selected.category}`} title={selected.title} badge={selected.date} focusable />
             <p className="app-body mt-4 max-w-3xl">{selected.desc}</p>
             <div className="app-detail-mobile-links mt-4"><ProjectLinks project={selected} /></div>
           </div>
@@ -111,7 +112,7 @@ export default function ProjectsApp() {
         </article>
       ) : (
         <>
-          <AppHeader icon={FolderOpen} file="projects.dir" title="Project Archive" badge={`${PROJECTS_DATA.length} projects`} />
+          <AppHeader icon={ProjectsIcon} file="projects.dir" title="Project Archive" badge={`${PROJECTS_DATA.length} projects`} />
           <p className="app-body max-w-2xl">Explore the apps, their features, and the technical decisions behind them.</p>
           <div className="app-grid-two items-stretch">
             {PROJECTS_DATA.map((project) => (

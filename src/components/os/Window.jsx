@@ -21,6 +21,7 @@ const APP_SHORT_LABELS = {
   skills: "SKL",
   education: "EDU",
   contact: "CNT",
+  cv: "CV",
 };
 
 export default function Window({

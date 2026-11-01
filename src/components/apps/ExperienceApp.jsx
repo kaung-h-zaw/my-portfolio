@@ -1,5 +1,6 @@
+import { ExperienceIcon } from "../os/AppIcons";
 import React from "react";
-import { MapPin, Calendar, Briefcase } from "lucide-react";
+import { MapPin, Calendar } from "lucide-react";
 import { AppHeader, AppFooter, Tags } from "./AppLayout";
 
 export default function ExperienceApp() {
@@ -22,34 +23,18 @@ export default function ExperienceApp() {
       ],
       stack: ["JavaScript", "React", "Tailwind", "Express", "MySQL", "Python", "Docker", "AWS"],
     },
-    {
-      id: "EXP_002",
-      role: "Frontend Developer",
-      company: "Freelance",
-      location: "Remote",
-      period: "Dec 2024 - Present",
-      status: "active",
-      description:
-        "Designing and building responsive frontend work for freelance projects, turning ideas and requirements into clear, usable React interfaces.",
-      highlights: [
-        "Built responsive interfaces with React, JavaScript, and Tailwind for landing pages, portfolio sites, and small client projects",
-        "Turned design references and rough concepts into clean, reusable components with consistent layout and styling",
-        "Improved frontend quality through performance tuning, responsive refinement, and cross-browser testing",
-      ],
-      stack: ["React", "Figma", "Tailwind CSS", "Framer Motion"],
-    },
   ];
 
   return (
     <div className="app-page">
-      <AppHeader icon={Briefcase} file="experience.sys" title="Work History" badge={`${experiences.length} roles`} />
-      <p className="app-body max-w-2xl">Hands-on development through capstone teamwork and freelance projects.</p>
+      <AppHeader icon={ExperienceIcon} file="experience.sys" title="Work History" badge={`${experiences.length} role`} />
+      <p className="app-body max-w-2xl">Full-stack development through a two-semester QUT capstone project with The Guinea Group.</p>
       <div className="space-y-4 sm:space-y-5">
         {experiences.map((experience) => (
           <article key={experience.id} className="app-panel">
             <div className="app-experience-grid">
               <div className="app-tile self-start">
-                <span className="app-badge inline-block mb-4">{experience.status === "active" ? "Active · Freelance" : "Completed · Capstone"}</span>
+                <span className="app-badge inline-block mb-4">Completed · Capstone</span>
                 <h2 className="text-lg font-bold leading-tight mb-2">{experience.role}</h2>
                 <p className="font-sans text-base text-black/70 mb-4">{experience.company}</p>
                 <div className="space-y-2 border-t border-black/10 pt-3 font-sans text-sm text-black/70">
@@ -69,7 +54,7 @@ export default function ExperienceApp() {
           </article>
         ))}
       </div>
-      <AppFooter file="experience.sys">2024–Present · Remote & Australia</AppFooter>
+      <AppFooter file="experience.sys">2024 · Brisbane, Australia</AppFooter>
     </div>
   );
 }

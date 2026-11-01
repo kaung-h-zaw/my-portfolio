@@ -105,10 +105,21 @@ test("case studies stay in one app and Back restores keyboard focus", async ({ p
   await expect(page.getByRole("link", { name: /IMKAUNG live demo/ })).toHaveAttribute("href", "https://imkaung.pages.dev/");
 });
 
-test("CV downloads as a PDF", async ({ page }) => {
+test("CV previews before download and supports zoom", async ({ page }) => {
   await visit(page);
+  await page.getByRole("button", { name: "View CV", exact: true }).last().click();
+  const canvas = page.getByRole("img", { name: "CV preview, page 1", exact: true });
+  await expect(canvas).toBeVisible();
+  expect(await canvas.evaluate((element) => element.width)).toBeGreaterThan(200);
+  await expect(page.getByRole("alert")).toHaveCount(0);
+  const originalWidth = await canvas.evaluate((element) => element.width);
+  await page.getByRole("button", { name: "Zoom in CV", exact: true }).click();
+  await expect(page.getByText("125%", { exact: true })).toBeVisible();
+  await expect.poll(() => canvas.evaluate((element) => element.width)).toBeGreaterThan(originalWidth);
+  await page.getByRole("button", { name: "125%", exact: true }).click();
+  await expect(page.getByRole("button", { name: "Fit width", exact: true })).toBeVisible();
   const download = page.waitForEvent("download");
-  await page.getByRole("region", { name: / window$/ }).getByRole("link", { name: /Download CV/ }).click();
+  await page.getByRole("region", { name: / window$/ }).getByRole("link", { name: "Download PDF", exact: true }).click();
   expect((await download).suggestedFilename()).toBe("Kaung-Htet-Zaw-CV.pdf");
 });
 
@@ -195,7 +206,7 @@ test("short laptop layouts keep actions reachable and restored windows stack col
     await page.setViewportSize(viewport);
     await openApp(page, "About_Me");
     await expect(page.getByRole("button", { name: "View Projects", exact: true })).toBeInViewport({ ratio: 1 });
-    await expect(page.locator('.app-page a[download]')).toBeInViewport({ ratio: 1 });
+    await expect(page.locator(".app-page").getByRole("button", { name: "View CV", exact: true })).toBeInViewport({ ratio: 1 });
     expect(await page.locator(".app-page").evaluate((e) => e.getBoundingClientRect().width)).toBeLessThanOrEqual(1160);
     await openApp(page, "Contact");
     const email = await page.locator('.app-page a[href^="mailto:"]').boundingBox();
@@ -213,4 +224,54 @@ test("short laptop layouts keep actions reachable and restored windows stack col
     const grid = page.locator('.app-split, .app-grid-two, .app-experience-grid').first();
     expect(await grid.evaluate((e) => getComputedStyle(e).gridTemplateColumns.split(' ').length)).toBe(1);
   }
+});
+
+
+test("experience only lists the QUT capstone role", async ({ page }) => {
+  await visit(page);
+  await openApp(page, "Experience");
+  await expect(page.getByText("1 role", { exact: true })).toBeVisible();
+  await expect(page.locator(".app-page")).not.toContainText(/freelance|present/i);
+  await expect(page.getByRole("heading", { name: "Full-Stack Developer", exact: true })).toBeVisible();
+});
+
+test("external link dialog matches the OS and traps keyboard focus", async ({ page, context }) => {
+  await visit(page);
+  await openApp(page, "Contact");
+  const github = page.locator(".app-page").getByRole("button", { name: "GitHub", exact: true });
+  await github.click();
+  const dialog = page.getByRole("dialog");
+  await expect(dialog.getByRole("heading", { name: "Open GitHub?", exact: true })).toBeVisible();
+  await expect(dialog.getByText("github.com/kaung-h-zaw", { exact: true })).toBeVisible();
+  await expect(dialog.getByRole("link", { name: "Open link", exact: true })).toHaveAttribute("rel", "noopener noreferrer");
+  await expect(dialog.getByRole("button", { name: "Cancel", exact: true })).toBeFocused();
+  await page.keyboard.press("Tab");
+  await expect(dialog.getByRole("link", { name: "Open link", exact: true })).toBeFocused();
+  await page.keyboard.press("Tab");
+  await expect(dialog.getByRole("button", { name: "Close link dialog", exact: true })).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(dialog).toHaveCount(0);
+  await expect(github).toBeFocused();
+  expect(await page.locator("#root").evaluate((element) => element.inert)).toBe(false);
+  await context.route("https://github.com/kaung-h-zaw", (route) => route.fulfill({ contentType: "text/html", body: "<title>Mock GitHub</title>" }));
+  await github.click();
+  const popupPromise = page.waitForEvent("popup");
+  await dialog.getByRole("link", { name: "Open link", exact: true }).click();
+  const popup = await popupPromise;
+  await popup.waitForLoadState();
+  expect(popup.url()).toBe("https://github.com/kaung-h-zaw");
+  expect(await popup.evaluate(() => window.opener)).toBe(null);
+  await popup.close();
+  await expect(dialog).toHaveCount(0);
+});
+
+
+test("CV preview failure offers the original PDF without blocking navigation", async ({ page }) => {
+  await page.route("**/resume.pdf", (route) => route.fulfill({ status: 404, body: "Unavailable during test" }));
+  await visit(page);
+  await page.locator(".app-page").getByRole("button", { name: "View CV", exact: true }).click();
+  await expect(page.getByRole("alert")).toContainText("The preview could not load");
+  await expect(page.getByRole("link", { name: "Download PDF", exact: true })).toHaveAttribute("href", "/resume.pdf");
+  await openApp(page, "About_Me");
+  await expect(page.getByRole("button", { name: "View Projects", exact: true })).toBeVisible();
 });

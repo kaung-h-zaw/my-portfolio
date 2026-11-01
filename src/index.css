@@ -129,3 +129,9 @@ a {
   .app-field { padding-top: 10px; padding-bottom: 10px; }
   .app-page .app-body { line-height: 1.5; }
 }
+
+@layer components {
+  .cv-control { @apply inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg border border-transparent hover:border-black/15 hover:bg-white/60 disabled:opacity-30 disabled:cursor-not-allowed; }
+}
+
+.os-content .cv-control { min-width: 44px; }

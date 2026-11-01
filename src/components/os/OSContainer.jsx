@@ -9,14 +9,8 @@ const ContactApp = lazy(() => import("../apps/ContactApp"));
 const ExperienceApp = lazy(() => import("../apps/ExperienceApp"));
 const EducationApp = lazy(() => import("../apps/EducationApp"));
 
-import {
-  User,
-  Code2,
-  FolderGit2,
-  Briefcase,
-  GraduationCap,
-  Mail,
-} from "lucide-react";
+const CVApp = lazy(() => import("../apps/CVApp"));
+import { ProfileIcon, SkillsIcon, ProjectsIcon, ExperienceIcon, EducationIcon, ContactIcon, CVIcon } from "./AppIcons";
 
 function getDeviceType() {
   const width = window.innerWidth;
@@ -30,7 +24,7 @@ function getDeviceType() {
 export default function OSContainer() {
   const [deviceType, setDeviceType] = useState(getDeviceType);
   const [openWindows, setOpenWindows] = useState([
-    { id: "about", title: "About_Me", icon: User, zIndex: 21, minimized: false },
+    { id: "about", title: "About_Me", icon: ProfileIcon, zIndex: 21, minimized: false },
   ]);
   const [activeWindowId, setActiveWindowId] = useState("about");
   const zTop = useRef(21);
@@ -43,6 +37,7 @@ export default function OSContainer() {
     "skills",
     "education",
     "contact",
+    "cv",
   ];
 
   useEffect(() => {
@@ -58,45 +53,46 @@ export default function OSContainer() {
       about: {
         id: "about",
         title: "About_Me",
-        icon: User,
-        mobileIcon: User,
+        icon: ProfileIcon,
+        mobileIcon: ProfileIcon,
         component: AboutApp,
       },
       skills: {
         id: "skills",
         title: "Skills",
-        icon: Code2,
-        mobileIcon: Code2,
+        icon: SkillsIcon,
+        mobileIcon: SkillsIcon,
         component: SkillsApp,
       },
       projects: {
         id: "projects",
         title: "Projects",
-        icon: FolderGit2,
-        mobileIcon: FolderGit2,
+        icon: ProjectsIcon,
+        mobileIcon: ProjectsIcon,
         component: ProjectsApp,
       },
       experience: {
         id: "experience",
         title: "Experience",
-        icon: Briefcase,
-        mobileIcon: Briefcase,
+        icon: ExperienceIcon,
+        mobileIcon: ExperienceIcon,
         component: ExperienceApp,
       },
       education: {
         id: "education",
         title: "Education",
-        icon: GraduationCap,
-        mobileIcon: GraduationCap,
+        icon: EducationIcon,
+        mobileIcon: EducationIcon,
         component: EducationApp,
       },
       contact: {
         id: "contact",
         title: "Contact",
-        icon: Mail,
-        mobileIcon: Mail,
+        icon: ContactIcon,
+        mobileIcon: ContactIcon,
         component: ContactApp,
       },
+      cv: { id: "cv", title: "CV", icon: CVIcon, mobileIcon: CVIcon, component: CVApp },
     }),
     [],
   );
