@@ -18,10 +18,17 @@ import {
   Mail,
 } from "lucide-react";
 
+function getDeviceType() {
+  const width = window.innerWidth;
+  const isLandscapePhone = width <= 1024 && window.innerHeight < 500 &&
+    window.matchMedia("(pointer: coarse)").matches;
+
+  if (width < 640 || isLandscapePhone) return "phone";
+  return width <= 1024 ? "tablet" : "desktop";
+}
+
 export default function OSContainer() {
-  const [deviceType, setDeviceType] = useState(() =>
-    window.innerWidth < 640 ? "phone" : window.innerWidth <= 1024 ? "tablet" : "desktop",
-  );
+  const [deviceType, setDeviceType] = useState(getDeviceType);
   const [openWindows, setOpenWindows] = useState([
     { id: "about", title: "About_Me", icon: User, zIndex: 21, minimized: false },
   ]);
@@ -39,17 +46,7 @@ export default function OSContainer() {
   ];
 
   useEffect(() => {
-    const handleResize = () => {
-      const width = window.innerWidth;
-
-      if (width < 640) {
-        setDeviceType("phone");
-      } else if (width <= 1024) {
-        setDeviceType("tablet");
-      } else {
-        setDeviceType("desktop");
-      }
-    };
+    const handleResize = () => setDeviceType(getDeviceType());
 
     handleResize();
     window.addEventListener("resize", handleResize);
