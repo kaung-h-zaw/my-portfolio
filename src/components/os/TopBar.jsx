@@ -59,7 +59,7 @@ export default function TopBar({ onOpenApp }) {
             />
           </picture>
 
-          <span className="truncate">KAUNG HTET ZAW</span>
+          <span className="truncate">IMKAUNG</span>
         </div>
 
         <nav id="portfolio-menu" aria-label="Portfolio shortcuts"
