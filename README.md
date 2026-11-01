@@ -18,7 +18,8 @@ A modern, interactive personal portfolio website showcasing my projects, skills,
 - Interactive and draggable UI components
 - Smooth page transitions and scroll-based animations
 - Functional contact form integrated with EmailJS
-- Dynamic project descriptions utilizing Markdown rendering
+- Project case studies with screenshots, features, technologies, and documented technical decisions
+- Featured QUT capstone with existing team contribution details
 
 ## Getting Started
 
@@ -73,6 +74,16 @@ Use the Workers build settings above for the connected Worker. The Pages setting
 
 If the dashboard defines `NODE_VERSION`, set it to `22.22.2` to match the repository.
 Verify a clean build locally with `npm ci`, `npm run lint`, and `npm run build`.
+
+## Browser regression checks
+
+Run `npx playwright install chromium` once, then `npm run test:e2e`.
+The suite builds the production app and checks desktop, tablet, and touch phone layouts. It covers boot branding, a single visible window during delayed app loading, Desktop/Home navigation, closing and reopening, case-study keyboard focus, CV downloads, and phone rotation.
+
+`.github/workflows/ci.yml` runs lint and the browser checks on pushes and pull requests to `main`. Failures save browser screenshots and traces as workflow artifacts. Test output is ignored by Git.
+
+Project content and source references: [docs/project-content.md](docs/project-content.md).
+Google account steps still required for indexing: [docs/search-console.md](docs/search-console.md).
 
 ## License
 
