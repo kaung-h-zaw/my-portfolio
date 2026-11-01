@@ -98,7 +98,7 @@ export default function DesktopLayout({
             if (win.minimized) return null;
             const AppComp = apps[win.id].component;
             return (
-              <div key={win.id} className="pointer-events-auto relative">
+              <div key="active-window" className="pointer-events-auto relative">
                 <Window
                   id={win.id}
                   title={win.title}
