@@ -51,6 +51,18 @@ npm install
 npm run dev
 ```
 
+## Cloudflare Workers build
+
+The connected Worker is `imkaung`. `wrangler.json` deploys the Vite `dist` folder as static assets with SPA fallback.
+
+- Production branch: `main`
+- Build command: `npm run build`
+- Deploy command: `npx wrangler deploy`
+- Root directory: repository root
+- Node.js version: `22.22.2` (set in `.node-version`)
+
+Use the Workers build settings above for the connected Worker. The Pages settings below apply only to a separate Pages project.
+
 ## Cloudflare Pages build
 
 - Production branch: `main`
