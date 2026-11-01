@@ -44,7 +44,22 @@ a {
   }
 }
 
-.os-content { overscroll-behavior: contain; scrollbar-gutter: stable; }
+.os-content {
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.25) transparent;
+}
+.os-content::-webkit-scrollbar { width: 6px; height: 6px; }
+.os-content::-webkit-scrollbar-track { background: transparent; }
+.os-content::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 999px;
+}
+.os-content::-webkit-scrollbar-thumb:hover { background: rgba(0, 0, 0, 0.4); }
+@supports selector(::-webkit-scrollbar) {
+  .os-content { scrollbar-width: auto; }
+}
 .os-content * { min-width: 0; }
 .os-content p { overflow-wrap: break-word; }
 :where(input, textarea, select):focus-visible { outline: 2px solid #171717; outline-offset: 3px; }

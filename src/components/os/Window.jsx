@@ -165,7 +165,7 @@ export default function Window({
     const isCompactMobile = isCompact && isMobile;
     const arrowButtonClass = isCompact
       ? "flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-black/16 bg-[#f7f4ef] text-black/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.36)] transition-colors hover:bg-white hover:text-black disabled:cursor-not-allowed disabled:opacity-30"
-      : "flex h-11 w-11 items-center justify-center rounded-lg border border-black/18 bg-white/70 text-black/75 shadow-[inset_0_1px_0_rgba(255,255,255,0.35)] transition-colors hover:bg-white hover:text-black disabled:cursor-not-allowed disabled:opacity-30";
+      : "flex h-8 w-8 items-center justify-center rounded-lg border border-black/18 bg-white/70 text-black/75 shadow-[inset_0_1px_0_rgba(255,255,255,0.35)] transition-colors hover:bg-white hover:text-black disabled:cursor-not-allowed disabled:opacity-30";
     const pickerBaseClass = isCompact
       ? `relative ${isPhoneHeader ? "min-w-0 flex-1" : "min-w-[240px] max-w-[340px] flex-1"}`
       : "relative";
@@ -407,7 +407,7 @@ export default function Window({
           {/* TITLE BAR */}
           <div
             className={`os-titlebar relative z-20 shrink-0 select-none bg-[#f1efea] ${
-              isCompactHeader ? "h-14 px-2 flex items-center" : "h-12 px-3"
+              isCompactHeader ? "h-14 px-2 flex items-center" : "h-10 px-3"
             } cursor-grab active:cursor-grabbing`}
           >
             {isCompactHeader ? (
@@ -456,7 +456,7 @@ export default function Window({
                     }}
                     type="button"
                     aria-label="Minimize window"
-                    className="w-11 h-11 border border-black/10 bg-transparent hover:bg-black/5 flex items-center justify-center transition-colors rounded-lg cursor-pointer"
+                    className="w-6 h-6 border border-black/10 bg-transparent hover:bg-black/5 flex items-center justify-center transition-colors rounded-lg cursor-pointer"
                   >
                     <Minus
                       size={12}
@@ -472,7 +472,7 @@ export default function Window({
                     }}
                     type="button"
                     aria-label={isMaximized ? "Restore window" : "Maximize window"}
-                    className="w-11 h-11 border border-black/10 bg-transparent flex items-center justify-center transition-colors rounded-lg cursor-pointer hover:bg-black/5"
+                    className="w-6 h-6 border border-black/10 bg-transparent flex items-center justify-center transition-colors rounded-lg cursor-pointer hover:bg-black/5"
                   >
                     {isMaximized ? (
                       <Maximize2
@@ -496,7 +496,7 @@ export default function Window({
                     }}
                     type="button"
                     aria-label="Close window"
-                    className="w-11 h-11 border border-black/10 bg-[#ff6b6b]/80 hover:bg-[#ff6b6b] text-white flex items-center justify-center transition-colors rounded-lg cursor-pointer"
+                    className="w-6 h-6 border border-black/10 bg-[#ff6b6b]/80 hover:bg-[#ff6b6b] text-white flex items-center justify-center transition-colors rounded-lg cursor-pointer"
                   >
                     <X size={13} strokeWidth={2.5} />
                   </button>
