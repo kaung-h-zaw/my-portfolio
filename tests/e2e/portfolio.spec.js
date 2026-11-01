@@ -138,3 +138,52 @@ test("tech stack shows the requested languages and databases without hover", asy
   await expect(databases.getByRole("listitem")).toHaveCount(4);
   expect(await page.locator(".os-content").evaluate((element) => element.scrollWidth <= element.clientWidth + 1)).toBe(true);
 });
+
+async function openApp(page, name) {
+  await page.getByRole("button", { name: /^Choose section, current:/ }).click();
+  await page.locator(".os-titlebar").getByRole("button", { name: new RegExp(`^${name}`) }).click();
+}
+
+test("redesigned pages remain readable without horizontal overflow", async ({ page }, testInfo) => {
+  await visit(page);
+  if (testInfo.project.name === "phone") await page.setViewportSize({ width: 320, height: 700 });
+  for (const [app, title] of [["About_Me", "Kaung Htet Zaw"], ["Projects", "Project Archive"], ["Experience", "Work History"], ["Education", "Academic History"], ["Contact", "Get In Touch"]]) {
+    await openApp(page, app);
+    await expect(page.getByRole("heading", { name: title, exact: true, level: 1 })).toBeVisible();
+    expect(await page.locator(".os-content").evaluate((element) => element.scrollWidth <= element.clientWidth + 1)).toBe(true);
+    await expect(page.getByRole("region", { name: / window$/ })).toHaveCount(1);
+  }
+});
+
+test("certificate verification dialog remains keyboard accessible", async ({ page }) => {
+  await visit(page);
+  await openApp(page, "Education");
+  const verify = page.getByRole("button", { name: "Verify Meta Front-End Developer Professional Certificate", exact: true });
+  await verify.click();
+  await expect(page.getByRole("dialog")).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("dialog")).toHaveCount(0);
+  await expect(verify).toBeFocused();
+});
+
+test("contact form handles failed and successful submissions without sending real mail", async ({ page }) => {
+  let requests = 0;
+  await page.route("https://api.emailjs.com/**", async (route) => {
+    requests += 1;
+    expect(route.request().postData()).toContain("reviewer@example.com");
+    await route.fulfill({ status: requests === 1 ? 500 : 200, body: requests === 1 ? "Simulated failure" : "OK" });
+  });
+  await visit(page);
+  await openApp(page, "Contact");
+  await page.locator("#contact-name").fill("Portfolio Test");
+  await page.locator("#contact-email").fill("reviewer@example.com");
+  await page.locator("#contact-message").fill("Mocked browser check. This message is never delivered.");
+  await page.getByRole("button", { name: "Send Message", exact: true }).click();
+  await expect(page.getByRole("alert")).toContainText("Message could not be sent");
+  await expect(page.locator("#contact-message")).not.toHaveValue("");
+  await page.getByRole("button", { name: "Send Message", exact: true }).click();
+  await expect(page.getByRole("status").filter({ hasText: "Message sent successfully!" })).toBeVisible();
+  await expect(page.locator("#contact-message")).toHaveValue("");
+  await expect(page.getByRole("button", { name: "Send Message", exact: true })).toBeEnabled();
+  expect(requests).toBe(2);
+});

@@ -78,7 +78,7 @@ Verify a clean build locally with `npm ci`, `npm run lint`, and `npm run build`.
 ## Browser regression checks
 
 Run `npx playwright install chromium` once, then `npm run test:e2e`.
-The suite builds the production app and checks desktop, tablet, and touch phone layouts. It covers boot branding, a single visible window during delayed app loading, Desktop/Home navigation, closing and reopening, case-study keyboard focus, CV downloads, and phone rotation.
+The suite builds the production app and checks desktop, tablet, and touch phone layouts. It covers boot branding, a single visible window during delayed app loading, Desktop/Home navigation, closing and reopening, case-study keyboard focus, CV downloads, phone rotation, redesigned page overflow, certificate dialogs, and mocked Contact form success/error feedback. No real email is sent by the tests.
 
 `.github/workflows/ci.yml` runs lint and the browser checks on pushes and pull requests to `main`. Failures save browser screenshots and traces as workflow artifacts. Test output is ignored by Git.
 

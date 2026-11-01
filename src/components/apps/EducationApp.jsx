@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { GraduationCap, Award, BookOpen, ExternalLink } from "lucide-react";
+import { GraduationCap, Award, BookOpen, ExternalLink, MapPin } from "lucide-react";
 import LinkConfirmationModal from "../os/LinkConfirmationModal";
+import { AppHeader, AppFooter, PanelTitle, Tags } from "./AppLayout";
 
 export default function EducationApp() {
   const [activeLinkData, setActiveLinkData] = useState(null);
@@ -47,171 +48,56 @@ export default function EducationApp() {
 
   return (
     <>
-      <LinkConfirmationModal
-        linkData={activeLinkData}
-        onClose={() => setActiveLinkData(null)}
-      />
-
-      <div className="font-mono text-black min-h-full flex flex-col gap-5 md:gap-6 xl:gap-6 p-3 md:p-4 lg:p-4 xl:p-6 overflow-y-auto overflow-x-hidden">
-        {/* HEADER */}
-        <div className="flex flex-col gap-4">
-          <div className="flex items-center gap-2.5">
-            <div className="p-1.5 bg-black/5 rounded-md">
-              <GraduationCap
-                size={16}
-                strokeWidth={2}
-                className="text-black/70"
-              />
-            </div>
-            <div className="flex flex-col">
-              <p className="text-xs md:text-[13px] lg:text-[13px] xl:text-sm uppercase tracking-widest text-black/60">
-                › education.log
-              </p>
-              <h1 className="text-lg md:text-xl lg:text-xl xl:text-2xl font-black uppercase tracking-tight leading-none text-black/90 mt-1">
-                Academic History
-              </h1>
-            </div>
-          </div>
-        </div>
-
-        <div className="border-t border-black/10" />
-
-        {/* MAIN GRID */}
-        <div className="flex flex-wrap gap-5 md:gap-6 lg:gap-6 xl:gap-8 flex-1">
-          {/* LEFT */}
-          <div className="flex flex-col gap-7 md:gap-8 lg:gap-8 flex-[2_1_360px] xl:flex-[2_1_400px]">
-            {education.map((edu, idx) => (
-              <div key={idx} className="relative pl-6 group">
-                <div className="absolute left-0 top-1.5 w-2.5 h-2.5 rounded-full bg-black/40 border-2 border-white/50 group-hover:bg-black/80 transition-colors" />
-                {idx < education.length - 1 && (
-                  <div className="absolute left-[4px] top-5 bottom-[-20px] w-[1px] border-l-2 border-dashed border-black/10" />
-                )}
-
-                {/* Content */}
-                <div className="flex flex-col gap-2">
-                  {/* Period */}
-                  <span className="text-xs md:text-[13px] lg:text-[13px] xl:text-sm font-bold uppercase tracking-widest px-2.5 py-1 bg-black/80 text-white rounded w-fit">
-                    {edu.period}
-                  </span>
-
-                  {/* Degree */}
-                  <h3 className="text-base md:text-[17px] lg:text-[17px] xl:text-lg font-black uppercase tracking-tight leading-tight text-black/90 mt-1">
-                    {edu.degree}
-                  </h3>
-
-                  {/* School & Location */}
-                  <p className="text-xs md:text-[13px] lg:text-[13px] xl:text-sm text-black/60 font-semibold uppercase tracking-wide">
-                    {edu.school} <span className="text-black/30 mx-1">·</span>{" "}
-                    {edu.location}
-                  </p>
-
-                  {/* Description */}
-                  <p className="text-sm md:text-[15px] lg:text-[15px] xl:text-base leading-relaxed text-black/80 mt-1.5">
-                    {edu.description}
-                  </p>
-
-                  {/* Skills */}
-                  <div className="flex flex-wrap gap-2 mt-3">
-                    {edu.skills.map((skill) => (
-                      <span
-                        key={skill}
-                        className="text-xs md:text-[13px] lg:text-[13px] xl:text-sm font-bold uppercase tracking-wide px-2 py-1 bg-black/5 text-black/70 rounded border border-black/5 hover:bg-black/10 hover:text-black/90 transition-colors"
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
+      <LinkConfirmationModal linkData={activeLinkData} onClose={() => setActiveLinkData(null)} />
+      <div className="app-page">
+        <AppHeader icon={GraduationCap} file="education.log" title="Academic History" badge={`${education.length} qualifications`} />
+        <p className="app-body">Education, certifications, and languages.</p>
+        <div className="grid gap-4 sm:gap-5 lg:grid-cols-[minmax(0,1.5fr)_minmax(260px,1fr)]">
+          <div className="space-y-4 sm:space-y-5">
+            {education.map((item) => (
+              <article key={item.degree} className="app-panel">
+                <span className="app-badge inline-block mb-4">{item.period}</span>
+                <h2 className="text-lg sm:text-xl font-bold leading-snug mb-2">{item.degree}</h2>
+                <p className="font-sans text-base font-semibold text-black/75 mb-2">{item.school}</p>
+                <p className="flex items-center gap-2 font-sans text-sm text-black/65 mb-4"><MapPin size={14} aria-hidden="true" />{item.location}</p>
+                <p className="app-body mb-5">{item.description}</p>
+                <Tags items={item.skills} label={`${item.degree} areas of study`} />
+              </article>
             ))}
           </div>
-
-          {/* RIGHT */}
-          <div className="flex flex-col gap-5 md:gap-6 lg:gap-6 xl:gap-8 flex-[1_1_230px] xl:flex-[1_1_250px]">
-            {/* Certifications */}
-            <div>
-              <Label icon={<Award size={14} strokeWidth={2} />}>
-                Certifications
-              </Label>
-
-              <div className="flex flex-col gap-3">
-                {certifications.map((cert, idx) => (
-                  <div
-                    key={idx}
-                    className="p-3 md:p-3.5 lg:p-3.5 bg-black/5 rounded border border-black/10 hover:border-black/30 hover:bg-black/10 transition-all group relative overflow-hidden"
-                  >
-                    <h4 className="text-xs md:text-[13px] lg:text-[13px] xl:text-sm font-bold uppercase leading-snug mb-2 text-black/90 pr-6">
-                      {cert.name}
-                    </h4>
-
-                    <div className="flex justify-between items-center text-xs md:text-[13px] lg:text-[13px] xl:text-sm font-medium uppercase tracking-widest text-black/60 border-t border-black/10 pt-2.5">
-                      <span>{cert.issuer}</span>
-                      <span>{cert.date}</span>
-                    </div>
-
-                    {cert.link && (
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setActiveLinkData({
-                            title: cert.name,
-                            href: cert.link,
-                            icon: Award,
-                          })
-                        }
-                        className="absolute top-3.5 right-3.5 text-black/30 hover:text-black/80 transition-colors"
-                        title="Verify Certificate"
-                      >
-                        <ExternalLink size={14} strokeWidth={2} />
+          <div className="space-y-4 sm:space-y-5">
+            <section className="app-panel">
+              <PanelTitle icon={Award}>Certifications</PanelTitle>
+              <div className="space-y-3">
+                {certifications.map((certificate) => (
+                  <article key={certificate.name} className="app-tile">
+                    <h3 className="text-sm font-bold leading-relaxed mb-3">{certificate.name}</h3>
+                    <p className="font-sans text-sm text-black/65">{certificate.issuer} · {certificate.date}</p>
+                    {certificate.link && (
+                      <button type="button" onClick={() => setActiveLinkData({ title: certificate.name, href: certificate.link, icon: Award })}
+                        aria-label={`Verify ${certificate.name}`} className="app-action-secondary mt-3">
+                        Verify certificate <ExternalLink size={14} aria-hidden="true" />
                       </button>
                     )}
-                  </div>
+                  </article>
                 ))}
               </div>
-            </div>
-
-            {/* Languages */}
-            <div>
-              <Label icon={<BookOpen size={14} strokeWidth={2} />}>
-                Languages
-              </Label>
-
-              <div className="flex flex-col gap-2.5">
-                {languages.map((lang, idx) => (
-                  <div
-                    key={idx}
-                    className="flex justify-between items-center px-3 md:px-3.5 lg:px-3.5 py-3 bg-black/5 rounded border border-black/10 hover:border-black/30 hover:bg-black/10 transition-all"
-                  >
-                    <span className="text-xs md:text-[13px] lg:text-[13px] xl:text-sm font-bold uppercase text-black/90">
-                      {lang.name}
-                    </span>
-                    <span className="text-xs md:text-[13px] lg:text-[13px] xl:text-sm text-black/60 font-bold uppercase tracking-widest bg-white/50 px-2 py-0.5 rounded">
-                      {lang.level}
-                    </span>
+            </section>
+            <section className="app-panel">
+              <PanelTitle icon={BookOpen}>Languages</PanelTitle>
+              <dl className="space-y-2">
+                {languages.map((language) => (
+                  <div key={language.name} className="app-tile flex flex-wrap items-center justify-between gap-2">
+                    <dt className="text-sm font-bold">{language.name}</dt>
+                    <dd className="font-sans text-sm text-black/65">{language.level}</dd>
                   </div>
                 ))}
-              </div>
-            </div>
+              </dl>
+            </section>
           </div>
         </div>
-
-        {/* FOOTER */}
-        <div className="border-t border-black/10 pt-4 mt-auto text-xs md:text-[13px] lg:text-[13px] xl:text-sm uppercase tracking-widest text-black/40 flex justify-between items-center">
-          <span>MM · AU</span>
-          <span>2019 - 2024</span>
-        </div>
+        <AppFooter file="education.log">Myanmar · Australia</AppFooter>
       </div>
     </>
-  );
-}
-
-function Label({ children, icon }) {
-  return (
-    <div className="flex items-center gap-2 mb-3 lg:mb-3.5 xl:mb-4 border-b border-black/10 pb-2">
-      {icon && <span className="text-black/60">{icon}</span>}
-      <p className="text-sm lg:text-[15px] xl:text-base uppercase tracking-widest text-black/50 font-medium">
-        {children}
-      </p>
-    </div>
   );
 }

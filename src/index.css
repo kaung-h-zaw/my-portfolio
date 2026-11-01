@@ -75,3 +75,16 @@ a {
     scroll-behavior: auto !important;
   }
 }
+
+@layer components {
+  .app-page { @apply font-mono text-black min-h-full flex flex-col gap-5 p-3 sm:p-4 xl:p-6; }
+  .app-panel { @apply rounded-xl border border-black/15 bg-white/20 p-4 sm:p-5; }
+  .app-tile { @apply rounded-lg border border-black/10 bg-white/20 p-3; }
+  .app-eyebrow { @apply text-xs uppercase tracking-widest text-black/65; }
+  .app-body { @apply font-sans text-base leading-relaxed text-black/80; }
+  .app-badge { @apply rounded-full border border-black/15 bg-white/20 px-3 py-1.5 text-xs text-black/70; }
+  .app-tag { @apply rounded-md border border-black/10 bg-white/25 px-2.5 py-1 text-xs text-black/75; }
+  .app-action { @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-black px-4 py-2.5 text-sm font-bold text-white transition-colors hover:bg-black/80 disabled:opacity-50 disabled:cursor-not-allowed; }
+  .app-action-secondary { @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-black/20 bg-white/20 px-4 py-2.5 text-sm font-medium text-black/85 transition-colors hover:bg-white/40 hover:border-black/30; }
+  .app-field { @apply w-full rounded-lg border border-black/20 bg-white/25 px-3 py-3 font-sans text-base text-black placeholder:text-black/40 transition-colors focus:bg-white/50; }
+}

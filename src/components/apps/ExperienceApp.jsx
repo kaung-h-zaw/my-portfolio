@@ -1,5 +1,6 @@
 import React from "react";
-import { MapPin, Calendar, Briefcase, ArrowRight } from "lucide-react";
+import { MapPin, Calendar, Briefcase } from "lucide-react";
+import { AppHeader, AppFooter, Tags } from "./AppLayout";
 
 export default function ExperienceApp() {
   const experiences = [
@@ -40,126 +41,35 @@ export default function ExperienceApp() {
   ];
 
   return (
-    <div className="font-mono text-black min-h-full flex flex-col gap-5 xl:gap-6 p-3 lg:p-4 xl:p-6 overflow-y-auto overflow-x-hidden">
-      {/* HEADER */}
-      <div className="flex flex-col gap-4">
-        <div className="flex items-center gap-2.5">
-          <div className="p-1.5 bg-black/5 rounded-md">
-            <Briefcase size={16} strokeWidth={2} className="text-black/70" />
-          </div>
-          <div className="flex flex-col">
-            <p className="text-xs lg:text-[13px] xl:text-sm uppercase tracking-widest text-black/60">
-              › experience.sys
-            </p>
-            <h1 className="text-lg lg:text-xl xl:text-2xl font-black uppercase tracking-tight leading-none text-black/90 mt-1">
-              Work History
-            </h1>
-          </div>
-        </div>
-      </div>
-
-      <div className="border-t border-black/10" />
-
-      {/* EXPERIENCE DOSSIER */}
-      <div className="flex flex-col gap-7 lg:gap-8 xl:gap-12 flex-1">
-        {experiences.map((exp, idx) => (
-          <div key={exp.id} className="group relative">
-            <div className="flex flex-wrap gap-5 lg:gap-6 xl:gap-8">
-              {/* LEFT*/}
-              <div className="flex flex-col gap-3 flex-[1_1_220px] xl:flex-[1_1_250px] shrink-0">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs lg:text-[13px] xl:text-sm font-bold font-mono text-black/40">
-                    [{exp.id}]
-                  </span>
-                  {/* Status Badge */}
-                  <span
-                    className={`text-xs lg:text-[13px] xl:text-sm font-bold uppercase tracking-widest px-2.5 py-1 rounded ${
-                      exp.status === "active"
-                        ? "bg-black text-white"
-                        : "bg-black/10 text-black/50"
-                    }`}
-                  >
-                    {exp.status}
-                  </span>
-                </div>
-
-                <div>
-                  <h2 className="text-base lg:text-lg xl:text-xl font-black uppercase tracking-tight leading-tight text-black/90">
-                    {exp.role}
-                  </h2>
-                  <p className="text-sm lg:text-[15px] xl:text-base text-black/60 font-bold uppercase tracking-widest mt-1">
-                    @ {exp.company}
-                  </p>
-                </div>
-
-                {/* Location & Time */}
-                <div className="flex flex-col gap-1.5 mt-2 pt-3 border-t border-black/10">
-                  <div className="flex items-center gap-2 text-xs lg:text-[13px] xl:text-sm text-black/60 font-medium">
-                    <Calendar size={13} strokeWidth={2} />
-                    <span>{exp.period}</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-xs lg:text-[13px] xl:text-sm text-black/60 font-medium">
-                    <MapPin size={13} strokeWidth={2} />
-                    <span>{exp.location}</span>
-                  </div>
+    <div className="app-page">
+      <AppHeader icon={Briefcase} file="experience.sys" title="Work History" badge={`${experiences.length} roles`} />
+      <p className="app-body max-w-2xl">Hands-on development through capstone teamwork and freelance projects.</p>
+      <div className="space-y-4 sm:space-y-5">
+        {experiences.map((experience) => (
+          <article key={experience.id} className="app-panel">
+            <div className="grid gap-5 lg:grid-cols-[240px_minmax(0,1fr)]">
+              <div className="app-tile self-start">
+                <span className="app-badge inline-block mb-4">{experience.status === "active" ? "Active · Freelance" : "Completed · Capstone"}</span>
+                <h2 className="text-lg font-bold leading-tight mb-2">{experience.role}</h2>
+                <p className="font-sans text-base text-black/70 mb-4">{experience.company}</p>
+                <div className="space-y-2 border-t border-black/10 pt-3 font-sans text-sm text-black/70">
+                  <p className="flex items-start gap-2"><Calendar size={15} className="shrink-0 mt-0.5" aria-hidden="true" />{experience.period}</p>
+                  <p className="flex items-start gap-2"><MapPin size={15} className="shrink-0 mt-0.5" aria-hidden="true" />{experience.location}</p>
                 </div>
               </div>
-
-              {/* RIGHT */}
-              <div className="flex flex-col gap-4 flex-[2_1_360px] xl:flex-[2_1_400px]">
-                <p className="text-sm lg:text-[15px] xl:text-base leading-relaxed text-black/80 font-medium bg-black/5 p-3 lg:p-3.5 rounded-lg border border-black/10">
-                  {exp.description}
-                </p>
-
-                <div className="flex flex-col gap-2">
-                  <p className="text-xs lg:text-[13px] xl:text-sm uppercase tracking-widest text-black/50 font-bold mb-1">
-                    Key Contributions
-                  </p>
-                  <ul className="space-y-2.5">
-                    {exp.highlights.map((item, i) => (
-                      <li
-                        key={i}
-                        className="flex items-start gap-2.5 text-sm lg:text-[15px] xl:text-base text-black/70 leading-relaxed"
-                      >
-                        <ArrowRight
-                          size={14}
-                          strokeWidth={2}
-                          className="mt-0.5 text-black/30 shrink-0"
-                        />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Tech Stack */}
-                <div className="mt-3">
-                  <div className="flex flex-wrap gap-2">
-                    {exp.stack.map((tech) => (
-                      <span
-                        key={tech}
-                        className="text-xs lg:text-[13px] xl:text-sm font-bold uppercase tracking-wide px-2.5 py-1 bg-black/5 text-black/60 rounded border border-black/5 group-hover:bg-black/10 group-hover:text-black/80 transition-colors"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+              <div>
+                <p className="app-body mb-5">{experience.description}</p>
+                <h3 className="app-eyebrow font-bold mb-3">Key contributions</h3>
+                <ul className="list-disc pl-5 space-y-2 font-sans text-base leading-relaxed text-black/80 mb-5">
+                  {experience.highlights.map((highlight) => <li key={highlight}>{highlight}</li>)}
+                </ul>
+                <Tags items={experience.stack} label={`${experience.company} technologies`} />
               </div>
             </div>
-
-            {idx < experiences.length - 1 && (
-              <div className="border-t border-black/10 mt-7 lg:mt-8 xl:mt-12" />
-            )}
-          </div>
+          </article>
         ))}
       </div>
-
-      {/* FOOTER */}
-      <div className="border-t border-black/10 pt-4 mt-auto text-xs lg:text-[13px] xl:text-sm uppercase tracking-widest text-black/40 flex justify-between items-center">
-        <span>2024 - Present</span>
-        <span>Remote · AU</span>
-      </div>
+      <AppFooter file="experience.sys">2024–Present · Remote & Australia</AppFooter>
     </div>
   );
 }
