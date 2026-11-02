@@ -37,7 +37,7 @@ export default function AboutApp({ onOpenApp }) {
                 className="app-profile-image h-14 w-14 sm:h-24 sm:w-24 rounded-xl border border-white/10 bg-[#e9e8e4] object-contain" />
             </picture>
             <div>
-              <p className="app-eyebrow mb-2 normal-case">alias kaung</p>
+              <p className="app-eyebrow mb-2 normal-case">Hello, I’m Kaung Htet Zaw, alias Kaung.</p>
               <h2 className="text-base sm:text-2xl font-bold leading-tight">Junior Full-Stack Developer</h2>
             </div>
           </div>
