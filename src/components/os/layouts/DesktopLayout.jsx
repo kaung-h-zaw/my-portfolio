@@ -17,7 +17,7 @@ const DesktopIcon = ({ title, icon: Icon, onClick }) => (
     <div className="w-14 h-14 lg:w-16 lg:h-16 xl:w-20 xl:h-20 flex items-center justify-center group-hover:-translate-y-1 group-active:translate-y-0 transition-transform drop-shadow-[0_8px_12px_rgba(0,0,0,0.25)]">
       <Icon size={64} strokeWidth={1.8} className="w-full h-full" />
     </div>
-    <span className="w-full font-sans font-medium text-[11px] lg:text-xs text-slate-200 text-center leading-tight px-0.5 whitespace-nowrap overflow-hidden text-ellipsis">
+    <span className="w-full font-sans font-medium text-[11px] lg:text-xs text-zinc-200 text-center leading-tight px-0.5 whitespace-nowrap overflow-hidden text-ellipsis">
       {formatDesktopTitle(title)}
     </span>
   </button>

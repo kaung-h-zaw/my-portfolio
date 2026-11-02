@@ -81,7 +81,7 @@ export default function WelcomeScreen({ onComplete }) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.1 }}
-              className="self-center text-[9px] sm:text-[10px] uppercase tracking-[0.3em] text-slate-400 font-mono mb-2 px-2 py-1 rounded border border-white/10 bg-white/5"
+              className="self-center text-[9px] sm:text-[10px] uppercase tracking-[0.3em] text-zinc-400 font-mono mb-2 px-2 py-1 rounded border border-white/10 bg-white/5"
             >
               <span className="md:hidden">tap to skip</span>
               <span className="hidden md:inline">press any key to skip</span>
@@ -121,8 +121,8 @@ export default function WelcomeScreen({ onComplete }) {
                     className={`text-[10px] sm:text-xs font-mono tracking-wider ${
                       index === BOOT_LOGS.length - 1 ||
                       index === BOOT_LOGS.length - 2
-                        ? "text-slate-100 font-bold"
-                        : "text-slate-400"
+                        ? "text-zinc-100 font-bold"
+                        : "text-zinc-400"
                     }`}
                   >
                     › {log}
@@ -137,7 +137,7 @@ export default function WelcomeScreen({ onComplete }) {
                     duration: 0.8,
                     ease: "linear",
                   }}
-                  className="w-1.5 sm:w-2 h-3 sm:h-4 bg-indigo-300 mt-1"
+                  className="w-1.5 sm:w-2 h-3 sm:h-4 bg-zinc-300 mt-1"
                 />
               </div>
             </div>
@@ -149,7 +149,7 @@ export default function WelcomeScreen({ onComplete }) {
               transition={{ delay: 0.3 }}
               className="text-center mt-4"
             >
-              <p className="text-[8px] sm:text-[9px] uppercase tracking-[0.4em] font-bold text-slate-400">
+              <p className="text-[8px] sm:text-[9px] uppercase tracking-[0.4em] font-bold text-zinc-400">
                 System Ready • 2026
               </p>
             </motion.div>

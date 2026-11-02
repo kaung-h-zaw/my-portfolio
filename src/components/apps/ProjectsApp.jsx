@@ -44,11 +44,11 @@ export default function ProjectsApp() {
             <div className="space-y-6">
               <section className="app-panel" aria-labelledby="project-purpose">
                 <SectionTitle id="project-purpose">The project</SectionTitle>
-                <p className="font-sans text-base leading-relaxed text-slate-200">{selected.purpose}</p>
+                <p className="font-sans text-base leading-relaxed text-zinc-200">{selected.purpose}</p>
               </section>
               <section className="app-panel" aria-labelledby="project-features">
                 <SectionTitle id="project-features">Main features</SectionTitle>
-                <ul className="list-disc pl-5 space-y-2 font-sans text-base leading-relaxed text-slate-200">
+                <ul className="list-disc pl-5 space-y-2 font-sans text-base leading-relaxed text-zinc-200">
                   {selected.features.map((feature) => <li key={feature}>{feature}</li>)}
                 </ul>
               </section>
@@ -56,13 +56,13 @@ export default function ProjectsApp() {
                 <figure className="app-panel">
                   <img src={selected.image} alt={`${selected.title} application screenshot`}
                     width="1440" height="900" className="w-full rounded-lg border border-white/10 bg-white/5" />
-                  <figcaption className="text-xs text-slate-300 mt-2">{selected.title} · application preview</figcaption>
+                  <figcaption className="text-xs text-zinc-300 mt-2">{selected.title} · application preview</figcaption>
                 </figure>
               )}
               {selected.contribution?.length > 0 && (
                 <section className="app-panel" aria-labelledby="project-contribution">
                   <SectionTitle id="project-contribution">My contribution</SectionTitle>
-                  <ul className="list-disc pl-5 space-y-2 font-sans text-base leading-relaxed text-slate-200">
+                  <ul className="list-disc pl-5 space-y-2 font-sans text-base leading-relaxed text-zinc-200">
                     {selected.contribution.map((item) => <li key={item}>{item}</li>)}
                   </ul>
                 </section>
@@ -74,7 +74,7 @@ export default function ProjectsApp() {
                     {selected.decisions.map((item) => (
                       <div key={item.title}>
                         <h3 className="text-sm font-bold mb-1">{item.title}</h3>
-                        <p className="font-sans text-base leading-relaxed text-slate-200">{item.detail}</p>
+                        <p className="font-sans text-base leading-relaxed text-zinc-200">{item.detail}</p>
                       </div>
                     ))}
                   </div>
@@ -83,13 +83,13 @@ export default function ProjectsApp() {
               {selected.challenge && (
                 <section className="app-panel" aria-labelledby="project-challenge">
                   <SectionTitle id="project-challenge">A challenge I solved</SectionTitle>
-                  <p className="font-sans text-base leading-relaxed text-slate-200">{selected.challenge}</p>
+                  <p className="font-sans text-base leading-relaxed text-zinc-200">{selected.challenge}</p>
                 </section>
               )}
               {selected.learning && (
                 <section className="app-panel" aria-labelledby="project-learning">
                   <SectionTitle id="project-learning">What I learned</SectionTitle>
-                  <p className="font-sans text-base leading-relaxed text-slate-200">{selected.learning}</p>
+                  <p className="font-sans text-base leading-relaxed text-zinc-200">{selected.learning}</p>
                 </section>
               )}
             </div>
@@ -97,8 +97,8 @@ export default function ProjectsApp() {
               <dl className="space-y-4 text-sm">
                 {[["Type", selected.category], ["Date", selected.date], ["Role", selected.role], ["Team", selected.team], ["Context", selected.context]].filter(([, value]) => value).map(([label, value]) => (
                   <div key={label}>
-                    <dt className="text-xs uppercase tracking-widest text-slate-300 mb-1">{label}</dt>
-                    <dd className="leading-relaxed text-slate-200">{value}</dd>
+                    <dt className="text-xs uppercase tracking-widest text-zinc-300 mb-1">{label}</dt>
+                    <dd className="leading-relaxed text-zinc-200">{value}</dd>
                   </div>
                 ))}
               </dl>
@@ -122,7 +122,7 @@ export default function ProjectsApp() {
                   <span className={project.featured ? "rounded-full bg-black px-3 py-1.5 text-xs font-medium text-white" : "app-badge"}>
                     {project.featured ? "Featured · " : ""}{project.category}
                   </span>
-                  <span className="text-xs text-slate-300">{project.date}</span>
+                  <span className="text-xs text-zinc-300">{project.date}</span>
                 </div>
                 <h2 id={`project-${project.id}`} className="text-xl font-bold leading-snug mb-3">{project.title}</h2>
                 <div className={`grid gap-4 mb-4 ${project.image ? "app-project-summary" : ""}`}>
@@ -130,13 +130,13 @@ export default function ProjectsApp() {
                   {project.image && <img src={project.image} alt={`${project.title} application screenshot`} loading="lazy" width="1440" height="900"
                     className="order-first app-project-image w-full aspect-[16/10] object-cover object-top rounded-lg border border-white/10 bg-white/5" />}
                 </div>
-                {project.team && <p className="text-xs text-slate-300 mb-4">{project.team}</p>}
-                <ul className="list-disc pl-5 space-y-1 font-sans text-sm leading-relaxed text-slate-200 mb-4">
+                {project.team && <p className="text-xs text-zinc-300 mb-4">{project.team}</p>}
+                <ul className="list-disc pl-5 space-y-1 font-sans text-sm leading-relaxed text-zinc-200 mb-4">
                   {project.features.slice(0, 3).map((feature) => <li key={feature}>{feature}</li>)}
                 </ul>
                 {project.contribution?.length > 0 && <div className="app-tile mb-4">
                   <h3 className="app-eyebrow font-bold mb-2">My contribution</h3>
-                  <p className="font-sans text-sm leading-relaxed text-slate-200">{project.contribution[0]}</p>
+                  <p className="font-sans text-sm leading-relaxed text-zinc-200">{project.contribution[0]}</p>
                 </div>}
                 <div className="mt-auto mb-4"><TechList project={project} /></div>
                 <div className="border-t border-white/10 pt-4 space-y-2">

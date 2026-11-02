@@ -23,7 +23,7 @@ export default function StatusBar({
       />
 
       <div role="navigation" aria-label="App dock" style={isTablet ? { bottom: "calc(var(--os-safe-bottom) + 68px)" } : undefined} className="fixed bottom-2 left-1/2 -translate-x-1/2 z-[9999] flex items-end select-none w-max max-w-[95vw]">
-        <div className="flex items-center gap-1.5 overflow-x-auto rounded-2xl border border-white/10 bg-[#151d30]/75 px-3 py-2.5 shadow-[0_8px_32px_rgba(20,36,43,0.16),inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-xl">
+        <div className="flex items-center gap-1.5 overflow-x-auto rounded-2xl border border-white/10 bg-[#18181b]/75 px-3 py-2.5 shadow-[0_8px_32px_rgba(20,36,43,0.16),inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-xl">
           {/* 1. APPS */}
           {appOrder.map((appId) => {
             const app = apps[appId];
@@ -71,10 +71,10 @@ export default function StatusBar({
                     strokeWidth={2}
                     className={`transition-all ${
                       isActive
-                        ? "text-slate-200"
+                        ? "text-zinc-200"
                         : isOpen
-                          ? "text-slate-400"
-                          : "text-slate-400 group-hover:text-slate-400"
+                          ? "text-zinc-400"
+                          : "text-zinc-400 group-hover:text-zinc-400"
                     }`}
                   />
                 ) : (
@@ -94,7 +94,7 @@ export default function StatusBar({
                 {isOpen && (
                   <span
                     className={`absolute -bottom-1 left-1/2 -translate-x-1/2 rounded-full ${
-                      isActive ? "w-3 h-0.5 bg-indigo-300" : "w-2.5 h-0.5 bg-slate-400"
+                      isActive ? "w-3 h-0.5 bg-zinc-300" : "w-2.5 h-0.5 bg-zinc-400"
                     }`}
                   />
                 )}
@@ -111,7 +111,7 @@ export default function StatusBar({
             ].map((profile) => (
               <button key={profile.title} type="button" onClick={(event) => setActiveLinkData({ ...profile, returnFocus: event.currentTarget })}
                 aria-label={`Open ${profile.title} profile`} title={`${profile.title} · opens in a new tab`}
-                className="flex h-11 w-11 items-center justify-center rounded-lg border border-transparent text-slate-300 transition-colors hover:border-white/10 hover:bg-white/10 hover:text-slate-100">
+                className="flex h-11 w-11 items-center justify-center rounded-lg border border-transparent text-zinc-300 transition-colors hover:border-white/10 hover:bg-white/10 hover:text-zinc-100">
                 <profile.icon size={36} strokeWidth={1.8} aria-hidden="true" />
               </button>
             ))}

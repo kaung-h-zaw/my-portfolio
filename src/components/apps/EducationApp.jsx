@@ -59,8 +59,8 @@ export default function EducationApp() {
               <article key={item.degree} className="app-panel">
                 <span className="app-badge inline-block mb-4">{item.period}</span>
                 <h2 className="text-lg sm:text-xl font-bold leading-snug mb-2">{item.degree}</h2>
-                <p className="font-sans text-base font-semibold text-slate-200 mb-2">{item.school}</p>
-                <p className="flex items-center gap-2 font-sans text-sm text-slate-300 mb-4"><MapPin size={14} aria-hidden="true" />{item.location}</p>
+                <p className="font-sans text-base font-semibold text-zinc-200 mb-2">{item.school}</p>
+                <p className="flex items-center gap-2 font-sans text-sm text-zinc-300 mb-4"><MapPin size={14} aria-hidden="true" />{item.location}</p>
                 <p className="app-body mb-5">{item.description}</p>
                 <Tags items={item.skills} label={`${item.degree} areas of study`} />
               </article>
@@ -73,7 +73,7 @@ export default function EducationApp() {
                 {certifications.map((certificate) => (
                   <article key={certificate.name} className="app-tile">
                     <h3 className="text-sm font-bold leading-relaxed mb-3">{certificate.name}</h3>
-                    <p className="font-sans text-sm text-slate-300">{certificate.issuer} · {certificate.date}</p>
+                    <p className="font-sans text-sm text-zinc-300">{certificate.issuer} · {certificate.date}</p>
                     {certificate.link && (
                       <button type="button" onClick={(event) => setActiveLinkData({ title: certificate.name, href: certificate.link, icon: Award, returnFocus: event.currentTarget })}
                         aria-label={`Verify ${certificate.name}`} className="app-action-secondary mt-3">
@@ -90,7 +90,7 @@ export default function EducationApp() {
                 {languages.map((language) => (
                   <div key={language.name} className="app-tile flex flex-wrap items-center justify-between gap-2">
                     <dt className="text-sm font-bold">{language.name}</dt>
-                    <dd className="font-sans text-sm text-slate-300">{language.level}</dd>
+                    <dd className="font-sans text-sm text-zinc-300">{language.level}</dd>
                   </div>
                 ))}
               </dl>

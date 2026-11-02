@@ -11,11 +11,11 @@ function AppGlyph({ glyph: Glyph, colors, size = 24, className, strokeWidth = 1.
   </svg>;
 }
 
-export function ProfileIcon(props) { return <AppGlyph {...props} glyph={UserRound} colors={["#354e91", "#1a2c59", "#c4d8ff"]} />; }
-export function ProjectsIcon(props) { return <AppGlyph {...props} glyph={FolderCode} colors={["#365b84", "#183447", "#a5e0f5"]} />; }
-export function ExperienceIcon(props) { return <AppGlyph {...props} glyph={BriefcaseBusiness} colors={["#644a85", "#342644", "#e4c8ff"]} />; }
-export function SkillsIcon(props) { return <AppGlyph {...props} glyph={Cpu} colors={["#4c4998", "#282756", "#d5ceff"]} />; }
-export function EducationIcon(props) { return <AppGlyph {...props} glyph={BookOpen} colors={["#366a69", "#1a3d44", "#a6eee3"]} />; }
-export function ContactIcon(props) { return <AppGlyph {...props} glyph={Mail} colors={["#405ab1", "#26345e", "#d3dfff"]} />; }
-export function GitHubIcon(props) { return <AppGlyph {...props} glyph={Github} colors={["#394356", "#1b2233", "#e2e8f0"]} />; }
-export function LinkedInIcon(props) { return <AppGlyph {...props} glyph={Linkedin} colors={["#2a5d91", "#163455", "#c2e3ff"]} />; }
+export function ProfileIcon(props) { return <AppGlyph {...props} glyph={UserRound} colors={["#353538", "#1b1b1e", "#e4e4e7"]} />; }
+export function ProjectsIcon(props) { return <AppGlyph {...props} glyph={FolderCode} colors={["#353538", "#1b1b1e", "#e4e4e7"]} />; }
+export function ExperienceIcon(props) { return <AppGlyph {...props} glyph={BriefcaseBusiness} colors={["#353538", "#1b1b1e", "#e4e4e7"]} />; }
+export function SkillsIcon(props) { return <AppGlyph {...props} glyph={Cpu} colors={["#353538", "#1b1b1e", "#e4e4e7"]} />; }
+export function EducationIcon(props) { return <AppGlyph {...props} glyph={BookOpen} colors={["#353538", "#1b1b1e", "#e4e4e7"]} />; }
+export function ContactIcon(props) { return <AppGlyph {...props} glyph={Mail} colors={["#353538", "#1b1b1e", "#e4e4e7"]} />; }
+export function GitHubIcon(props) { return <AppGlyph {...props} glyph={Github} colors={["#353538", "#1b1b1e", "#e4e4e7"]} />; }
+export function LinkedInIcon(props) { return <AppGlyph {...props} glyph={Linkedin} colors={["#353538", "#1b1b1e", "#e4e4e7"]} />; }

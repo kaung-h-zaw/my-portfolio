@@ -169,7 +169,7 @@ export default function OSContainer() {
   };
 
   return (
-    <div className="fixed inset-0 w-screen h-[100dvh] overflow-hidden font-sans text-slate-100 selection:bg-indigo-500/40 selection:text-white">
+    <div className="fixed inset-0 w-screen h-[100dvh] overflow-hidden font-sans text-zinc-100 selection:bg-zinc-500/40 selection:text-white">
       {deviceType === "desktop" && <DesktopLayout {...layoutProps} />}
       {deviceType === "tablet" && <TabletLayout {...layoutProps} />}
       {deviceType === "phone" && <PhoneLayout {...layoutProps} />}

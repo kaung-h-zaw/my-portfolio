@@ -90,7 +90,7 @@ export default function ContactApp() {
         <div className="app-split">
           <section className="app-panel">
             <PanelTitle icon={Send}>Send a message</PanelTitle>
-            <p className="font-sans text-sm text-slate-300 mb-5">Required fields are marked *.</p>
+            <p className="font-sans text-sm text-zinc-300 mb-5">Required fields are marked *.</p>
             <form ref={formRef} onSubmit={handleSubmit} aria-busy={sending} className="space-y-4">
               <div className="app-form-grid grid gap-4">
                 <div>
@@ -125,7 +125,7 @@ export default function ContactApp() {
               <button type="button" onClick={handleCopyEmail} aria-label={copied ? "Email copied" : "Copy email address"} className="app-action-secondary mt-4">
                 {copied ? <Check size={15} aria-hidden="true" /> : <Copy size={15} aria-hidden="true" />}{copied ? "Copied" : "Copy email"}
               </button>
-              <p role="status" className="font-sans text-sm text-slate-300 mt-2">{copyError ? "Copy unavailable. You can use the email link above." : copied ? "Email address copied." : ""}</p>
+              <p role="status" className="font-sans text-sm text-zinc-300 mt-2">{copyError ? "Copy unavailable. You can use the email link above." : copied ? "Email address copied." : ""}</p>
             </section>
             <section className="app-panel">
               <PanelTitle icon={MessageCircle}>Elsewhere</PanelTitle>

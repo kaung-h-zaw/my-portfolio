@@ -18,7 +18,7 @@ export default function TabletLayout({ apps, appOrder, openWindows, activeWindow
   ];
   const goHome = () => { if (activeApp) minimizeWindow(activeApp.id); };
 
-  return <div className="native-tablet fixed inset-0 overflow-hidden bg-[#080d1c]">
+  return <div className="native-tablet fixed inset-0 overflow-hidden bg-[#0a0a0b]">
     <BackgroundLayers />
     <TopBar isTablet appActive={Boolean(activeApp)} />
     {!activeApp && <main className="native-tablet-home absolute inset-x-0 overflow-y-auto overscroll-contain px-7" style={{ top: "calc(var(--os-safe-top) + 48px)", bottom: "calc(var(--os-safe-bottom) + 156px)" }}>
