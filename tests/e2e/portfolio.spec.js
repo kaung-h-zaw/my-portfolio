@@ -21,19 +21,23 @@ test.afterEach(async ({ page }) => {
 async function visit(page) {
   await page.addInitScript(() => sessionStorage.setItem("hasVisitedThisSession", "true"));
   await page.goto("/");
-  await page.getByRole("button", { name: /^About(?:_| )Me$/ }).click();
+  if (await page.locator("[data-device]").getAttribute("data-device") !== "desktop") {
+    await page.getByRole("button", { name: /^About(?:_| )Me$/ }).click();
+  }
   await expect(page.getByRole("button", { name: "View Projects", exact: true })).toBeVisible();
 }
 
-test("boots as KAUNG and shows the home screen before opening apps", async ({ page }, testInfo) => {
+test("boots as KAUNG, opens About on desktop, and keeps native home screens", async ({ page }, testInfo) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { name: "KAUNG", exact: true })).toBeVisible();
   await expect(page.getByText(/KAUNG_SPACE/)).toHaveCount(0);
   const about = page.getByRole("button", { name: /^About(?:_| )Me$/ });
   await expect(about).toBeVisible();
-  await expect(page.getByRole("region", { name: / window$/ })).toHaveCount(0);
   await expect(page.locator(".greeting-text")).toHaveCount(1);
-  await about.click();
+  if (isNative(testInfo)) {
+    await expect(page.getByRole("region", { name: / window$/ })).toHaveCount(0);
+    await about.click();
+  }
   await expect(page.getByRole("button", { name: "View Projects", exact: true })).toBeVisible();
   await expect(page.getByRole("region", { name: / window$/ })).toHaveCount(1);
   if (isNative(testInfo)) {

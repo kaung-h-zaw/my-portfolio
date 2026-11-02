@@ -4,7 +4,7 @@ import { ContactRound, FolderCode, BriefcaseBusiness, Cpu, BookOpen, Mail, Githu
 function AppGlyph({ glyph: Glyph, size = 24, className, strokeWidth = 1.5, ...props }) {
   return <svg width={size} height={size} viewBox="0 0 48 48" fill="none" className={className} aria-hidden="true" {...props}>
     <rect x="1" y="1" width="46" height="46" rx="11" fill="#202020" />
-    <Glyph x="8" y="8" width="32" height="32" color="#b8b8b8" strokeWidth={Math.min(strokeWidth, 1.5)} />
+    <Glyph x="10" y="10" width="28" height="28" color="#b8b8b8" strokeWidth={Math.min(strokeWidth, 1.5)} />
   </svg>;
 }
 

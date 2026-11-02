@@ -205,6 +205,11 @@ a {
 
 /* Matte charcoal, without atmospheric glow or reflective surfaces. */
 .os-wallpaper { background: #161616; }
+.os-wallpaper-grain {
+  opacity: .035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
 .native-icon-tile { background: transparent; border-color: transparent; box-shadow: none; }
 
 /* Distribute spare height across the home grid instead of leaving it all below. */

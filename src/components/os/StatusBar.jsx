@@ -12,7 +12,7 @@ export default function StatusBar({
   onMinimizeWindow,
   isTablet = false,
 }) {
-  const dockIconSize = isTablet ? 44 : 50;
+  const dockIconSize = isTablet ? 40 : 46;
   const [activeLinkData, setActiveLinkData] = useState(null);
   const openWindowIds = new Set(openWindows.map((win) => win.id));
 
