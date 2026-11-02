@@ -65,12 +65,12 @@ export default function TopBar({ onOpenApp, isPhone = false, isTablet = false, a
       <div className="flex items-center gap-3 xl:gap-6 min-w-0">
         <div className="flex items-center gap-2 font-black text-sm xl:text-base tracking-tight cursor-pointer hover:scale-105 transition-transform text-zinc-300 min-w-0">
           <picture>
-            <source srcSet="/me2.webp" type="image/webp" />
+            <source srcSet="/kaung-ink-avatar.webp" type="image/webp" />
             <img
-              src="/me2.png"
-              alt="Logo"
+              src="/kaung-ink-avatar.png"
+              alt="Kaung illustrated avatar"
               loading="eager"
-              className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 rounded-full border-2 border-white/10"
+              className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 rounded-full border border-white/10 bg-[#e9e8e4] object-contain"
             />
           </picture>
 

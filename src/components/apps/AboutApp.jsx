@@ -32,9 +32,9 @@ export default function AboutApp({ onOpenApp }) {
         <section className="app-panel">
           <div className="flex items-center gap-3 sm:gap-4 mb-5">
             <picture className="shrink-0">
-              <source srcSet="/me-nb.webp" type="image/webp" />
-              <img src="/me-nb.png" alt="Kaung Htet Zaw profile illustration" width="88" height="88"
-                className="app-profile-image h-14 w-14 sm:h-24 sm:w-24 rounded-xl border border-white/10 bg-white/5 object-cover grayscale" />
+              <source srcSet="/kaung-ink-avatar.webp" type="image/webp" />
+              <img src="/kaung-ink-avatar.png" alt="Kaung Htet Zaw profile illustration" width="88" height="88"
+                className="app-profile-image h-14 w-14 sm:h-24 sm:w-24 rounded-xl border border-white/10 bg-[#e9e8e4] object-contain" />
             </picture>
             <div>
               <p className="app-eyebrow mb-2">Hello, I’m Kaung</p>
