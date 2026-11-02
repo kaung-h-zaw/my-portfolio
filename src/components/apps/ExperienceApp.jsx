@@ -36,8 +36,8 @@ export default function ExperienceApp() {
               <div className="app-tile self-start">
                 <span className="app-badge inline-block mb-4">Completed · Capstone</span>
                 <h2 className="text-lg font-bold leading-tight mb-2">{experience.role}</h2>
-                <p className="font-sans text-base text-black/70 mb-4">{experience.company}</p>
-                <div className="space-y-2 border-t border-black/10 pt-3 font-sans text-sm text-black/70">
+                <p className="font-sans text-base text-slate-300 mb-4">{experience.company}</p>
+                <div className="space-y-2 border-t border-white/10 pt-3 font-sans text-sm text-slate-300">
                   <p className="flex items-start gap-2"><Calendar size={15} className="shrink-0 mt-0.5" aria-hidden="true" />{experience.period}</p>
                   <p className="flex items-start gap-2"><MapPin size={15} className="shrink-0 mt-0.5" aria-hidden="true" />{experience.location}</p>
                 </div>
@@ -45,7 +45,7 @@ export default function ExperienceApp() {
               <div>
                 <p className="app-body mb-5">{experience.description}</p>
                 <h3 className="app-eyebrow font-bold mb-3">Key contributions</h3>
-                <ul className="list-disc pl-5 space-y-2 font-sans text-base leading-relaxed text-black/80 mb-5">
+                <ul className="list-disc pl-5 space-y-2 font-sans text-base leading-relaxed text-slate-200 mb-5">
                   {experience.highlights.map((highlight) => <li key={highlight}>{highlight}</li>)}
                 </ul>
                 <Tags items={experience.stack} label={`${experience.company} technologies`} />

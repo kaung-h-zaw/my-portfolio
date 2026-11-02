@@ -33,7 +33,7 @@ export default function AboutApp({ onOpenApp }) {
             <picture className="shrink-0">
               <source srcSet="/me-nb.webp" type="image/webp" />
               <img src="/me-nb.png" alt="Kaung Htet Zaw profile illustration" width="88" height="88"
-                className="app-profile-image h-14 w-14 sm:h-24 sm:w-24 rounded-xl border border-black/15 bg-white/25 object-cover grayscale" />
+                className="app-profile-image h-14 w-14 sm:h-24 sm:w-24 rounded-xl border border-white/10 bg-white/5 object-cover grayscale" />
             </picture>
             <div>
               <p className="app-eyebrow mb-2">Hello, I’m Kaung</p>
@@ -80,7 +80,7 @@ export default function AboutApp({ onOpenApp }) {
               </button>
               <button type="button" onClick={() => onOpenApp?.("contact")} className="app-action-secondary">Contact</button>
             </div>
-            <p role="status" className="font-sans text-sm text-black/70 mt-2">{copyError ? "Copy unavailable. You can use the email link above." : copied ? "Email address copied." : ""}</p>
+            <p role="status" className="font-sans text-sm text-slate-300 mt-2">{copyError ? "Copy unavailable. You can use the email link above." : copied ? "Email address copied." : ""}</p>
           </section>
         </div>
       </div>
@@ -90,7 +90,7 @@ export default function AboutApp({ onOpenApp }) {
           <div className="flex flex-wrap justify-between gap-2 mb-2">
             <h3 className="text-base font-bold">Full-Stack Developer</h3><span className="app-badge">2024</span>
           </div>
-          <p className="text-xs uppercase tracking-wide text-black/65 mb-3">QUT Capstone Project · Guinea Group</p>
+          <p className="text-xs uppercase tracking-wide text-slate-300 mb-3">QUT Capstone Project · Guinea Group</p>
           <p className="app-body">Worked in a four-person capstone team to build a video and survey platform for research, contributing across React and Tailwind frontend work, plus Express and MySQL features for data handling and reporting.</p>
           <button type="button" onClick={() => onOpenApp?.("experience")} className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-medium underline underline-offset-4">View experience <ArrowUpRight size={15} aria-hidden="true" /></button>
         </section>

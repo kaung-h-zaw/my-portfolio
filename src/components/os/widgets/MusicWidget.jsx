@@ -66,10 +66,10 @@ export default function MusicWidget({ variant = "mobile" }) {
 
   if (variant === "compact") {
     return <button type="button" onClick={togglePlay} aria-label={isPlaying ? "Pause music" : "Play music"} aria-pressed={isPlaying}
-      className="native-widget flex h-full min-h-[112px] flex-col justify-between p-3.5 text-left transition-colors hover:bg-[#dce3d8]">
-      <span className="flex w-full items-center justify-between"><span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#445f60] text-[#e2e9df]"><Music size={15} aria-hidden="true" /></span>{isPlaying ? <Pause size={18} aria-hidden="true" /> : <Play size={18} aria-hidden="true" />}</span>
-      <span><span className="block font-sans text-xs font-bold text-[#293e40]">Lofi beats</span><span className="block font-sans text-[10px] text-[#536969]">{isPlaying ? "Now playing" : "Tap to play"}</span></span>
-      <span className="block h-1 w-full overflow-hidden rounded-full bg-black/10"><span className="block h-full rounded-full bg-[#496769]" style={{ width: `${progress}%` }} /></span>
+      className="native-widget flex h-full min-h-[112px] flex-col justify-between p-3.5 text-left transition-colors hover:bg-[#202d48]">
+      <span className="flex w-full items-center justify-between"><span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#354583] text-indigo-100"><Music size={15} aria-hidden="true" /></span>{isPlaying ? <Pause size={18} aria-hidden="true" /> : <Play size={18} aria-hidden="true" />}</span>
+      <span><span className="block font-sans text-xs font-bold text-slate-100">Lofi beats</span><span className="block font-sans text-[10px] text-slate-300">{isPlaying ? "Now playing" : "Tap to play"}</span></span>
+      <span className="block h-1 w-full overflow-hidden rounded-full bg-white/5"><span className="block h-full rounded-full bg-[#8b9dff]" style={{ width: `${progress}%` }} /></span>
     </button>;
   }
 
@@ -77,11 +77,11 @@ export default function MusicWidget({ variant = "mobile" }) {
     return (
       <div
         onClick={togglePlay}
-        className="w-full box-border bg-white/40 border border-black/10 backdrop-blur-md hover:border-black/15 relative transition-all !p-0 overflow-hidden cursor-pointer group rounded-2xl flex flex-col"
+        className="w-full box-border bg-[#151e34]/85 border border-white/10 backdrop-blur-md hover:border-white/10 relative transition-all !p-0 overflow-hidden cursor-pointer group rounded-2xl flex flex-col"
       >
         <div className="p-3 xl:p-3.5 2xl:p-4 bg-black/90 text-white flex justify-between items-center">
           <div className="flex gap-2 items-center w-full overflow-hidden">
-            <div className="bg-[#ff6b6b] p-1 2xl:p-1.5 rounded-lg shrink-0">
+            <div className="bg-[#a78bfa] p-1 2xl:p-1.5 rounded-lg shrink-0">
               <Music className="w-3.5 h-3.5 2xl:w-4 2xl:h-4" strokeWidth={2} />
             </div>
             <div className="flex flex-col overflow-hidden">
@@ -97,10 +97,10 @@ export default function MusicWidget({ variant = "mobile" }) {
           {/* Animated Bars */}
           <div className="flex gap-0.5 xl:gap-1 shrink-0 ml-2">
             <div
-              className={`w-0.5 xl:w-1 bg-[#ff6b6b] rounded-full ${isPlaying ? "h-2 xl:h-3 animate-pulse" : "h-1"}`}
+              className={`w-0.5 xl:w-1 bg-[#a78bfa] rounded-full ${isPlaying ? "h-2 xl:h-3 animate-pulse" : "h-1"}`}
             ></div>
             <div
-              className={`w-0.5 xl:w-1 bg-white/60 rounded-full ${isPlaying ? "h-3 xl:h-4 animate-pulse delay-75" : "h-2"}`}
+              className={`w-0.5 xl:w-1 bg-[#151e34]/85 rounded-full ${isPlaying ? "h-3 xl:h-4 animate-pulse delay-75" : "h-2"}`}
             ></div>
             <div
               className={`w-0.5 xl:w-1 bg-white rounded-full ${isPlaying ? "h-2 xl:h-3 animate-pulse delay-150" : "h-1"}`}
@@ -108,17 +108,17 @@ export default function MusicWidget({ variant = "mobile" }) {
           </div>
         </div>
 
-        <div className="bg-white/30 p-2.5 xl:p-3 flex justify-between items-center border-t border-black/10">
-          <div className="w-full h-1 xl:h-1.5 bg-black/10 rounded-full mr-3 overflow-hidden">
+        <div className="bg-white/5 p-2.5 xl:p-3 flex justify-between items-center border-t border-white/10">
+          <div className="w-full h-1 xl:h-1.5 bg-white/5 rounded-full mr-3 overflow-hidden">
             <div
-              className="h-full bg-black/60 transition-none rounded-full"
+              className="h-full bg-indigo-300 transition-none rounded-full"
               style={{ width: `${progress}%` }}
             ></div>
           </div>
           <div className="flex gap-1.5">
             <button
               aria-label={isPlaying ? "Pause music" : "Play music"}
-              className="min-h-11 min-w-11 flex items-center justify-center hover:bg-black/5 p-1 rounded-lg transition-colors"
+              className="min-h-11 min-w-11 flex items-center justify-center hover:bg-white/5 p-1 rounded-lg transition-colors"
               onClick={(e) => {
                 e.stopPropagation();
                 togglePlay();
@@ -152,9 +152,9 @@ export default function MusicWidget({ variant = "mobile" }) {
           togglePlay();
         }
       }}
-      className="w-full box-border bg-white/40 backdrop-blur-md border border-black/10 p-3 md:p-4 rounded-2xl flex flex-col h-full relative active:scale-[0.99] transition-all cursor-pointer hover:border-black/15"
+      className="w-full box-border bg-[#151e34]/85 backdrop-blur-md border border-white/10 p-3 md:p-4 rounded-2xl flex flex-col h-full relative active:scale-[0.99] transition-all cursor-pointer hover:border-white/10"
     >
-      <div className="flex justify-between items-center border-b border-black/10 pb-2 md:pb-3 mb-2 md:mb-3">
+      <div className="flex justify-between items-center border-b border-white/10 pb-2 md:pb-3 mb-2 md:mb-3">
         <div className="bg-black/90 p-1 md:p-1.5 rounded-lg">
           <Music
             className="w-[14px] h-[14px] md:w-[16px] md:h-[16px] text-white"
@@ -164,13 +164,13 @@ export default function MusicWidget({ variant = "mobile" }) {
 
         <div className="flex gap-1 md:gap-1.5 items-end h-4 md:h-5">
           <div
-            className={`w-1 md:w-1.5 bg-black/60 rounded-full ${isPlaying ? "h-3 md:h-4 animate-pulse" : "h-1.5"}`}
+            className={`w-1 md:w-1.5 bg-indigo-300 rounded-full ${isPlaying ? "h-3 md:h-4 animate-pulse" : "h-1.5"}`}
           ></div>
           <div
-            className={`w-1 md:w-1.5 bg-black/60 rounded-full ${isPlaying ? "h-4 md:h-5 animate-pulse delay-75" : "h-2.5"}`}
+            className={`w-1 md:w-1.5 bg-indigo-300 rounded-full ${isPlaying ? "h-4 md:h-5 animate-pulse delay-75" : "h-2.5"}`}
           ></div>
           <div
-            className={`w-1 md:w-1.5 bg-black/60 rounded-full ${isPlaying ? "h-2 md:h-3 animate-pulse delay-150" : "h-1.5"}`}
+            className={`w-1 md:w-1.5 bg-indigo-300 rounded-full ${isPlaying ? "h-2 md:h-3 animate-pulse delay-150" : "h-1.5"}`}
           ></div>
         </div>
       </div>
@@ -178,14 +178,14 @@ export default function MusicWidget({ variant = "mobile" }) {
       <div className="flex flex-col gap-2 w-full flex-grow justify-end">
         <div className="flex justify-between items-end">
           <div className="flex flex-col overflow-hidden pr-2">
-            <span className="text-[12px] md:text-[15px] font-black truncate block w-full leading-tight text-black/80">
+            <span className="text-[12px] md:text-[15px] font-black truncate block w-full leading-tight text-slate-200">
               Lofi Beats
             </span>
-            <span className="text-[9px] md:text-[10px] text-black/40 font-medium truncate block w-full uppercase tracking-widest mt-0.5">
+            <span className="text-[9px] md:text-[10px] text-slate-400 font-medium truncate block w-full uppercase tracking-widest mt-0.5">
               Spotify
             </span>
           </div>
-          <div className="text-black/60 mb-0.5">
+          <div className="text-slate-400 mb-0.5">
             {isPlaying ? (
               <Pause
                 className="w-[16px] h-[16px] md:w-[20px] md:h-[20px]"
@@ -200,9 +200,9 @@ export default function MusicWidget({ variant = "mobile" }) {
           </div>
         </div>
 
-        <div className="w-full h-1.5 md:h-2 bg-black/10 rounded-full overflow-hidden">
+        <div className="w-full h-1.5 md:h-2 bg-white/5 rounded-full overflow-hidden">
           <div
-            className="h-full bg-black/60 transition-none rounded-full"
+            className="h-full bg-indigo-300 transition-none rounded-full"
             style={{ width: `${progress}%` }}
           />
         </div>

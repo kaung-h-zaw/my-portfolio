@@ -409,7 +409,7 @@ test("native scrolling keeps final content above the bottom safe area", async ({
   const viewport = page.viewportSize();
   expect(footer.y + footer.height).toBeLessThanOrEqual(viewport.height - (isPhone(testInfo) ? 36 : 156));
   await expect(page.getByRole("button", { name: "Return to home screen", exact: true })).toHaveCount(0);
-  expect(await page.locator("html").evaluate((element) => getComputedStyle(element).backgroundColor)).toBe("rgb(62, 85, 95)");
+  expect(await page.locator("html").evaluate((element) => getComputedStyle(element).backgroundColor)).toBe("rgb(8, 13, 28)");
   await expect(page.locator('meta[name="viewport"]')).toHaveAttribute("content", /viewport-fit=cover/);
 });
 

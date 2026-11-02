@@ -38,21 +38,21 @@ export default function LinkConfirmationModal({ linkData, onClose }) {
   const Icon = linkData.icon || ExternalLink;
 
   return createPortal(
-    <div className="fixed inset-0 z-[999999] flex items-center justify-center bg-black/30 p-4 font-mono text-neutral-900" onClick={onClose}>
+    <div className="fixed inset-0 z-[999999] flex items-center justify-center bg-black/30 p-4 font-mono text-slate-100" onClick={onClose}>
       <section ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby={titleId} aria-describedby={descriptionId}
         onClick={(event) => event.stopPropagation()}
-        className="w-full max-w-[440px] max-h-[calc(100dvh-32px)] overflow-y-auto rounded-2xl border border-black/20 bg-[#f3f1ed] shadow-[0_24px_80px_rgba(0,0,0,0.22)]">
-        <div className="flex items-center justify-between border-b border-black/10 pl-5 pr-2 py-1">
-          <span className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-widest text-black/60"><ExternalLink size={13} aria-hidden="true" />External link</span>
-          <button type="button" onClick={onClose} aria-label="Close link dialog" className="flex h-11 w-11 items-center justify-center rounded-lg hover:bg-black/5"><X size={17} /></button>
+        className="w-full max-w-[440px] max-h-[calc(100dvh-32px)] overflow-y-auto rounded-2xl border border-white/10 bg-[#151d30] shadow-[0_24px_80px_rgba(0,0,0,0.22)]">
+        <div className="flex items-center justify-between border-b border-white/10 pl-5 pr-2 py-1">
+          <span className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-widest text-slate-400"><ExternalLink size={13} aria-hidden="true" />External link</span>
+          <button type="button" onClick={onClose} aria-label="Close link dialog" className="flex h-11 w-11 items-center justify-center rounded-lg hover:bg-white/5"><X size={17} /></button>
         </div>
         <div className="p-5 sm:p-6">
-          <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl border border-black/15 bg-white/65">
+          <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-white/10">
             {typeof Icon === "string" ? <img src={Icon} alt="" className="h-7 w-7 object-contain" /> : <Icon size={25} strokeWidth={1.8} aria-hidden="true" />}
           </div>
           <h2 id={titleId} className="font-mono text-xl font-bold leading-snug tracking-tight break-words">Open {linkData.title}?</h2>
-          <p id={descriptionId} className="mt-2 font-sans text-sm leading-relaxed text-black/65">This link opens in a new tab. Your portfolio stays open here.</p>
-          <p className="mt-4 rounded-lg border border-black/10 bg-white/50 px-3 py-3 font-mono text-xs leading-relaxed break-all text-black/70">{displayUrl}</p>
+          <p id={descriptionId} className="mt-2 font-sans text-sm leading-relaxed text-slate-300">This link opens in a new tab. Your portfolio stays open here.</p>
+          <p className="mt-4 rounded-lg border border-white/10 bg-white/10 px-3 py-3 font-mono text-xs leading-relaxed break-all text-slate-300">{displayUrl}</p>
           <div className="mt-5 grid grid-cols-2 gap-3">
             <button type="button" onClick={onClose} ref={cancelRef} className="app-action-secondary font-mono">Cancel</button>
             <a href={linkData.href} target="_blank" rel="noopener noreferrer" onClick={onClose} className="app-action font-mono">Open link<ExternalLink size={15} aria-hidden="true" /></a>

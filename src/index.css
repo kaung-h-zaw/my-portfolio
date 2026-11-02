@@ -3,6 +3,9 @@
 @tailwind utilities;
 
 :root {
+  color-scheme: dark;
+  --os-accent: #a5b4fc;
+  --os-surface: #111827;
   --os-safe-top: env(safe-area-inset-top, 0px);
   --os-safe-bottom: env(safe-area-inset-bottom, 0px);
   --os-safe-left: env(safe-area-inset-left, 0px);
@@ -13,13 +16,13 @@ html, body, #root {
   width: 100%;
   height: 100%;
   min-height: 100%;
-  background-color: #3e555f;
+  background-color: #080d1c;
   overscroll-behavior: none;
 }
 html, body { overflow: hidden; }
 
 body {
-  @apply text-neutral-900 font-mono antialiased;
+  @apply text-slate-100 font-sans antialiased;
   margin: 0;
   padding: 0;
 }
@@ -30,16 +33,16 @@ body {
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  @apply bg-neutral-100;
+  @apply bg-slate-900;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  @apply bg-neutral-400 hover:bg-neutral-500;
+  @apply bg-slate-600 hover:bg-slate-500;
   border-radius: 4px;
 }
 
 ::selection {
-  @apply bg-neutral-800 text-white;
+  @apply bg-indigo-500/40 text-white;
 }
 
 a {
@@ -47,16 +50,16 @@ a {
 }
 
 :where(button, [role="button"], a):focus-visible {
-  @apply outline-none ring-2 ring-black/50 ring-offset-2 ring-offset-white/60;
+  @apply outline-none ring-2 ring-indigo-300 ring-offset-2 ring-offset-slate-900;
 }
 
 @layer components {
   .os-panel {
-    @apply bg-white/40 backdrop-blur-md border border-black/20;
+    @apply bg-[#101729]/80 backdrop-blur-xl border border-white/10;
   }
 
   .os-panel-soft {
-    @apply bg-white/30 backdrop-blur-sm border border-black/10;
+    @apply bg-[#151d30]/80 backdrop-blur-md border border-white/10;
   }
 }
 
@@ -65,21 +68,21 @@ a {
   overscroll-behavior: contain;
   scrollbar-gutter: stable;
   scrollbar-width: thin;
-  scrollbar-color: rgba(0, 0, 0, 0.25) transparent;
+  scrollbar-color: rgba(148, 163, 184, 0.35) transparent;
 }
 .os-content::-webkit-scrollbar { width: 6px; height: 6px; }
 .os-content::-webkit-scrollbar-track { background: transparent; }
 .os-content::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.25);
+  background: rgba(148, 163, 184, 0.35);
   border-radius: 999px;
 }
-.os-content::-webkit-scrollbar-thumb:hover { background: rgba(0, 0, 0, 0.4); }
+.os-content::-webkit-scrollbar-thumb:hover { background: rgba(148, 163, 184, 0.55); }
 @supports selector(::-webkit-scrollbar) {
   .os-content { scrollbar-width: auto; }
 }
 .os-content * { min-width: 0; }
 .os-content p { overflow-wrap: break-word; }
-:where(input, textarea, select):focus-visible { outline: 2px solid #171717; outline-offset: 3px; }
+:where(input, textarea, select):focus-visible { outline: 2px solid #a5b4fc; outline-offset: 3px; }
 @media (max-width: 639px) {
   .os-content :where(button, a) { min-height: 44px; }
   .os-content :where(input, textarea, select) { font-size: 16px; }
@@ -94,16 +97,16 @@ a {
 }
 
 @layer components {
-  .app-page { @apply w-full max-w-[1200px] mx-auto font-mono text-black min-h-full flex flex-col gap-5 p-3 sm:p-4 xl:p-6; }
-  .app-panel { @apply rounded-xl border border-black/15 bg-white/20 p-4 sm:p-5; }
-  .app-tile { @apply rounded-lg border border-black/10 bg-white/20 p-3; }
-  .app-eyebrow { @apply text-xs uppercase tracking-widest text-black/65; }
-  .app-body { @apply font-sans text-base leading-relaxed text-black/80; }
-  .app-badge { @apply rounded-full border border-black/15 bg-white/20 px-3 py-1.5 text-xs text-black/70; }
-  .app-tag { @apply rounded-md border border-black/10 bg-white/25 px-2.5 py-1 text-xs text-black/75; }
-  .app-action { @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-black px-4 py-2.5 text-sm font-bold text-white transition-colors hover:bg-black/80 disabled:opacity-50 disabled:cursor-not-allowed; }
-  .app-action-secondary { @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-black/20 bg-white/20 px-4 py-2.5 text-sm font-medium text-black/85 transition-colors hover:bg-white/40 hover:border-black/30; }
-  .app-field { @apply w-full rounded-lg border border-black/20 bg-white/25 px-3 py-3 font-sans text-base text-black placeholder:text-black/40 transition-colors focus:bg-white/50; }
+  .app-page { @apply w-full max-w-[1200px] mx-auto font-sans text-slate-100 min-h-full flex flex-col gap-5 p-3 sm:p-4 xl:p-6; }
+  .app-panel { @apply rounded-2xl border border-white/10 bg-white/[0.03] p-4 sm:p-5; }
+  .app-tile { @apply rounded-xl border border-white/10 bg-white/[0.03] p-3; }
+  .app-eyebrow { @apply font-mono text-xs uppercase tracking-widest text-indigo-300; }
+  .app-body { @apply font-sans text-base leading-relaxed text-slate-300; }
+  .app-badge { @apply rounded-full border border-indigo-300/20 bg-indigo-400/10 px-3 py-1.5 text-xs text-indigo-200; }
+  .app-tag { @apply rounded-md border border-white/10 bg-white/5 px-2.5 py-1 text-xs text-slate-300; }
+  .app-action { @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-indigo-500 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-indigo-400 disabled:opacity-50 disabled:cursor-not-allowed; }
+  .app-action-secondary { @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/5 px-4 py-2.5 text-sm font-medium text-slate-200 transition-colors hover:bg-white/10 hover:border-white/25; }
+  .app-field { @apply w-full rounded-xl border border-white/15 bg-[#0d1425] px-3 py-3 font-sans text-base text-slate-100 placeholder:text-slate-500 transition-colors focus:bg-[#151f35]; }
 }
 
 /* Columns follow the app window, including when a desktop window is restored. */
@@ -149,7 +152,7 @@ a {
 /* Native home screens use fixed widget heights and icon sizes, independent of
    viewport aspect ratio, so cards never push the app grid behind the dock. */
 @layer components {
-  .native-widget { @apply rounded-[22px] border border-white/20 bg-[#d4dfd5]/85 text-[#2b4446] shadow-[0_4px_16px_rgba(20,36,43,0.08)] backdrop-blur-lg; }
+  .native-widget { @apply rounded-[22px] border border-white/10 bg-[#151e34]/85 text-slate-100 shadow-[0_12px_32px_rgba(0,0,0,0.2)] backdrop-blur-xl; }
 }
 .native-phone .native-icon-tile { width: 58px; height: 58px; }
 .native-phone-profile { height: 108px; }
@@ -198,4 +201,39 @@ a {
   .native-phone-profile .native-profile { padding: 14px; }
   .native-phone-profile .native-profile-greeting { height: 24px; font-size: 18px; }
   .native-phone-profile .native-profile > span > span:nth-child(2) { font-size: 16px; line-height: 20px; }
+}
+
+/* Midnight atmosphere, shared by boot, desktop, tablet and phone. */
+.os-wallpaper {
+  background: radial-gradient(ellipse at 75% 12%, #182447 0%, transparent 46%), #080d1c;
+}
+.os-wallpaper-glow {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 18% 85%, rgba(61, 85, 216, .32), transparent 47%),
+    radial-gradient(ellipse at 80% 65%, rgba(111, 59, 177, .25), transparent 45%),
+    radial-gradient(ellipse at 48% 100%, rgba(66, 113, 167, .12), transparent 40%);
+}
+.os-wallpaper-orbit {
+  position: absolute;
+  width: 120%;
+  height: 110%;
+  left: -10%;
+  top: 28%;
+  border-radius: 50%;
+  transform: rotate(-24deg);
+  background: radial-gradient(ellipse at 50% 0%, rgba(133, 147, 255, .24), rgba(71, 58, 163, .07) 20%, transparent 55%);
+  box-shadow: 0 -20px 100px rgba(83,80,205,.12);
+}
+.os-wallpaper-grain {
+  position: absolute;
+  inset: 0;
+  opacity: .012;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.native-icon-tile {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: 0 8px 18px rgba(0,0,0,.15);
 }

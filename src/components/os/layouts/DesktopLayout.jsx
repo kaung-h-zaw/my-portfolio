@@ -14,16 +14,10 @@ const DesktopIcon = ({ title, icon: Icon, onClick }) => (
     className="flex flex-col items-center gap-2 active:scale-95 transition-transform group w-16 lg:w-[4.5rem] xl:w-20"
   >
     {/* Icon Container */}
-    <div className="w-14 h-14 lg:w-16 lg:h-16 xl:w-20 xl:h-20 bg-white/40 backdrop-blur-md rounded-[18px] lg:rounded-[20px] xl:rounded-[22px] border border-black/20 flex items-center justify-center p-2 lg:p-2.5 group-hover:bg-white/50 group-hover:border-black/15 group-hover:-translate-y-1 group-active:translate-y-0 transition-all">
-      <Icon
-        size={30}
-        strokeWidth={2}
-        className="text-black/70 group-hover:text-black/90 transition-all w-6 h-6 lg:w-8 lg:h-8 xl:w-10 xl:h-10"
-      />
+    <div className="w-14 h-14 lg:w-16 lg:h-16 xl:w-20 xl:h-20 flex items-center justify-center group-hover:-translate-y-1 group-active:translate-y-0 transition-transform drop-shadow-[0_8px_12px_rgba(0,0,0,0.25)]">
+      <Icon size={64} strokeWidth={1.8} className="w-full h-full" />
     </div>
-
-    {/* Label */}
-    <span className="w-full font-mono font-medium text-[9px] lg:text-[10px] text-black/70 tracking-[0.08em] lg:tracking-[0.1em] uppercase text-center leading-tight bg-white/40 backdrop-blur-md px-2 py-0.5 rounded-md border border-black/10 group-hover:border-black/15 group-hover:text-black/90 transition-all whitespace-nowrap overflow-hidden text-ellipsis">
+    <span className="w-full font-sans font-medium text-[11px] lg:text-xs text-slate-200 text-center leading-tight px-0.5 whitespace-nowrap overflow-hidden text-ellipsis">
       {formatDesktopTitle(title)}
     </span>
   </button>

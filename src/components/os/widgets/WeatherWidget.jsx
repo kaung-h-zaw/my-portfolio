@@ -69,18 +69,18 @@ export default function WeatherWidget({ variant = "mobile" }) {
 
   if (variant === "compact") {
     return <section aria-label="Bangkok weather" className="native-widget flex h-full min-h-[112px] flex-col justify-between p-3.5">
-      <p className="font-sans text-xs font-semibold text-[#405657]">Bangkok</p>
-      <div className="flex items-center justify-between gap-1"><span className="font-sans text-[32px] font-semibold leading-none tracking-tight text-[#243b3e]">{weather.temp}°</span><WeatherIcon size={26} strokeWidth={1.6} className="shrink-0 text-[#405f60]" aria-hidden="true" /></div>
-      <p className="font-sans text-[10px] leading-tight text-[#4a6161]">{weather.description}</p>
+      <p className="font-sans text-xs font-semibold text-slate-300">Bangkok</p>
+      <div className="flex items-center justify-between gap-1"><span className="font-sans text-[32px] font-semibold leading-none tracking-tight text-slate-100">{weather.temp}°</span><WeatherIcon size={26} strokeWidth={1.6} className="shrink-0 text-slate-300" aria-hidden="true" /></div>
+      <p className="font-sans text-[10px] leading-tight text-slate-300">{weather.description}</p>
     </section>;
   }
 
   if (variant === "desktop") {
     return (
-      <div className="w-full box-border bg-white/40 backdrop-blur-md border border-black/10 p-3 xl:p-4 rounded-2xl flex flex-col justify-between aspect-[2/1] relative hover:border-black/15 transition-all">
+      <div className="w-full box-border bg-[#151e34]/85 backdrop-blur-md border border-white/10 p-3 xl:p-4 rounded-2xl flex flex-col justify-between aspect-[2/1] relative hover:border-white/10 transition-all">
         {/* TOP ROW */}
         <div className="flex justify-between items-start w-full">
-          <span className="font-medium text-[9px] xl:text-[10px] 2xl:text-xs uppercase tracking-widest text-black/50 mt-1 shrink-0">
+          <span className="font-medium text-[9px] xl:text-[10px] 2xl:text-xs uppercase tracking-widest text-slate-400 mt-1 shrink-0">
             Bangkok
           </span>
           <div className="bg-black/90 text-white px-2 py-0.5 xl:px-2.5 xl:py-1 rounded-lg text-[8px] xl:text-[9px] 2xl:text-[10px] font-mono font-medium tracking-wider whitespace-nowrap">
@@ -92,24 +92,24 @@ export default function WeatherWidget({ variant = "mobile" }) {
         <div className="flex justify-between items-end w-full">
           <div className="flex flex-col overflow-hidden pr-2">
             <div className="flex items-baseline gap-1">
-              <span className="font-black text-3xl xl:text-4xl 2xl:text-5xl tracking-tighter leading-none text-black/80">
+              <span className="font-black text-3xl xl:text-4xl 2xl:text-5xl tracking-tighter leading-none text-slate-200">
                 {weather.temp}
               </span>
-              <span className="font-bold text-lg xl:text-xl text-black/70">
+              <span className="font-bold text-lg xl:text-xl text-slate-300">
                 °C
               </span>
             </div>
             <div className="flex items-center gap-1.5 ">
-              <div className="w-1.5 h-1.5 bg-black/30 rounded-full shrink-0"></div>
-              <span className="text-[8px] xl:text-[9px] 2xl:text-[10px] font-medium uppercase tracking-wide truncate text-black/50">
+              <div className="w-1.5 h-1.5 bg-slate-400 rounded-full shrink-0"></div>
+              <span className="text-[8px] xl:text-[9px] 2xl:text-[10px] font-medium uppercase tracking-wide truncate text-slate-400">
                 {weather.description}
               </span>
             </div>
           </div>
 
-          <div className="border border-black/10 p-2 xl:p-2.5 rounded-xl bg-white/30 shrink-0">
+          <div className="border border-white/10 p-2 xl:p-2.5 rounded-xl bg-white/5 shrink-0">
             <WeatherIcon
-              className="w-5 h-5 xl:w-6 xl:h-6 2xl:w-7 2xl:h-7 text-black/60"
+              className="w-5 h-5 xl:w-6 xl:h-6 2xl:w-7 2xl:h-7 text-slate-400"
               strokeWidth={2}
             />
           </div>
@@ -119,8 +119,8 @@ export default function WeatherWidget({ variant = "mobile" }) {
   }
 
   return (
-    <div className="bg-white/40 backdrop-blur-md border border-black/10 p-3 md:p-4 rounded-2xl flex flex-col aspect-[4/3] relative hover:border-black/15 transition-all">
-      <div className="flex justify-between items-center border-b border-black/10 pb-2 md:pb-3 mb-2 md:mb-3">
+    <div className="bg-[#151e34]/85 backdrop-blur-md border border-white/10 p-3 md:p-4 rounded-2xl flex flex-col aspect-[4/3] relative hover:border-white/10 transition-all">
+      <div className="flex justify-between items-center border-b border-white/10 pb-2 md:pb-3 mb-2 md:mb-3">
         <div className="bg-black/90 text-white px-2 py-0.5 md:px-2 md:py-1 rounded-lg text-[8px] md:text-[9px] font-mono font-medium tracking-widest whitespace-nowrap">
           {currentDate}
         </div>
@@ -128,23 +128,23 @@ export default function WeatherWidget({ variant = "mobile" }) {
 
       <div className="flex justify-between items-end flex-grow">
         <div className="flex flex-col h-full justify-between">
-          <span className="font-medium text-[9px] md:text-[10px] uppercase tracking-widest text-black/50">
+          <span className="font-medium text-[9px] md:text-[10px] uppercase tracking-widest text-slate-400">
             Bangkok
           </span>
           <div>
-            <span className="font-black text-4xl md:text-5xl leading-none mt-1 block text-black/80">
+            <span className="font-black text-4xl md:text-5xl leading-none mt-1 block text-slate-200">
               {weather.temp}°
             </span>
-            <span className="text-[9px] md:text-[10px] font-medium uppercase tracking-wide mt-1 md:mt-2 block truncate max-w-[80px] md:max-w-[100px] text-black/50">
+            <span className="text-[9px] md:text-[10px] font-medium uppercase tracking-wide mt-1 md:mt-2 block truncate max-w-[80px] md:max-w-[100px] text-slate-400">
               {weather.description}
             </span>
           </div>
         </div>
 
-        <div className="bg-white/30 border border-black/10 p-2 md:p-2.5 rounded-xl mb-1">
+        <div className="bg-white/5 border border-white/10 p-2 md:p-2.5 rounded-xl mb-1">
           <div className="w-[22px] h-[22px] md:w-[28px] md:h-[28px]">
             <WeatherIcon
-              className="w-full h-full text-black/60"
+              className="w-full h-full text-slate-400"
               strokeWidth={2}
             />
           </div>

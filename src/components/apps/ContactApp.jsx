@@ -90,7 +90,7 @@ export default function ContactApp() {
         <div className="app-split">
           <section className="app-panel">
             <PanelTitle icon={Send}>Send a message</PanelTitle>
-            <p className="font-sans text-sm text-black/65 mb-5">Required fields are marked *.</p>
+            <p className="font-sans text-sm text-slate-300 mb-5">Required fields are marked *.</p>
             <form ref={formRef} onSubmit={handleSubmit} aria-busy={sending} className="space-y-4">
               <div className="app-form-grid grid gap-4">
                 <div>
@@ -125,14 +125,14 @@ export default function ContactApp() {
               <button type="button" onClick={handleCopyEmail} aria-label={copied ? "Email copied" : "Copy email address"} className="app-action-secondary mt-4">
                 {copied ? <Check size={15} aria-hidden="true" /> : <Copy size={15} aria-hidden="true" />}{copied ? "Copied" : "Copy email"}
               </button>
-              <p role="status" className="font-sans text-sm text-black/70 mt-2">{copyError ? "Copy unavailable. You can use the email link above." : copied ? "Email address copied." : ""}</p>
+              <p role="status" className="font-sans text-sm text-slate-300 mt-2">{copyError ? "Copy unavailable. You can use the email link above." : copied ? "Email address copied." : ""}</p>
             </section>
             <section className="app-panel">
               <PanelTitle icon={MessageCircle}>Elsewhere</PanelTitle>
               <div className="app-social-grid grid gap-2">
                 {socials.map((social) => (
                   <button key={social.name} type="button" onClick={(event) => setActiveLinkData({ title: social.name, href: social.href, icon: social.icon, returnFocus: event.currentTarget })}
-                    className="app-tile flex min-h-11 items-center gap-3 text-left text-sm hover:bg-white/40 transition-colors">
+                    className="app-tile flex min-h-11 items-center gap-3 text-left text-sm hover:bg-white/10 transition-colors">
                     <social.icon size={17} className="shrink-0" aria-hidden="true" /><span className="flex-1">{social.name}</span><ArrowUpRight size={15} aria-hidden="true" />
                   </button>
                 ))}

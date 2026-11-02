@@ -23,7 +23,7 @@ export default function StatusBar({
       />
 
       <div role="navigation" aria-label="App dock" style={isTablet ? { bottom: "calc(var(--os-safe-bottom) + 68px)" } : undefined} className="fixed bottom-2 left-1/2 -translate-x-1/2 z-[9999] flex items-end select-none w-max max-w-[95vw]">
-        <div className="flex items-center gap-1.5 overflow-x-auto rounded-2xl border border-white/30 bg-[#d8dfd8]/75 px-3 py-2.5 shadow-[0_8px_32px_rgba(20,36,43,0.16),inset_0_1px_0_rgba(255,255,255,0.25)] backdrop-blur-xl">
+        <div className="flex items-center gap-1.5 overflow-x-auto rounded-2xl border border-white/10 bg-[#151d30]/75 px-3 py-2.5 shadow-[0_8px_32px_rgba(20,36,43,0.16),inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-xl">
           {/* 1. APPS */}
           {appOrder.map((appId) => {
             const app = apps[appId];
@@ -61,20 +61,20 @@ export default function StatusBar({
                 title={app.title}
                 className={`group relative shrink-0 w-12 h-12 flex items-center justify-center rounded-xl border transition-colors ${
                   isActive
-                    ? "border-black/10 bg-white/35 shadow-sm"
-                    : "border-transparent bg-transparent hover:border-black/10 hover:bg-white/25"
+                    ? "border-white/10 bg-white/5 shadow-sm"
+                    : "border-transparent bg-transparent hover:border-white/10 hover:bg-white/5"
                 }`}
               >
                 {isLucideIcon ? (
                   <Icon
-                    size={30}
+                    size={36}
                     strokeWidth={2}
                     className={`transition-all ${
                       isActive
-                        ? "text-black/80"
+                        ? "text-slate-200"
                         : isOpen
-                          ? "text-black/55"
-                          : "text-black/30 group-hover:text-black/60"
+                          ? "text-slate-400"
+                          : "text-slate-400 group-hover:text-slate-400"
                     }`}
                   />
                 ) : (
@@ -94,7 +94,7 @@ export default function StatusBar({
                 {isOpen && (
                   <span
                     className={`absolute -bottom-1 left-1/2 -translate-x-1/2 rounded-full ${
-                      isActive ? "w-3 h-0.5 bg-black/60" : "w-2.5 h-0.5 bg-black/40"
+                      isActive ? "w-3 h-0.5 bg-indigo-300" : "w-2.5 h-0.5 bg-slate-400"
                     }`}
                   />
                 )}
@@ -103,16 +103,16 @@ export default function StatusBar({
             );
           })}
 
-          {appOrder.length > 0 && <div className="mx-2 h-7 w-px shrink-0 bg-black/15" aria-hidden="true" />}
-          <div role="group" aria-label="Professional profiles" className="flex shrink-0 gap-1 rounded-xl bg-black/[0.04] p-1">
+          {appOrder.length > 0 && <div className="mx-2 h-7 w-px shrink-0 bg-white/5" aria-hidden="true" />}
+          <div role="group" aria-label="Professional profiles" className="flex shrink-0 gap-1 rounded-xl bg-white/[0.03] p-1">
             {[
               { title: "GitHub", href: "https://github.com/kaung-h-zaw", icon: GitHubIcon },
               { title: "LinkedIn", href: "https://linkedin.com/in/kaung-h-zaw", icon: LinkedInIcon },
             ].map((profile) => (
               <button key={profile.title} type="button" onClick={(event) => setActiveLinkData({ ...profile, returnFocus: event.currentTarget })}
                 aria-label={`Open ${profile.title} profile`} title={`${profile.title} · opens in a new tab`}
-                className="flex h-11 w-11 items-center justify-center rounded-lg border border-transparent text-black/65 transition-colors hover:border-black/10 hover:bg-white/40 hover:text-black">
-                <profile.icon size={30} strokeWidth={1.8} aria-hidden="true" />
+                className="flex h-11 w-11 items-center justify-center rounded-lg border border-transparent text-slate-300 transition-colors hover:border-white/10 hover:bg-white/10 hover:text-slate-100">
+                <profile.icon size={36} strokeWidth={1.8} aria-hidden="true" />
               </button>
             ))}
           </div>

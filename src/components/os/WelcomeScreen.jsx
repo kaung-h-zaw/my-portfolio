@@ -81,7 +81,7 @@ export default function WelcomeScreen({ onComplete }) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.1 }}
-              className="self-center text-[9px] sm:text-[10px] uppercase tracking-[0.3em] text-black/60 font-mono mb-2 px-2 py-1 rounded border border-black/10 bg-white/30"
+              className="self-center text-[9px] sm:text-[10px] uppercase tracking-[0.3em] text-slate-400 font-mono mb-2 px-2 py-1 rounded border border-white/10 bg-white/5"
             >
               <span className="md:hidden">tap to skip</span>
               <span className="hidden md:inline">press any key to skip</span>
@@ -97,16 +97,16 @@ export default function WelcomeScreen({ onComplete }) {
                 KAUNG OS
               </h1>
               <div className="flex items-center justify-center gap-2 mt-2">
-                <div className="h-1 w-8 bg-white/50 rounded-full" />
+                <div className="h-1 w-8 bg-white/10 rounded-full" />
                 <span className="text-[9px] sm:text-[10px] font-bold tracking-[0.3em] uppercase text-white/75">
                   KAUNG OS · v2.0
                 </span>
-                <div className="h-1 w-8 bg-white/50 rounded-full" />
+                <div className="h-1 w-8 bg-white/10 rounded-full" />
               </div>
             </motion.div>
 
             {/* Terminal Log Container */}
-            <div className="bg-white/70 backdrop-blur-sm border border-black/10 rounded-xl p-4 sm:p-6 shadow-[6px_6px_0px_rgba(0,0,0,0.06)]">
+            <div className="bg-white/10 backdrop-blur-sm border border-white/10 rounded-xl p-4 sm:p-6 shadow-[6px_6px_0px_rgba(0,0,0,0.06)]">
               <div
                 className="flex flex-col gap-1.5"
                 role="status"
@@ -121,8 +121,8 @@ export default function WelcomeScreen({ onComplete }) {
                     className={`text-[10px] sm:text-xs font-mono tracking-wider ${
                       index === BOOT_LOGS.length - 1 ||
                       index === BOOT_LOGS.length - 2
-                        ? "text-black font-bold"
-                        : "text-black/60"
+                        ? "text-slate-100 font-bold"
+                        : "text-slate-400"
                     }`}
                   >
                     › {log}
@@ -137,7 +137,7 @@ export default function WelcomeScreen({ onComplete }) {
                     duration: 0.8,
                     ease: "linear",
                   }}
-                  className="w-1.5 sm:w-2 h-3 sm:h-4 bg-black/70 mt-1"
+                  className="w-1.5 sm:w-2 h-3 sm:h-4 bg-indigo-300 mt-1"
                 />
               </div>
             </div>
@@ -149,7 +149,7 @@ export default function WelcomeScreen({ onComplete }) {
               transition={{ delay: 0.3 }}
               className="text-center mt-4"
             >
-              <p className="text-[8px] sm:text-[9px] uppercase tracking-[0.4em] font-bold text-gray-700">
+              <p className="text-[8px] sm:text-[9px] uppercase tracking-[0.4em] font-bold text-slate-400">
                 System Ready • 2026
               </p>
             </motion.div>
