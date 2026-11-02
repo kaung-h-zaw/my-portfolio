@@ -44,8 +44,8 @@ export default function Window({
   const [position, setPosition] = useState(() => {
     const wide = window.innerWidth >= 1600;
     const width = Math.min(wide ? 1400 : 860, window.innerWidth - 32);
-    const height = Math.min(wide ? 900 : 680, window.innerHeight - 160);
-    return { x: (window.innerWidth - width) / 2, y: Math.max(44, 44 + (window.innerHeight - 132 - height) / 2) };
+    const height = Math.min(wide ? 900 : 680, window.innerHeight - 172);
+    return { x: (window.innerWidth - width) / 2, y: Math.max(44, 44 + (window.innerHeight - 144 - height) / 2) };
   });
   const [isPickerOpen, setIsPickerOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -81,7 +81,7 @@ export default function Window({
   const isMaximized = isMobile || isTablet || windowMode === "maximized" || (windowMode === "auto" && !isWideScreen);
   const restoredWidth = Math.min(isWideScreen ? 1400 : 860, viewportWidth - 32);
   const [viewportHeight, setViewportHeight] = useState(() => window.innerHeight);
-  const restoredHeight = Math.min(isWideScreen ? 900 : 680, viewportHeight - 160);
+  const restoredHeight = Math.min(isWideScreen ? 900 : 680, viewportHeight - 172);
 
   useEffect(() => {
     const handleResize = () => {
@@ -100,7 +100,7 @@ export default function Window({
 
     if (!isMobile) {
       const centerX = (viewportWidth - restoredWidth) / 2;
-      const centerY = Math.max(44, 44 + (viewportHeight - 132 - restoredHeight) / 2);
+      const centerY = Math.max(44, 44 + (viewportHeight - 144 - restoredHeight) / 2);
       setPosition({ x: Math.max(0, centerX), y: Math.max(0, centerY) });
     }
   }, [isMobile, restoredWidth, restoredHeight, viewportWidth, viewportHeight]);
@@ -148,7 +148,7 @@ export default function Window({
     top: 44,
     left: 0,
     right: Math.max(0, viewportWidth - restoredWidth),
-    bottom: Math.max(44, viewportHeight - restoredHeight - 88),
+    bottom: Math.max(44, viewportHeight - restoredHeight - 100),
   };
 
   const toggleMaximize = () => {
@@ -157,7 +157,7 @@ export default function Window({
 
     if (isMaximized) {
       const centerX = (viewportWidth - restoredWidth) / 2;
-      const centerY = Math.max(44, 44 + (viewportHeight - 132 - restoredHeight) / 2);
+      const centerY = Math.max(44, 44 + (viewportHeight - 144 - restoredHeight) / 2);
       setPosition({ x: Math.max(0, centerX), y: Math.max(0, centerY) });
     } else {
       setPosition({ x: 0, y: 0 });
@@ -362,7 +362,7 @@ export default function Window({
       positionClass = "fixed top-[calc(var(--os-safe-top)+40px)] left-3 right-3 bottom-[calc(var(--os-safe-bottom)+100px)] z-50 rounded-[24px] !transform-none border border-white/20 bg-[#141416] shadow-xl";
     } else {
       positionClass =
-        "fixed top-11 left-3 right-3 xl:left-1 xl:right-1 bottom-[88px] z-50 rounded-2xl !transform-none border border-white/10 bg-[#141416]/95 backdrop-blur-md";
+        "fixed top-11 left-3 right-3 xl:left-1 xl:right-1 bottom-[100px] z-50 rounded-2xl !transform-none border border-white/10 bg-[#141416]/95 backdrop-blur-md";
     }
   } else {
     positionClass =

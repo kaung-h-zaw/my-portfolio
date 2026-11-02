@@ -12,6 +12,7 @@ export default function StatusBar({
   onMinimizeWindow,
   isTablet = false,
 }) {
+  const dockIconSize = isTablet ? 36 : 46;
   const [activeLinkData, setActiveLinkData] = useState(null);
   const openWindowIds = new Set(openWindows.map((win) => win.id));
 
@@ -22,7 +23,7 @@ export default function StatusBar({
         onClose={() => setActiveLinkData(null)}
       />
 
-      <div role="navigation" aria-label="App dock" style={isTablet ? { bottom: "calc(var(--os-safe-bottom) + 12px)" } : undefined} className="fixed bottom-2 left-1/2 -translate-x-1/2 z-[9999] flex items-end select-none w-max max-w-[95vw]">
+      <div role="navigation" aria-label="App dock" style={isTablet ? { bottom: "calc(var(--os-safe-bottom) + 12px)" } : undefined} className={`${isTablet ? "tablet-dock" : "desktop-dock"} fixed bottom-2 left-1/2 -translate-x-1/2 z-[9999] flex items-end select-none w-max max-w-[95vw]`}>
         <div className="flex items-center gap-1.5 overflow-x-auto rounded-2xl border border-white/10 bg-[#18181b]/75 px-3 py-2.5 shadow-[0_8px_32px_rgba(20,36,43,0.16),inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-xl">
           {/* 1. APPS */}
           {appOrder.map((appId) => {
@@ -67,7 +68,7 @@ export default function StatusBar({
               >
                 {isLucideIcon ? (
                   <Icon
-                    size={36}
+                    size={dockIconSize}
                     strokeWidth={2}
                     className={`transition-all ${
                       isActive
@@ -112,7 +113,7 @@ export default function StatusBar({
               <button key={profile.title} type="button" onClick={(event) => setActiveLinkData({ ...profile, returnFocus: event.currentTarget })}
                 aria-label={`Open ${profile.title} profile`} title={`${profile.title} · opens in a new tab`}
                 className="flex h-11 w-11 items-center justify-center rounded-lg border border-transparent text-zinc-300 transition-colors hover:border-white/10 hover:bg-white/10 hover:text-zinc-100">
-                <profile.icon size={36} strokeWidth={1.8} aria-hidden="true" />
+                <profile.icon size={dockIconSize} strokeWidth={1.8} aria-hidden="true" />
               </button>
             ))}
           </div>

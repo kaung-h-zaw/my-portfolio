@@ -22,11 +22,11 @@ export default function PhoneLayout({ apps, appOrder, openWindows, openWindow, c
     <TopBar isPhone appActive={Boolean(activeApp)} />
     {!activeApp && <>
       <main className="native-phone-home absolute inset-x-0 overflow-y-auto overscroll-contain" style={{ top: "calc(var(--os-safe-top) + 32px)", bottom: "calc(var(--os-safe-bottom) + 100px)" }}>
-        <div className="native-phone-home-content mx-auto flex w-full max-w-[480px] flex-col px-4 pb-6 pt-3">
+        <div className="native-phone-home-content mx-auto flex min-h-full w-full max-w-[480px] flex-col px-4 pb-6 pt-3">
           <header className="mb-4 flex items-end justify-between text-white"><div><p className="font-sans text-[11px] text-white/70">{new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}</p><h1 className="mt-1 font-sans text-xl font-semibold tracking-tight">Kaung OS</h1></div><span className="pb-1 font-mono text-[9px] tracking-widest text-white/60">v2.0</span></header>
           <div className="native-phone-profile mb-3"><ProfileWidget onOpenAbout={() => openWindow("about")} /></div>
           <div className="native-phone-widgets mb-5 grid grid-cols-2 gap-3"><WeatherWidget variant="compact" /><MusicWidget variant="compact" /></div>
-          <nav aria-label="Home apps" className="native-phone-apps grid grid-cols-4 gap-x-2 gap-y-4">
+          <nav aria-label="Home apps" className="native-phone-apps grid flex-1 grid-cols-4 gap-x-2 gap-y-4">
             {appOrder.map((id) => apps[id]).map((app) => <HomeIcon key={app.id} title={app.title} label={app.id === "about" ? "About" : app.title} icon={app.mobileIcon || app.icon} onClick={() => openWindow(app.id)} />)}
             {links.map((link) => <HomeIcon key={link.title} {...link} onClick={(event) => setPendingLink({ ...link, returnFocus: event.currentTarget })} />)}
           </nav>

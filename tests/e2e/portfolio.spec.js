@@ -296,14 +296,14 @@ test("wide monitors open a centered window with working maximize and restore", a
     await page.setViewportSize(viewport);
     await expect(page.getByRole("button", { name: "Maximize window", exact: true })).toBeVisible();
     await expect.poll(async () => Math.round((await appWindow.boundingBox()).width)).toBe(1400);
-    await expect.poll(async () => Math.round((await appWindow.boundingBox()).height)).toBe(Math.min(900, viewport.height - 160));
+    await expect.poll(async () => Math.round((await appWindow.boundingBox()).height)).toBe(Math.min(900, viewport.height - 172));
     await expect.poll(async () => {
       const box = await appWindow.boundingBox();
       return Math.abs(box.x - (viewport.width - box.width) / 2);
     }).toBeLessThan(2);
     const box = await appWindow.boundingBox();
     expect(box.y).toBeGreaterThanOrEqual(44);
-    expect(box.y + box.height).toBeLessThanOrEqual(viewport.height - 88);
+    expect(box.y + box.height).toBeLessThanOrEqual(viewport.height - 100);
   }
   await page.getByRole("button", { name: "Maximize window", exact: true }).click();
   await expect(page.getByRole("button", { name: "Restore window", exact: true })).toBeVisible();
@@ -346,7 +346,7 @@ test("phone and tablet have compact home screens with matching profile icons", a
   test.skip(!isNative(testInfo), "Device home screens");
   await visit(page);
   const phone = isPhone(testInfo);
-  for (const viewport of phone ? [{ width: 320, height: 744 }, { width: 390, height: 844 }] : [{ width: 768, height: 744 }, { width: 1024, height: 600 }]) {
+  for (const viewport of phone ? [{ width: 320, height: 744 }, { width: 390, height: 844 }] : [{ width: 820, height: 1100 }, { width: 768, height: 744 }, { width: 1024, height: 600 }]) {
     await page.setViewportSize(viewport);
     await page.getByRole("button", { name: /^(Show desktop|Go to home screen)$/ }).click();
     await expect(page.getByRole("region", { name: / window$/ })).toHaveCount(0);
@@ -360,6 +360,8 @@ test("phone and tablet have compact home screens with matching profile icons", a
     const gridBox = await icons.boundingBox();
     const dockBox = await dock.boundingBox();
     expect(gridBox.y + gridBox.height).toBeLessThanOrEqual(dockBox.y);
+    const lastIcon = await icons.getByRole("button").last().boundingBox();
+    expect(dockBox.y - lastIcon.y - lastIcon.height).toBeLessThan(viewport.height * 0.18);
     await icons.getByRole("button", { name: "GitHub", exact: true }).click();
     await expect(page.getByRole("dialog").getByRole("heading", { name: "Open GitHub?", exact: true })).toBeVisible();
     await page.keyboard.press("Escape");
