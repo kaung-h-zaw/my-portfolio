@@ -225,12 +225,18 @@ test("contact form handles failed and successful submissions without sending rea
   expect(requests).toBe(2);
 });
 
-test("short laptop layouts keep actions reachable and restored windows stack columns", async ({ page }, testInfo) => {
+test("laptops open floating windows close to the dock and keep actions reachable", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "laptop", "Laptop layout regression coverage");
   await visit(page);
   for (const viewport of [{ width: 1440, height: 650 }, { width: 1366, height: 768 }, { width: 1280, height: 600 }]) {
     await page.setViewportSize(viewport);
     await openApp(page, "About_Me");
+    await expect(page.getByRole("button", { name: "Maximize window", exact: true })).toBeVisible();
+    const windowBox = await page.getByRole("region", { name: / window$/ }).boundingBox();
+    const dockBox = await page.getByRole("navigation", { name: "App dock", exact: true }).boundingBox();
+    expect(windowBox.width).toBeLessThan(viewport.width - 100);
+    expect(dockBox.y - windowBox.y - windowBox.height).toBeGreaterThanOrEqual(4);
+    expect(dockBox.y - windowBox.y - windowBox.height).toBeLessThanOrEqual(8);
     await expect(page.getByRole("button", { name: "View Projects", exact: true })).toBeInViewport({ ratio: 1 });
     await expect(page.locator(".app-page").getByRole("link", { name: "View CV", exact: true })).toBeInViewport({ ratio: 1 });
     expect(await page.locator(".app-page").evaluate((e) => e.getBoundingClientRect().width)).toBeLessThanOrEqual(1160);
@@ -243,12 +249,13 @@ test("short laptop layouts keep actions reachable and restored windows stack col
     await submit.scrollIntoViewIfNeeded();
     await expect(submit).toBeInViewport({ ratio: 1 });
   }
+  await page.getByRole("button", { name: "Maximize window", exact: true }).click();
   await page.getByRole("button", { name: "Restore window", exact: true }).click();
   for (const app of ["About_Me", "Projects", "Experience", "Skills", "Education", "Contact"]) {
     await openApp(page, app);
     expect(await page.locator(".os-content").evaluate((e) => e.scrollWidth <= e.clientWidth + 1)).toBe(true);
     const grid = page.locator('.app-split, .app-grid-two, .app-experience-grid').first();
-    expect(await grid.evaluate((e) => getComputedStyle(e).gridTemplateColumns.split(' ').length)).toBe(1);
+    expect(await grid.evaluate((e) => getComputedStyle(e).gridTemplateColumns.split(' ').length)).toBe(2);
   }
 });
 
@@ -300,14 +307,14 @@ test("wide monitors open a centered window with working maximize and restore", a
     await page.setViewportSize(viewport);
     await expect(page.getByRole("button", { name: "Maximize window", exact: true })).toBeVisible();
     await expect.poll(async () => Math.round((await appWindow.boundingBox()).width)).toBe(1400);
-    await expect.poll(async () => Math.round((await appWindow.boundingBox()).height)).toBe(Math.min(900, viewport.height - 172));
+    await expect.poll(async () => Math.round((await appWindow.boundingBox()).height)).toBe(Math.min(900, viewport.height - 132));
     await expect.poll(async () => {
       const box = await appWindow.boundingBox();
       return Math.abs(box.x - (viewport.width - box.width) / 2);
     }).toBeLessThan(2);
     const box = await appWindow.boundingBox();
     expect(box.y).toBeGreaterThanOrEqual(44);
-    expect(box.y + box.height).toBeLessThanOrEqual(viewport.height - 100);
+    expect(box.y + box.height).toBeLessThanOrEqual(viewport.height - 80);
   }
   await page.getByRole("button", { name: "Maximize window", exact: true }).click();
   await expect(page.getByRole("button", { name: "Restore window", exact: true })).toBeVisible();
@@ -320,8 +327,8 @@ test("wide monitors open a centered window with working maximize and restore", a
   await page.getByRole("button", { name: "Close window", exact: true }).click();
   await page.getByRole("navigation", { name: "App dock" }).getByRole("button", { name: "Open About_Me window", exact: true }).click();
   await page.setViewportSize({ width: 1440, height: 900 });
-  await expect(page.getByRole("button", { name: "Restore window", exact: true })).toBeVisible();
-  expect((await appWindow.boundingBox()).width).toBeGreaterThan(1400);
+  await expect(page.getByRole("button", { name: "Maximize window", exact: true })).toBeVisible();
+  await expect.poll(async () => Math.round((await appWindow.boundingBox()).width)).toBe(1060);
   await page.setViewportSize({ width: 1920, height: 1080 });
   await expect(page.getByRole("button", { name: "Maximize window", exact: true })).toBeVisible();
   await expect.poll(async () => Math.round((await appWindow.boundingBox()).width)).toBe(1400);

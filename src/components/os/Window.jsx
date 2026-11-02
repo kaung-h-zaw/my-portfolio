@@ -40,12 +40,12 @@ export default function Window({
   const nodeRef = useRef(null);
   const pickerRef = useRef(null);
   const searchInputRef = useRef(null);
-  const [windowMode, setWindowMode] = useState("auto");
+  const [windowMode, setWindowMode] = useState("restored");
   const [position, setPosition] = useState(() => {
     const wide = window.innerWidth >= 1600;
-    const width = Math.min(wide ? 1400 : 860, window.innerWidth - 32);
-    const height = Math.min(wide ? 900 : 680, window.innerHeight - 172);
-    return { x: (window.innerWidth - width) / 2, y: Math.max(44, 44 + (window.innerHeight - 144 - height) / 2) };
+    const width = Math.min(wide ? 1400 : 1060, window.innerWidth - 64);
+    const height = Math.min(wide ? 900 : 680, window.innerHeight - 132);
+    return { x: (window.innerWidth - width) / 2, y: Math.max(44, window.innerHeight - 80 - height) };
   });
   const [isPickerOpen, setIsPickerOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -78,10 +78,10 @@ export default function Window({
     });
 
   const isWideScreen = viewportWidth >= 1600;
-  const isMaximized = isMobile || isTablet || windowMode === "maximized" || (windowMode === "auto" && !isWideScreen);
-  const restoredWidth = Math.min(isWideScreen ? 1400 : 860, viewportWidth - 32);
+  const isMaximized = isMobile || isTablet || windowMode === "maximized";
+  const restoredWidth = Math.min(isWideScreen ? 1400 : 1060, viewportWidth - 64);
   const [viewportHeight, setViewportHeight] = useState(() => window.innerHeight);
-  const restoredHeight = Math.min(isWideScreen ? 900 : 680, viewportHeight - 172);
+  const restoredHeight = Math.min(isWideScreen ? 900 : 680, viewportHeight - 132);
 
   useEffect(() => {
     const handleResize = () => {
@@ -100,7 +100,7 @@ export default function Window({
 
     if (!isMobile) {
       const centerX = (viewportWidth - restoredWidth) / 2;
-      const centerY = Math.max(44, 44 + (viewportHeight - 144 - restoredHeight) / 2);
+      const centerY = Math.max(44, viewportHeight - 80 - restoredHeight);
       setPosition({ x: Math.max(0, centerX), y: Math.max(0, centerY) });
     }
   }, [isMobile, restoredWidth, restoredHeight, viewportWidth, viewportHeight]);
@@ -148,7 +148,7 @@ export default function Window({
     top: 44,
     left: 0,
     right: Math.max(0, viewportWidth - restoredWidth),
-    bottom: Math.max(44, viewportHeight - restoredHeight - 100),
+    bottom: Math.max(44, viewportHeight - restoredHeight - 80),
   };
 
   const toggleMaximize = () => {
@@ -157,7 +157,7 @@ export default function Window({
 
     if (isMaximized) {
       const centerX = (viewportWidth - restoredWidth) / 2;
-      const centerY = Math.max(44, 44 + (viewportHeight - 144 - restoredHeight) / 2);
+      const centerY = Math.max(44, viewportHeight - 80 - restoredHeight);
       setPosition({ x: Math.max(0, centerX), y: Math.max(0, centerY) });
     } else {
       setPosition({ x: 0, y: 0 });
@@ -362,7 +362,7 @@ export default function Window({
       positionClass = "fixed top-[calc(var(--os-safe-top)+40px)] left-3 right-3 bottom-[calc(var(--os-safe-bottom)+100px)] z-50 rounded-[24px] !transform-none border border-white/20 bg-[#181818] ";
     } else {
       positionClass =
-        "fixed top-11 left-3 right-3 xl:left-1 xl:right-1 bottom-[100px] z-50 rounded-2xl !transform-none border border-white/10 bg-[#181818] ";
+        "fixed top-11 left-3 right-3 xl:left-1 xl:right-1 bottom-[80px] z-50 rounded-2xl !transform-none border border-white/10 bg-[#181818] ";
     }
   } else {
     positionClass =
