@@ -1,211 +1,45 @@
 import React, { useState } from "react";
-import { AnimatePresence } from "framer-motion";
 import TopBar from "../TopBar";
 import Window from "../Window";
 import WeatherWidget from "../widgets/WeatherWidget";
 import MusicWidget from "../widgets/MusicWidget";
 import LinkConfirmationModal from "../LinkConfirmationModal";
-import IntroductionWidget from "../widgets/IntroductionWidget";
-import { Github, Linkedin, Instagram } from "lucide-react";
+import { GitHubIcon, LinkedInIcon } from "../AppIcons";
+import { HomeIcon, ProfileWidget, HomeIndicator } from "../DeviceHome";
 import BackgroundLayers from "../BackgroundLayers";
 
-const MobileAppIcon = ({ app, onClick }) => {
-  const Icon = app.mobileIcon || app.icon;
-  const isLucideIcon = typeof Icon !== "string";
-
-  return (
-    <button
-      onClick={() => {
-        if (navigator.vibrate) navigator.vibrate(50);
-        onClick();
-      }}
-      className="flex flex-col items-center gap-2 active:scale-95 transition-transform duration-100 w-full group"
-    >
-      <div className="w-16 h-16 bg-white/40 backdrop-blur-md rounded-2xl border border-black/20 flex items-center justify-center p-2 group-active:bg-white/50 group-active:border-black/15 transition-all">
-        {isLucideIcon ? (
-          <Icon
-            size={32}
-            strokeWidth={2}
-            className="text-black/70 group-active:text-black/90 transition-all"
-          />
-        ) : (
-          <img
-            src={Icon}
-            alt={app.title}
-            className="w-full h-full object-contain opacity-70 group-active:opacity-90"
-          />
-        )}
-      </div>
-      <span className="font-medium font-mono text-[10px] text-[#263838] bg-[#e4e8e1]/80 rounded-md uppercase tracking-tight px-2 py-1 text-center">
-        {app.title}
-      </span>
-    </button>
-  );
-};
-
-const MobileLinkIcon = ({ title, icon, onClick }) => {
-  const isLucideIcon = typeof icon !== "string";
-
-  return (
-    <button
-      onClick={() => {
-        if (navigator.vibrate) navigator.vibrate(50);
-        onClick();
-      }}
-      className="flex flex-col items-center gap-2 active:scale-95 transition-transform duration-100 w-full group"
-    >
-      <div className="w-16 h-16 bg-white/40 backdrop-blur-md rounded-2xl border border-black/10 flex items-center justify-center p-2 group-active:bg-white/50 group-active:border-black/15 transition-all">
-        {isLucideIcon ? (
-          React.createElement(icon, {
-            size: 32,
-            strokeWidth: 2,
-            className:
-              "text-black/70 group-active:text-black/90 transition-all",
-          })
-        ) : (
-          <img
-            src={icon}
-            alt={title}
-            className="w-full h-full object-contain opacity-70 group-active:opacity-90"
-          />
-        )}
-      </div>
-      <span className="font-medium font-mono text-[10px] text-[#263838] bg-[#e4e8e1]/80 rounded-md uppercase tracking-tight px-2 py-1 text-center">
-        {title}
-      </span>
-    </button>
-  );
-};
-
-export default function PhoneLayout({
-  apps,
-  appOrder,
-  navDirection,
-  navigationMode,
-  openWindows,
-  openWindow,
-  closeWindow,
-  minimizeWindow,
-}) {
-  const activeApp =
-    openWindows.length > 0 ? openWindows.find((win) => !win.minimized) : null;
+export default function PhoneLayout({ apps, appOrder, openWindows, openWindow, closeWindow, minimizeWindow }) {
+  const activeApp = openWindows.find((win) => !win.minimized);
   const [pendingLink, setPendingLink] = useState(null);
-  const externalLinks = [
-    {
-      title: "GitHub",
-      icon: Github,
-      href: "https://github.com/kaung-h-zaw",
-    },
-    {
-      title: "LinkedIn",
-      icon: Linkedin,
-      href: "https://linkedin.com/in/kaung-h-zaw",
-    },
-    {
-      title: "Instagram",
-      icon: Instagram,
-      href: "https://www.instagram.com/kaung.h.zaw/",
-    },
+  const links = [
+    { title: "GitHub", icon: GitHubIcon, href: "https://github.com/kaung-h-zaw" },
+    { title: "LinkedIn", icon: LinkedInIcon, href: "https://linkedin.com/in/kaung-h-zaw" },
   ];
+  const goHome = () => { if (activeApp) minimizeWindow(activeApp.id); };
 
-  return (
-    <div
-      className="fixed inset-0 w-full h-full overflow-hidden overscroll-none"
-      style={{
-        background: "#657d7d",
-      }}
-    >
-      {/* 1. BACKGROUND WALLPAPER - Extended to cover safe areas */}
-      <div
-        className="absolute inset-0 z-0 pointer-events-none"
-        style={{ top: "-100px", bottom: "-100px" }}
-      >
-        <BackgroundLayers />
-      </div>
-
-      {/* 2. TOP BAR */}
-      <div className="absolute top-0 left-0 right-0 z-[10000]">
-        <TopBar isPhone onOpenApp={openWindow} />
-      </div>
-
-      {/* 3. HOME SCREEN CONTENT */}
-      {!activeApp && (
-        <div
-          className="absolute left-0 right-0 z-10 overflow-y-auto pt-0 custom-scrollbar"
-          style={{
-            top: "calc(env(safe-area-inset-top) + 32px)",
-            bottom: "0",
-            paddingBottom: "calc(env(safe-area-inset-bottom) + 2rem)",
-          }}
-        >
-          <div className="w-full px-5 mt-2 mb-6 max-w-[360px] mx-auto flex flex-col gap-3">
-            {/* The Intro Widget */}
-            <div className="w-full">
-              <IntroductionWidget onOpenAbout={() => openWindow("about")} />
-            </div>
-
-            {/* The Weather & Music grid */}
-            <div className="grid grid-cols-2 gap-3">
-              <WeatherWidget />
-              <MusicWidget />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-3 gap-x-4 gap-y-4 px-6 w-full max-w-[400px] mx-auto mt-2">
-            {appOrder
-              .map((id) => apps[id])
-              .filter(Boolean)
-              .map((app) => (
-                <div key={app.id} className="flex justify-center w-full">
-                  <MobileAppIcon app={app} onClick={() => openWindow(app.id)} />
-                </div>
-              ))}
-
-            {externalLinks.map((link) => (
-              <div key={link.title} className="flex justify-center w-full">
-                <MobileLinkIcon
-                  title={link.title}
-                  icon={link.icon}
-                  onClick={() => setPendingLink(link)}
-                />
-              </div>
-            ))}
-          </div>
+  return <div className="native-phone fixed inset-0 overflow-hidden bg-[#657d7d]">
+    <BackgroundLayers />
+    <TopBar isPhone appActive={Boolean(activeApp)} />
+    {!activeApp && <>
+      <main className="native-phone-home absolute inset-x-0 overflow-y-auto overscroll-contain" style={{ top: "calc(env(safe-area-inset-top) + 32px)", bottom: "calc(env(safe-area-inset-bottom) + 132px)" }}>
+        <div className="mx-auto flex w-full max-w-[480px] flex-col px-4 pb-4 pt-3">
+          <header className="mb-4 flex items-end justify-between text-white"><div><p className="font-sans text-[11px] text-white/70">{new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}</p><h1 className="mt-1 font-sans text-xl font-semibold tracking-tight">Kaung OS</h1></div><span className="pb-1 font-mono text-[9px] tracking-widest text-white/60">v2.0</span></header>
+          <div className="native-phone-profile mb-3"><ProfileWidget onOpenAbout={() => openWindow("about")} /></div>
+          <div className="native-phone-widgets mb-5 grid grid-cols-2 gap-3"><WeatherWidget variant="compact" /><MusicWidget variant="compact" /></div>
+          <nav aria-label="Home apps" className="native-phone-apps grid grid-cols-4 gap-x-2 gap-y-4">
+            {appOrder.map((id) => apps[id]).map((app) => <HomeIcon key={app.id} title={app.title} label={app.id === "about" ? "About" : app.title} icon={app.mobileIcon || app.icon} onClick={() => openWindow(app.id)} />)}
+            {links.map((link) => <HomeIcon key={link.title} {...link} onClick={() => setPendingLink(link)} />)}
+          </nav>
         </div>
-      )}
-
-      {/* 4. APP WINDOW */}
-      {/* Window handles content transitions; unmount closed shells immediately. */}
-      {activeApp && (
-        <Window
-          key="active-window"
-          id={activeApp.id}
-          title={activeApp.title}
-          apps={apps}
-          currentAppId={activeApp.id}
-          appOrder={appOrder}
-          navDirection={navDirection}
-          navigationMode={navigationMode}
-          onNavigate={openWindow}
-          zIndex={50}
-          onClose={() => closeWindow(activeApp.id)}
-          isMobile={true}
-          onFocus={() => {}}
-          onMinimize={() => minimizeWindow(activeApp.id)}
-        >
-          {React.createElement(apps[activeApp.id].component, { onOpenApp: openWindow })}
-        </Window>
-      )}
-
-      {/* 6. LINK CONFIRMATION MODAL */}
-      <AnimatePresence>
-        {pendingLink && (
-          <LinkConfirmationModal
-            linkData={pendingLink}
-            onClose={() => setPendingLink(null)}
-          />
-        )}
-      </AnimatePresence>
-    </div>
-  );
+      </main>
+      <nav aria-label="Phone dock" className="native-phone-dock fixed bottom-11 left-1/2 z-20 flex w-[calc(100%-32px)] max-w-[400px] -translate-x-1/2 items-center justify-around rounded-[28px] border border-white/25 bg-[#d2dcd3]/65 px-3 py-3 shadow-[0_8px_32px_rgba(20,36,43,0.12)] backdrop-blur-xl" style={{ marginBottom: "env(safe-area-inset-bottom)" }}>
+        {["about", "projects", "skills", "contact"].map((id) => { const app = apps[id]; const Icon = app.mobileIcon || app.icon; return <button key={id} type="button" aria-label={`Open ${app.title} app`} onClick={() => openWindow(id)} className="flex h-12 w-12 items-center justify-center rounded-[17px] border border-white/35 bg-[#e1e6dc]/85 text-[#30494c] shadow-sm active:scale-95"><Icon size={36} strokeWidth={1.8} aria-hidden="true" /></button>; })}
+      </nav>
+    </>}
+    {activeApp && <Window key="active-window" title={activeApp.title} apps={apps} currentAppId={activeApp.id} appOrder={appOrder} onNavigate={openWindow} zIndex={50} onClose={() => closeWindow(activeApp.id)} isMobile onFocus={() => {}} onMinimize={goHome}>
+      {React.createElement(apps[activeApp.id].component, { onOpenApp: openWindow })}
+    </Window>}
+    <HomeIndicator onClick={goHome} appActive={Boolean(activeApp)} />
+    <LinkConfirmationModal linkData={pendingLink} onClose={() => setPendingLink(null)} />
+  </div>;
 }

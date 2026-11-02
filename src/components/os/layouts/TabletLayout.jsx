@@ -1,190 +1,41 @@
 import React, { useState } from "react";
-import { AnimatePresence } from "framer-motion";
 import Window from "../Window";
-
 import TopBar from "../TopBar";
 import StatusBar from "../StatusBar";
-import IntroductionWidget from "../widgets/IntroductionWidget";
 import WeatherWidget from "../widgets/WeatherWidget";
 import MusicWidget from "../widgets/MusicWidget";
 import LinkConfirmationModal from "../LinkConfirmationModal";
-import { Github, Linkedin } from "lucide-react";
+import { GitHubIcon, LinkedInIcon } from "../AppIcons";
+import { HomeIcon, ProfileWidget, HomeIndicator } from "../DeviceHome";
 import BackgroundLayers from "../BackgroundLayers";
 
-const formatTabletTitle = (title = "") =>
-  title.replace(/_/g, " ");
-
-const TabletIcon = ({ title, icon, onClick }) => {
-  const isLucideIcon = typeof icon !== "string";
-
-  return (
-    <button
-      onClick={onClick}
-      className="flex flex-col items-center gap-3 active:scale-95 transition-transform group w-full"
-    >
-      <div className="w-24 h-24 bg-white/40 backdrop-blur-md rounded-[28px] border border-black/20 flex items-center justify-center p-4 group-hover:bg-white/50 group-hover:border-black/15 group-active:bg-white/50 group-active:border-black/15 transition-all">
-        {isLucideIcon ? (
-          React.createElement(icon, {
-            size: 40,
-            strokeWidth: 2,
-            className: "text-black/70 group-hover:text-black/90 transition-all",
-          })
-        ) : (
-          <img
-            src={icon}
-            alt={title}
-            className="w-full h-full object-contain opacity-70 group-hover:opacity-90 transition-all"
-          />
-        )}
-      </div>
-      <span className="font-mono font-medium text-xs text-black/70 tracking-[0.14em] uppercase text-center leading-tight bg-white/40 backdrop-blur-md px-3 py-1 rounded-md border border-black/10 whitespace-normal break-words">
-        {formatTabletTitle(title)}
-      </span>
-    </button>
-  );
-};
-
-export default function TabletLayout({
-  apps,
-  appOrder,
-  navDirection,
-  navigationMode,
-  openWindows,
-  activeWindowId,
-  openWindow,
-  closeWindow,
-  focusWindow,
-  minimizeWindow,
-}) {
+export default function TabletLayout({ apps, appOrder, openWindows, activeWindowId, openWindow, closeWindow, focusWindow, minimizeWindow }) {
+  const activeApp = openWindows.find((win) => !win.minimized);
   const [pendingLink, setPendingLink] = useState(null);
-
-  const externalLinks = [
-    {
-      title: "GitHub",
-      icon: Github,
-      href: "https://github.com/kaung-h-zaw",
-    },
-    {
-      title: "LinkedIn",
-      icon: Linkedin,
-      href: "https://linkedin.com/in/kaung-h-zaw",
-    },
+  const links = [
+    { title: "GitHub", icon: GitHubIcon, href: "https://github.com/kaung-h-zaw" },
+    { title: "LinkedIn", icon: LinkedInIcon, href: "https://linkedin.com/in/kaung-h-zaw" },
   ];
+  const goHome = () => { if (activeApp) minimizeWindow(activeApp.id); };
 
-  return (
-    <div className="fixed inset-0 flex flex-col overflow-hidden text-black select-none bg-[#EFE5D9]">
-      {/* 1. BACKGROUND */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <BackgroundLayers />
+  return <div className="native-tablet fixed inset-0 overflow-hidden bg-[#657d7d]">
+    <BackgroundLayers />
+    <TopBar isTablet appActive={Boolean(activeApp)} />
+    {!activeApp && <main className="native-tablet-home absolute inset-x-0 overflow-y-auto overscroll-contain px-7" style={{ top: "calc(env(safe-area-inset-top) + 48px)", bottom: "calc(env(safe-area-inset-bottom) + 132px)" }}>
+      <div className="mx-auto w-full max-w-[960px] py-4">
+        <header className="mb-6 flex items-end justify-between gap-4 text-white"><div><p className="font-sans text-xs text-white/65">Make yourself at home</p><h1 className="mt-1 font-sans text-[28px] font-semibold tracking-tight">Kaung OS</h1></div><p className="pb-1 font-sans text-xs text-white/75">{new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}</p></header>
+        <section aria-label="Home widgets" className="native-tablet-widgets mb-8 grid grid-cols-[1.5fr_1fr_1fr] gap-3"><ProfileWidget onOpenAbout={() => openWindow("about")} /><WeatherWidget variant="compact" /><MusicWidget variant="compact" /></section>
+        <nav aria-label="Home apps" className="native-tablet-apps mx-auto grid max-w-[800px] grid-cols-4 gap-x-6 gap-y-5">
+          {appOrder.map((id) => apps[id]).map((app) => <HomeIcon key={app.id} title={app.title} label={app.id === "about" ? "About" : app.title} icon={app.mobileIcon || app.icon} onClick={() => openWindow(app.id)} />)}
+          {links.map((link) => <HomeIcon key={link.title} {...link} onClick={() => setPendingLink(link)} />)}
+        </nav>
       </div>
-
-      {/* 2. TOP MENU BAR */}
-      <div className="absolute top-0 left-0 right-0 z-[10000]">
-        <TopBar onOpenApp={openWindow} />
-      </div>
-
-      {/* 3. MAIN DASHBOARD CONTENT */}
-      <div className="flex-1 z-10 pt-20 pb-32 px-8 flex justify-center overflow-y-auto custom-scrollbar min-h-0">
-        <div className="w-full max-w-[680px] flex flex-col gap-8">
-          <div className="w-full">
-            <IntroductionWidget onOpenAbout={() => openWindow("about")} />
-          </div>
-
-          <div className="grid grid-cols-2 gap-6 w-full mt-0">
-            <WeatherWidget />
-            <MusicWidget />
-          </div>
-
-          <div className="grid grid-cols-4 gap-x-6 gap-y-10 w-full mt-5 px-2">
-            {appOrder.map((id) => apps[id]).filter(Boolean).map((app) => (
-              <div key={app.id} className="flex justify-center w-full">
-                <TabletIcon
-                  title={app.title}
-                  icon={app.mobileIcon || app.icon}
-                  onClick={() => openWindow(app.id)}
-                />
-              </div>
-            ))}
-
-            {externalLinks.map((link) => (
-              <div key={link.title} className="flex justify-center w-full">
-                <TabletIcon
-                  title={link.title}
-                  icon={link.icon}
-                  onClick={() => setPendingLink(link)}
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* 4. DESKTOP BOTTOM DOCK */}
-      <div className="absolute bottom-0 left-0 right-0">
-        <StatusBar
-          apps={apps}
-          appOrder={appOrder}
-          openWindows={openWindows}
-          activeWindowId={activeWindowId}
-          onOpenApp={openWindow}
-          onFocusWindow={focusWindow}
-          onMinimizeWindow={minimizeWindow}
-          isTablet={true}
-        />
-      </div>
-
-      {/* 5. FOOTER BRANDING */}
-      <div className="absolute bottom-6 lg:bottom-7 xl:bottom-8 right-4 lg:right-6 xl:right-10 z-10 text-right opacity-50 mix-blend-multiply pointer-events-none select-none origin-bottom-right">
-        <div className="text-2xl lg:text-3xl xl:text-4xl font-black tracking-tighter text-black leading-none drop-shadow-sm">
-          KAUNG OS
-        </div>
-        <div className="text-[9px] lg:text-[10px] xl:text-xs font-bold tracking-[0.3em] uppercase mt-1 text-gray-800">
-          v2.0 • SYSTEM READY
-        </div>
-      </div>
-
-      {/* 6. WINDOWS LAYER */}
-      {/* Window handles content transitions; unmount closed shells immediately. */}
-      <div className="absolute inset-0 z-50 pointer-events-none">
-        {openWindows.map((win) => {
-          if (win.minimized) return null;
-          const AppComp = apps[win.id].component;
-          return (
-            <div key="active-window" className="pointer-events-auto relative">
-              <Window
-                id={win.id}
-                title={win.title}
-                apps={apps}
-                currentAppId={win.id}
-                appOrder={appOrder}
-                navDirection={navDirection}
-                navigationMode={navigationMode}
-                onNavigate={openWindow}
-                defaultPos={{ x: 0, y: 0 }}
-                zIndex={win.zIndex}
-                onClose={() => closeWindow(win.id)}
-                onFocus={() => focusWindow(win.id)}
-                onMinimize={() => minimizeWindow(win.id)}
-                isMobile={false}
-              >
-                <AppComp onOpenApp={openWindow} />
-              </Window>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* 7. LINK CONFIRMATION MODAL */}
-      <AnimatePresence>
-        {pendingLink && (
-          <div className="pointer-events-auto relative z-[99999]">
-            <LinkConfirmationModal
-              linkData={pendingLink}
-              onClose={() => setPendingLink(null)}
-            />
-          </div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
+    </main>}
+    <StatusBar apps={apps} appOrder={appOrder} openWindows={openWindows} activeWindowId={activeWindowId} onOpenApp={openWindow} onFocusWindow={focusWindow} onMinimizeWindow={minimizeWindow} isTablet />
+    {activeApp && <Window key="active-window" title={activeApp.title} apps={apps} currentAppId={activeApp.id} appOrder={appOrder} onNavigate={openWindow} zIndex={activeApp.zIndex} onClose={() => closeWindow(activeApp.id)} onFocus={() => focusWindow(activeApp.id)} onMinimize={goHome} isMobile={false} isTablet>
+      {React.createElement(apps[activeApp.id].component, { onOpenApp: openWindow })}
+    </Window>}
+    <HomeIndicator onClick={goHome} appActive={Boolean(activeApp)} />
+    <LinkConfirmationModal linkData={pendingLink} onClose={() => setPendingLink(null)} />
+  </div>;
 }

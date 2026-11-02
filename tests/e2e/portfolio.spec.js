@@ -22,13 +22,17 @@ async function visit(page) {
   await expect(page.getByRole("button", { name: "View Projects", exact: true })).toBeVisible();
 }
 
-test("boots as KAUNG OS and opens one About window", async ({ page }) => {
+test("boots as KAUNG OS and opens one About window", async ({ page }, testInfo) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { name: "KAUNG OS", exact: true })).toBeVisible();
   await expect(page.getByText(/KAUNG_SPACE/)).toHaveCount(0);
   await expect(page.getByRole("button", { name: "View Projects", exact: true })).toBeVisible();
   await expect(page.getByRole("region", { name: / window$/ })).toHaveCount(1);
-  await expect(page.getByRole("region", { name: / window$/ }).getByText("KAUNG OS · v2.0", { exact: true })).toBeVisible();
+  if (["phone", "tablet"].includes(testInfo.project.name)) {
+    await expect(page.getByRole("button", { name: "Return to home screen", exact: true })).toBeVisible();
+  } else {
+    await expect(page.getByRole("region", { name: / window$/ }).getByText("KAUNG OS · v2.0", { exact: true })).toBeVisible();
+  }
 });
 
 test("delayed app loading never blinks or overlaps the window", async ({ page }) => {
@@ -141,7 +145,7 @@ test("phone keeps a compact status bar and Home through rotation", async ({ page
     await expect(page.getByLabel("Phone status", { exact: true })).toBeVisible();
     await expect(page.getByRole("button", { name: "Open portfolio menu", exact: true })).toHaveCount(0);
     await expect(page.getByRole("button", { name: "Go to home screen", exact: true })).toBeVisible();
-    expect((await page.locator(".os-titlebar").boundingBox()).height).toBe(36);
+    expect((await page.locator(".os-titlebar").boundingBox()).height).toBe(48);
     await expect(page.getByRole("region", { name: / window$/ })).toHaveCount(1);
   }
 });
@@ -326,5 +330,41 @@ test("dock groups GitHub and LinkedIn without Instagram", async ({ page }, testI
     await expect(page.getByRole("dialog").getByRole("heading", { name: `Open ${name}?`, exact: true })).toBeVisible();
     await page.keyboard.press("Escape");
     await expect(button).toBeFocused();
+  }
+});
+
+
+test("phone and tablet have compact home screens with matching profile icons", async ({ page }, testInfo) => {
+  test.skip(!["phone", "tablet"].includes(testInfo.project.name), "Device home screens");
+  await visit(page);
+  const phone = testInfo.project.name === "phone";
+  for (const viewport of phone ? [{ width: 320, height: 744 }, { width: 390, height: 844 }] : [{ width: 768, height: 744 }, { width: 1024, height: 600 }]) {
+    await page.setViewportSize(viewport);
+    await page.getByRole("button", { name: /^(Show desktop|Go to home screen)$/ }).click();
+    await expect(page.getByRole("region", { name: / window$/ })).toHaveCount(0);
+    await expect(page.getByLabel(phone ? "Phone status" : "Tablet status", { exact: true })).toBeVisible();
+    await expect(page.getByRole("button", { name: "Open portfolio menu", exact: true })).toHaveCount(0);
+    const icons = page.getByRole("navigation", { name: "Home apps", exact: true });
+    await expect(icons.getByRole("button")).toHaveCount(8);
+    await expect(icons.getByRole("button", { name: /Instagram|CV/ })).toHaveCount(0);
+    for (const icon of await icons.getByRole("button").all()) await expect(icon).toBeInViewport({ ratio: 1 });
+    const dock = page.getByRole("navigation", { name: phone ? "Phone dock" : "App dock", exact: true });
+    const gridBox = await icons.boundingBox();
+    const dockBox = await dock.boundingBox();
+    expect(gridBox.y + gridBox.height).toBeLessThanOrEqual(dockBox.y);
+    await icons.getByRole("button", { name: "GitHub", exact: true }).click();
+    await expect(page.getByRole("dialog").getByRole("heading", { name: "Open GitHub?", exact: true })).toBeVisible();
+    await page.keyboard.press("Escape");
+    await icons.getByRole("button", { name: "About_Me", exact: true }).click();
+    const appWindow = page.getByRole("region", { name: / window$/ });
+    await expect(appWindow).toBeVisible();
+    await expect(page.getByRole("button", { name: "Maximize window", exact: true })).toHaveCount(0);
+    await expect(page.getByRole("button", { name: "Restore window", exact: true })).toHaveCount(0);
+    if (phone) {
+      const box = await appWindow.boundingBox();
+      expect(box.x).toBe(0);
+      expect(Math.round(box.width)).toBe(viewport.width);
+    }
+    expect(await page.locator(".os-content").evaluate((e) => e.scrollWidth <= e.clientWidth + 1)).toBe(true);
   }
 });

@@ -129,3 +129,37 @@ a {
   .app-field { padding-top: 10px; padding-bottom: 10px; }
   .app-page .app-body { line-height: 1.5; }
 }
+
+/* Native home screens use fixed widget heights and icon sizes, independent of
+   viewport aspect ratio, so cards never push the app grid behind the dock. */
+@layer components {
+  .native-widget { @apply rounded-[22px] border border-white/20 bg-[#d4dfd5]/85 text-[#2b4446] shadow-[0_4px_16px_rgba(20,36,43,0.08)] backdrop-blur-lg; }
+}
+.native-phone .native-icon-tile { width: 58px; height: 58px; }
+.native-phone-profile { height: 96px; }
+.native-phone-widgets { height: 116px; }
+.native-tablet .native-icon-tile { width: 72px; height: 72px; border-radius: 23px; }
+.native-tablet .native-home-icon { gap: 8px; }
+.native-tablet .native-home-icon > span:last-child { font-size: 12px; }
+.native-tablet-widgets { height: 148px; }
+.native-tablet .native-profile { flex-wrap: nowrap; gap: 12px; }
+.native-tablet .native-profile-avatar { width: 40px; height: 40px; }
+.native-tablet .native-profile-arrow { display: none; }
+.native-tablet .native-profile > span { flex-basis: auto; }
+.native-tablet .native-profile > span > span:nth-child(2) { font-size: 16px; }
+@media (max-width: 359px) {
+  .native-phone .native-icon-tile { width: 54px; height: 54px; border-radius: 17px; }
+  .native-phone .native-home-icon { gap: 5px; }
+  .native-phone .native-home-icon > span:last-child { font-size: 10px; }
+  .native-phone .native-profile { padding: 12px; gap: 10px; }
+  .native-phone .native-profile-arrow { display: none; }
+  .native-phone .native-profile > span > span:nth-child(2) { font-size: 16px; }
+}
+@media (max-height: 700px) and (min-width: 640px) {
+  .native-tablet-home > div { padding-top: 4px; }
+  .native-tablet-home header { margin-bottom: 12px; }
+  .native-tablet-home header > div > p { display: none; }
+  .native-tablet-widgets { height: 132px; margin-bottom: 20px; }
+  .native-tablet .native-icon-tile { width: 60px; height: 60px; border-radius: 20px; }
+  .native-tablet-apps { row-gap: 12px; }
+}

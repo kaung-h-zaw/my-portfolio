@@ -35,6 +35,7 @@ export default function Window({
   onMinimize,
   children,
   isMobile,
+  isTablet = false,
 }) {
   const nodeRef = useRef(null);
   const pickerRef = useRef(null);
@@ -59,7 +60,7 @@ export default function Window({
   const currentApp = currentAppId ? apps[currentAppId] : null;
   const nextApp = nextAppId ? apps[nextAppId] : null;
   const currentLabel = currentApp?.title || title;
-  const isCompactHeader = isMobile;
+  const isCompactHeader = isMobile || isTablet;
   const isSmallScreen = viewportWidth <= 1024;
   const isPhoneHeader = isMobile;
   const isTabletViewport = !isMobile && viewportWidth < 1180;
@@ -77,7 +78,7 @@ export default function Window({
     });
 
   const isWideScreen = viewportWidth >= 1600;
-  const isMaximized = isMobile || windowMode === "maximized" || (windowMode === "auto" && !isWideScreen);
+  const isMaximized = isMobile || isTablet || windowMode === "maximized" || (windowMode === "auto" && !isWideScreen);
   const restoredWidth = Math.min(isWideScreen ? 1400 : 860, viewportWidth - 32);
   const [viewportHeight, setViewportHeight] = useState(() => window.innerHeight);
   const restoredHeight = Math.min(isWideScreen ? 900 : 680, viewportHeight - 160);
@@ -167,7 +168,7 @@ export default function Window({
     if (!currentApp) return null;
 
     const isCompact = mode !== "desktop";
-    const isCompactMobile = isCompact && isMobile;
+    const isCompactMobile = isCompact && isCompactHeader;
     const arrowButtonClass = isCompact
       ? "flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-black/16 bg-[#f7f4ef] text-black/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.36)] transition-colors hover:bg-white hover:text-black disabled:cursor-not-allowed disabled:opacity-30"
       : `flex ${isSmallScreen ? "h-7 w-7" : "h-8 w-8"} items-center justify-center rounded-lg border border-black/18 bg-white/70 text-black/75 shadow-[inset_0_1px_0_rgba(255,255,255,0.35)] transition-colors hover:bg-white hover:text-black disabled:cursor-not-allowed disabled:opacity-30`;
@@ -178,10 +179,10 @@ export default function Window({
       ? "min-w-[240px]"
       : "min-w-[300px]";
     const closedButtonClass = isCompact
-      ? `flex items-center justify-between rounded-xl border border-black/18 bg-[#f5f3ef] h-7 px-2 text-[11px] text-black/85 shadow-[inset_0_1px_0_rgba(255,255,255,0.32)] transition-colors hover:bg-[#faf8f4] ${isPhoneHeader ? "w-full min-w-0" : "min-w-[240px]"}`
+      ? `flex items-center justify-between rounded-xl border border-black/18 bg-white/30 h-10 px-3 text-sm text-black/85 shadow-[inset_0_1px_0_rgba(255,255,255,0.32)] transition-colors hover:bg-[#faf8f4] ${isPhoneHeader ? "w-full min-w-0" : "min-w-[240px]"}`
       : `flex ${desktopPickerWidthClass} items-center justify-between rounded-xl border border-black/18 bg-[#f5f3ef] px-3 ${isSmallScreen ? "py-1" : "py-1.5"} text-[11px] text-black/85 shadow-[inset_0_1px_0_rgba(255,255,255,0.32)] transition-colors hover:bg-[#faf8f4]`;
     const openShellClass = isCompact
-      ? `relative z-20 flex items-center justify-between rounded-t-xl rounded-b-md border border-black/22 border-b-transparent bg-[#f5f3ef] h-7 px-2 text-[11px] text-black/85 shadow-[0_10px_22px_rgba(0,0,0,0.12)] ${isPhoneHeader ? "w-full min-w-0" : "min-w-[240px]"}`
+      ? `relative z-20 flex items-center justify-between rounded-t-xl rounded-b-md border border-black/22 border-b-transparent bg-white/30 h-10 px-3 text-sm text-black/85 shadow-[0_10px_22px_rgba(0,0,0,0.12)] ${isPhoneHeader ? "w-full min-w-0" : "min-w-[240px]"}`
       : `relative z-20 flex ${desktopPickerWidthClass} items-center justify-between rounded-t-xl rounded-b-md border border-black/22 border-b-transparent bg-[#f5f3ef] px-3 ${isSmallScreen ? "py-1" : "py-1.5"} text-[11px] text-black/85 shadow-[0_10px_22px_rgba(0,0,0,0.12)]`;
     const pickerItems = isCompactMobile
       ? appOrder.map((id) => apps[id]).filter(Boolean)
@@ -189,6 +190,7 @@ export default function Window({
 
     return (
       <div className="flex items-center gap-2">
+        {!isCompactHeader && <>
         <button
           type="button"
           disabled={!previousApp}
@@ -215,12 +217,13 @@ export default function Window({
           <ChevronRight size={14} strokeWidth={2.6} />
         </button>
 
+        </>}
         <div className={pickerBaseClass}>
           {isPickerOpen ? (
             <div className={openShellClass}>
               {isCompactMobile ? (
                 <span className="w-full truncate text-[13px] font-medium text-black/85">
-                  {currentLabel}
+                  {isCompactHeader ? currentLabel.replace(/_/g, " ") : currentLabel}
                 </span>
               ) : (
                 <div className="flex min-w-0 flex-1 items-center gap-2">
@@ -240,7 +243,7 @@ export default function Window({
                       }
                     }}
                     aria-label="Search portfolio sections"
-                    placeholder={currentLabel}
+                    placeholder={isCompactHeader ? currentLabel.replace(/_/g, " ") : currentLabel}
                     className="w-full min-w-0 bg-transparent text-[12px] font-medium text-black outline-none placeholder:text-black/50"
                   />
                 </div>
@@ -277,7 +280,7 @@ export default function Window({
                     className="shrink-0 text-black/65"
                   />
                 )}
-                <span className="truncate text-[13px]">{currentLabel}</span>
+                <span className="truncate text-[13px]">{isCompactHeader ? currentLabel.replace(/_/g, " ") : currentLabel}</span>
               </span>
               <ChevronDown
                 size={13}
@@ -354,7 +357,9 @@ export default function Window({
   if (isMaximized) {
     if (isMobile) {
       positionClass =
-        "fixed top-[calc(env(safe-area-inset-top)+36px)] left-2 right-2 bottom-[calc(env(safe-area-inset-bottom)+8px)] z-50 !transform-none border border-black/20 rounded-2xl bg-gray-300/80 backdrop-blur-md";
+        "fixed top-[calc(env(safe-area-inset-top)+32px)] left-0 right-0 bottom-0 z-50 !transform-none bg-[#c4cecc]";
+    } else if (isTablet) {
+      positionClass = "fixed top-[calc(env(safe-area-inset-top)+40px)] left-3 right-3 bottom-[calc(env(safe-area-inset-bottom)+132px)] z-50 rounded-[24px] !transform-none border border-white/20 bg-[#c4cecc] shadow-xl";
     } else {
       positionClass =
         "fixed top-11 left-3 right-3 xl:left-1 xl:right-1 bottom-[88px] z-50 rounded-2xl !transform-none border border-black/20 bg-gray-300/80 backdrop-blur-md";
@@ -390,19 +395,19 @@ export default function Window({
         className={`outline-none bg-gray-300/40 flex flex-col overflow-hidden ${positionClass} pointer-events-auto`}
         onMouseDown={onFocus}
       >
-        <div className="flex flex-col h-full rounded-2xl">
+        <div className={`flex flex-col h-full ${isMobile ? "" : "rounded-2xl"}`}>
           {/* TITLE BAR */}
           <div
             className={`os-titlebar relative z-20 shrink-0 select-none bg-[#e3e5df] ${
-              isCompactHeader ? "h-9 px-2 flex items-center" : isSmallScreen ? "h-9 px-3" : "h-10 px-3"
-            } cursor-grab active:cursor-grabbing`}
+              isCompactHeader ? "h-12 px-3 flex items-center" : isSmallScreen ? "h-9 px-3" : "h-10 px-3"
+            } ${isCompactHeader ? "cursor-default" : "cursor-grab active:cursor-grabbing"}`}
           >
             {isCompactHeader ? (
               <div className="no-drag flex w-full items-center gap-2">
                 <button type="button" onClick={onMinimize}
-                  aria-label="Go to home screen" title="Return to all apps"
-                  className="flex h-7 shrink-0 items-center gap-1 rounded-md px-1 text-[11px] font-medium text-black/75 hover:bg-black/5">
-                  <House size={12} aria-hidden="true" /> Home
+                  aria-label={isMobile ? "Go to home screen" : "Show desktop"} title="Return to all apps"
+                  className="flex h-10 shrink-0 items-center gap-1 rounded-xl px-1 font-sans text-sm font-semibold text-[#365859] hover:bg-black/5">
+                  {isMobile ? <ChevronLeft size={18} aria-hidden="true" /> : <House size={18} aria-hidden="true" />} Home
                 </button>
                 {currentApp && (
                   <div ref={pickerRef} className="min-w-0 flex-1">
@@ -417,7 +422,7 @@ export default function Window({
                   type="button"
                   aria-label="Close window"
                   title={isMobile ? "Close app and go home" : "Close window and show desktop"}
-                  className="h-7 w-7 shrink-0 border border-black/12 bg-[#ff6b6b]/85 text-white flex items-center justify-center transition-colors rounded-lg cursor-pointer hover:bg-[#ff6b6b]"
+                  className="h-10 w-10 shrink-0 text-[#365859] flex items-center justify-center transition-colors rounded-xl cursor-pointer hover:bg-black/5"
                 >
                   <X size={14} strokeWidth={2.4} />
                 </button>
@@ -499,7 +504,7 @@ export default function Window({
             )}
           </div>
 
-          <div className="os-content relative z-0 min-h-0 flex-1 overflow-auto border-t border-black/10 bg-[#c4cecc]/95 backdrop-blur-sm p-1 sm:p-3">
+          <div style={isMobile ? { paddingBottom: 44 } : undefined} className="os-content relative z-0 min-h-0 flex-1 overflow-auto border-t border-black/10 bg-[#c4cecc]/95 backdrop-blur-sm p-1 sm:p-3">
             <div key={currentAppId || title} className="h-full">
               <Suspense
                 fallback={
@@ -512,10 +517,10 @@ export default function Window({
               </Suspense>
             </div>
           </div>
-          <footer className="flex h-6 shrink-0 items-center justify-between gap-2 border-t border-black/10 bg-white/25 px-3 text-[10px] text-black/65">
+          {!isCompactHeader && <footer className="flex h-6 shrink-0 items-center justify-between gap-2 border-t border-black/10 bg-white/25 px-3 text-[10px] text-black/65">
             <span className="whitespace-nowrap font-medium">KAUNG OS · v2.0</span>
             <span className="truncate">{isMobile ? "Home shows all apps" : "Use the dock below to switch apps"}</span>
-          </footer>
+          </footer>}
         </div>
       </div>
     </Draggable>

@@ -64,6 +64,15 @@ export default function MusicWidget({ variant = "mobile" }) {
     };
   }, []);
 
+  if (variant === "compact") {
+    return <button type="button" onClick={togglePlay} aria-label={isPlaying ? "Pause music" : "Play music"} aria-pressed={isPlaying}
+      className="native-widget flex h-full min-h-[112px] flex-col justify-between p-3.5 text-left transition-colors hover:bg-[#dce3d8]">
+      <span className="flex w-full items-center justify-between"><span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#445f60] text-[#e2e9df]"><Music size={15} aria-hidden="true" /></span>{isPlaying ? <Pause size={18} aria-hidden="true" /> : <Play size={18} aria-hidden="true" />}</span>
+      <span><span className="block font-sans text-xs font-bold text-[#293e40]">Lofi beats</span><span className="block font-sans text-[10px] text-[#536969]">{isPlaying ? "Now playing" : "Tap to play"}</span></span>
+      <span className="block h-1 w-full overflow-hidden rounded-full bg-black/10"><span className="block h-full rounded-full bg-[#496769]" style={{ width: `${progress}%` }} /></span>
+    </button>;
+  }
+
   if (variant === "desktop") {
     return (
       <div

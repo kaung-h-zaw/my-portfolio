@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Wifi, BatteryFull, Volume2, Search, Menu, X } from "lucide-react";
 
-export default function TopBar({ onOpenApp, isPhone = false }) {
+export default function TopBar({ onOpenApp, isPhone = false, isTablet = false, appActive = false }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
   const menuButtonRef = useRef(null);
@@ -44,14 +44,14 @@ export default function TopBar({ onOpenApp, isPhone = false }) {
     });
   };
 
-  if (isPhone) {
+  if (isPhone || isTablet) {
     return (
-      <div className="fixed top-0 left-0 right-0 z-[9999] flex items-center justify-between border-b border-black/10 bg-white/40 px-5 text-black/70 backdrop-blur-md select-none"
+      <div className={`native-status fixed top-0 left-0 right-0 z-[9999] flex items-center justify-between px-5 select-none ${appActive ? "bg-[#d1d9d4] text-[#293d3f]" : "bg-transparent text-white/90"}`}
         style={{ height: "calc(env(safe-area-inset-top) + 32px)", paddingTop: "env(safe-area-inset-top)" }}>
         <span className="text-xs font-semibold tabular-nums">
           {time.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: false })}
         </span>
-        <div className="flex items-center gap-2" aria-label="Phone status">
+        <div className="flex items-center gap-2" aria-label={isTablet ? "Tablet status" : "Phone status"}>
           <Wifi size={14} aria-hidden="true" />
           <BatteryFull size={18} aria-hidden="true" />
         </div>

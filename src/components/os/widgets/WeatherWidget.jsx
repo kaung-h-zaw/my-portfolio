@@ -67,6 +67,14 @@ export default function WeatherWidget({ variant = "mobile" }) {
 
   const WeatherIcon = weather.icon;
 
+  if (variant === "compact") {
+    return <section aria-label="Bangkok weather" className="native-widget flex h-full min-h-[112px] flex-col justify-between p-3.5">
+      <p className="font-sans text-xs font-semibold text-[#405657]">Bangkok</p>
+      <div className="flex items-center justify-between gap-1"><span className="font-sans text-[32px] font-semibold leading-none tracking-tight text-[#243b3e]">{weather.temp}°</span><WeatherIcon size={26} strokeWidth={1.6} className="shrink-0 text-[#405f60]" aria-hidden="true" /></div>
+      <p className="font-sans text-[10px] leading-tight text-[#4a6161]">{weather.description}</p>
+    </section>;
+  }
+
   if (variant === "desktop") {
     return (
       <div className="w-full box-border bg-white/40 backdrop-blur-md border border-black/10 p-3 xl:p-4 rounded-2xl flex flex-col justify-between aspect-[2/1] relative hover:border-black/15 transition-all">

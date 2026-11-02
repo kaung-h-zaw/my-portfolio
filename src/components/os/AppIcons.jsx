@@ -1,4 +1,5 @@
 import React from "react";
+import { Github, Linkedin } from "lucide-react";
 
 function IconFrame({ size = 24, className, children, ...props }) {
   return <svg width={size} height={size} viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true" {...props}>{children}</svg>;
@@ -21,4 +22,11 @@ export function EducationIcon(props) {
 }
 export function ContactIcon(props) {
   return <IconFrame {...props}><rect x="5" y="9" width="38" height="31" rx="6" fill="#c4ceca" /><path d="m7 13 14 12a5 5 0 0 0 6 0l14-12M7 37l12-11m22 11L29 26" /><path d="M11 5h26" strokeOpacity=".4" /></IconFrame>;
+}
+
+export function GitHubIcon(props) {
+  return <IconFrame {...props}><rect x="6" y="6" width="36" height="36" rx="8" fill="#d6d1c5" /><path d="M7 14h34" strokeOpacity=".35" /><Github x="13" y="15" width="22" height="22" strokeWidth="1.7" /><path d="M13 10h3m4 0h3" strokeOpacity=".5" /></IconFrame>;
+}
+export function LinkedInIcon(props) {
+  return <IconFrame {...props}><rect x="6" y="6" width="36" height="36" rx="8" fill="#bdcdd2" /><path d="M7 14h34" strokeOpacity=".35" /><Linkedin x="14" y="17" width="20" height="20" strokeWidth="1.7" /><path d="M13 10h3m4 0h3" strokeOpacity=".5" /></IconFrame>;
 }
