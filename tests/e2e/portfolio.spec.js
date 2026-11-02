@@ -274,3 +274,39 @@ test("external link dialog matches the OS and traps keyboard focus", async ({ pa
   await popup.close();
   await expect(dialog).toHaveCount(0);
 });
+
+
+test("wide monitors open a centered window with working maximize and restore", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "wide", "Wide monitor behavior");
+  await visit(page);
+  const appWindow = page.getByRole("region", { name: / window$/ });
+  for (const viewport of [{ width: 1920, height: 832 }, { width: 2560, height: 1440 }, { width: 1600, height: 900 }]) {
+    await page.setViewportSize(viewport);
+    await expect(page.getByRole("button", { name: "Maximize window", exact: true })).toBeVisible();
+    await expect.poll(async () => Math.round((await appWindow.boundingBox()).width)).toBe(1400);
+    await expect.poll(async () => Math.round((await appWindow.boundingBox()).height)).toBe(Math.min(900, viewport.height - 160));
+    await expect.poll(async () => {
+      const box = await appWindow.boundingBox();
+      return Math.abs(box.x - (viewport.width - box.width) / 2);
+    }).toBeLessThan(2);
+    const box = await appWindow.boundingBox();
+    expect(box.y).toBeGreaterThanOrEqual(44);
+    expect(box.y + box.height).toBeLessThanOrEqual(viewport.height - 88);
+  }
+  await page.getByRole("button", { name: "Maximize window", exact: true }).click();
+  await expect(page.getByRole("button", { name: "Restore window", exact: true })).toBeVisible();
+  expect((await appWindow.boundingBox()).width).toBeGreaterThan(1550);
+  await page.getByRole("button", { name: "Restore window", exact: true }).click();
+  await expect.poll(async () => Math.round((await appWindow.boundingBox()).width)).toBe(1400);
+  await openApp(page, "Projects");
+  await expect.poll(async () => Math.round((await appWindow.boundingBox()).width)).toBe(1400);
+  expect(await page.locator(".os-content").evaluate((e) => e.scrollWidth <= e.clientWidth + 1)).toBe(true);
+  await page.getByRole("button", { name: "Close window", exact: true }).click();
+  await page.getByRole("navigation", { name: "App dock" }).getByRole("button", { name: "Open About_Me window", exact: true }).click();
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await expect(page.getByRole("button", { name: "Restore window", exact: true })).toBeVisible();
+  expect((await appWindow.boundingBox()).width).toBeGreaterThan(1400);
+  await page.setViewportSize({ width: 1920, height: 1080 });
+  await expect(page.getByRole("button", { name: "Maximize window", exact: true })).toBeVisible();
+  await expect.poll(async () => Math.round((await appWindow.boundingBox()).width)).toBe(1400);
+});
