@@ -170,8 +170,8 @@ export default function Window({
     const isCompact = mode !== "desktop";
     const isCompactMobile = isCompact && isCompactHeader;
     const arrowButtonClass = isCompact
-      ? "flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-[#262629] text-zinc-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-colors hover:bg-white/10 hover:text-zinc-100 disabled:cursor-not-allowed disabled:opacity-30"
-      : `flex ${isSmallScreen ? "h-7 w-7" : "h-8 w-8"} items-center justify-center rounded-lg border border-white/10 bg-white/10 text-zinc-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-colors hover:bg-white/10 hover:text-zinc-100 disabled:cursor-not-allowed disabled:opacity-30`;
+      ? "flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-[#292929] text-zinc-200 transition-colors hover:bg-white/10 hover:text-zinc-100 disabled:cursor-not-allowed disabled:opacity-30"
+      : `flex ${isSmallScreen ? "h-7 w-7" : "h-8 w-8"} items-center justify-center rounded-lg border border-white/10 bg-white/10 text-zinc-200 transition-colors hover:bg-white/10 hover:text-zinc-100 disabled:cursor-not-allowed disabled:opacity-30`;
     const pickerBaseClass = isCompact
       ? `relative ${isPhoneHeader ? "min-w-0 flex-1" : "min-w-[240px] max-w-[340px] flex-1"}`
       : "relative";
@@ -179,11 +179,11 @@ export default function Window({
       ? "min-w-[240px]"
       : "min-w-[300px]";
     const closedButtonClass = isCompact
-      ? `flex items-center justify-between rounded-xl border border-white/10 bg-white/5 h-10 px-3 text-sm text-zinc-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-colors hover:bg-[#323237] ${isPhoneHeader ? "w-full min-w-0" : "min-w-[240px]"}`
-      : `flex ${desktopPickerWidthClass} items-center justify-between rounded-xl border border-white/10 bg-[#262629] px-3 ${isSmallScreen ? "py-1" : "py-1.5"} text-[11px] text-zinc-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-colors hover:bg-[#323237]`;
+      ? `flex items-center justify-between rounded-xl border border-white/10 bg-white/5 h-10 px-3 text-sm text-zinc-200 transition-colors hover:bg-[#303030] ${isPhoneHeader ? "w-full min-w-0" : "min-w-[240px]"}`
+      : `flex ${desktopPickerWidthClass} items-center justify-between rounded-xl border border-white/10 bg-[#292929] px-3 ${isSmallScreen ? "py-1" : "py-1.5"} text-[11px] text-zinc-200 transition-colors hover:bg-[#303030]`;
     const openShellClass = isCompact
-      ? `relative z-20 flex items-center justify-between rounded-t-xl rounded-b-md border border-white/10 border-b-transparent bg-white/5 h-10 px-3 text-sm text-zinc-200 shadow-[0_10px_22px_rgba(0,0,0,0.12)] ${isPhoneHeader ? "w-full min-w-0" : "min-w-[240px]"}`
-      : `relative z-20 flex ${desktopPickerWidthClass} items-center justify-between rounded-t-xl rounded-b-md border border-white/10 border-b-transparent bg-[#262629] px-3 ${isSmallScreen ? "py-1" : "py-1.5"} text-[11px] text-zinc-200 shadow-[0_10px_22px_rgba(0,0,0,0.12)]`;
+      ? `relative z-20 flex items-center justify-between rounded-t-xl rounded-b-md border border-white/10 border-b-transparent bg-white/5 h-10 px-3 text-sm text-zinc-200 ${isPhoneHeader ? "w-full min-w-0" : "min-w-[240px]"}`
+      : `relative z-20 flex ${desktopPickerWidthClass} items-center justify-between rounded-t-xl rounded-b-md border border-white/10 border-b-transparent bg-[#292929] px-3 ${isSmallScreen ? "py-1" : "py-1.5"} text-[11px] text-zinc-200 `;
     const pickerItems = isCompactMobile
       ? appOrder.map((id) => apps[id]).filter(Boolean)
       : filteredApps;
@@ -297,7 +297,7 @@ export default function Window({
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -6, scale: 0.98 }}
                 transition={{ duration: 0.14, ease: "easeOut" }}
-              className="absolute left-0 right-0 top-full z-30 -mt-px overflow-hidden rounded-b-2xl rounded-t-md border border-white/10 bg-[#202023] shadow-[0_18px_28px_rgba(0,0,0,0.16)]"
+              className="absolute left-0 right-0 top-full z-30 -mt-px overflow-hidden rounded-b-2xl rounded-t-md border border-white/10 bg-[#242424] "
             >
               <div className="max-h-[min(24rem,55dvh)] overflow-y-auto p-1.5">
                 {pickerItems.length > 0 ? (
@@ -357,16 +357,16 @@ export default function Window({
   if (isMaximized) {
     if (isMobile) {
       positionClass =
-        "fixed top-[calc(var(--os-safe-top)+32px)] left-0 right-0 bottom-[calc(var(--os-safe-bottom)+20px)] z-50 !transform-none bg-[#141416]";
+        "fixed top-[calc(var(--os-safe-top)+32px)] left-0 right-0 bottom-[calc(var(--os-safe-bottom)+20px)] z-50 !transform-none bg-[#181818]";
     } else if (isTablet) {
-      positionClass = "fixed top-[calc(var(--os-safe-top)+40px)] left-3 right-3 bottom-[calc(var(--os-safe-bottom)+100px)] z-50 rounded-[24px] !transform-none border border-white/20 bg-[#141416] shadow-xl";
+      positionClass = "fixed top-[calc(var(--os-safe-top)+40px)] left-3 right-3 bottom-[calc(var(--os-safe-bottom)+100px)] z-50 rounded-[24px] !transform-none border border-white/20 bg-[#181818] ";
     } else {
       positionClass =
-        "fixed top-11 left-3 right-3 xl:left-1 xl:right-1 bottom-[100px] z-50 rounded-2xl !transform-none border border-white/10 bg-[#141416]/95 backdrop-blur-md";
+        "fixed top-11 left-3 right-3 xl:left-1 xl:right-1 bottom-[100px] z-50 rounded-2xl !transform-none border border-white/10 bg-[#181818] ";
     }
   } else {
     positionClass =
-      "absolute rounded-2xl border border-white/10 shadow-[0_24px_80px_rgba(0,0,0,0.4)] bg-[#141416]/95 backdrop-blur-md";
+      "absolute rounded-2xl border border-white/10 bg-[#181818] ";
   }
 
   return (
@@ -392,13 +392,13 @@ export default function Window({
             ? {}
             : { width: restoredWidth, height: restoredHeight }),
         }}
-        className={`outline-none bg-[#141416]/95 flex flex-col overflow-hidden ${positionClass} pointer-events-auto`}
+        className={`outline-none bg-[#181818] flex flex-col overflow-hidden ${positionClass} pointer-events-auto`}
         onMouseDown={onFocus}
       >
         <div className={`flex flex-col h-full ${isMobile ? "" : "rounded-2xl"}`}>
           {/* TITLE BAR */}
           <div
-            className={`os-titlebar relative z-20 shrink-0 select-none bg-[#1b1b1e] ${
+            className={`os-titlebar relative z-20 shrink-0 select-none bg-[#202020] ${
               isCompactHeader ? "h-12 px-3 flex items-center" : isSmallScreen ? "h-9 px-3" : "h-10 px-3"
             } ${isCompactHeader ? "cursor-default" : "cursor-grab active:cursor-grabbing"}`}
           >
@@ -495,7 +495,7 @@ export default function Window({
                     type="button"
                     aria-label="Close window"
                   title={isMobile ? "Close app and go home" : "Close window and show desktop"}
-                    className="w-6 h-6 border border-white/10 bg-[#71717a]/80 hover:bg-[#71717a] text-white flex items-center justify-center transition-colors rounded-lg cursor-pointer"
+                    className="w-6 h-6 border border-white/10 bg-[#71717a] hover:bg-[#71717a] text-white flex items-center justify-center transition-colors rounded-lg cursor-pointer"
                   >
                     <X size={13} strokeWidth={2.5} />
                   </button>
@@ -504,7 +504,7 @@ export default function Window({
             )}
           </div>
 
-          <div style={isCompactHeader ? { paddingBottom: 32, scrollPaddingBottom: 32 } : undefined} className="os-content relative z-0 min-h-0 flex-1 overflow-auto border-t border-white/10 bg-[#141416]/95 backdrop-blur-sm p-1 sm:p-3">
+          <div style={isCompactHeader ? { paddingBottom: 32, scrollPaddingBottom: 32 } : undefined} className="os-content relative z-0 min-h-0 flex-1 overflow-auto border-t border-white/10 bg-[#181818] p-1 sm:p-3">
             <div key={currentAppId || title} className={isCompactHeader ? "min-h-full" : "h-full"}>
               <Suspense
                 fallback={

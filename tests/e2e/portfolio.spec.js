@@ -25,9 +25,9 @@ async function visit(page) {
   await expect(page.getByRole("button", { name: "View Projects", exact: true })).toBeVisible();
 }
 
-test("boots as KAUNG OS and shows the home screen before opening apps", async ({ page }, testInfo) => {
+test("boots as KAUNG and shows the home screen before opening apps", async ({ page }, testInfo) => {
   await page.goto("/");
-  await expect(page.getByRole("heading", { name: "KAUNG OS", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "KAUNG", exact: true })).toBeVisible();
   await expect(page.getByText(/KAUNG_SPACE/)).toHaveCount(0);
   const about = page.getByRole("button", { name: /^About(?:_| )Me$/ });
   await expect(about).toBeVisible();
@@ -114,7 +114,7 @@ test("case studies stay in one app and Back restores keyboard focus", async ({ p
   await page.getByRole("button", { name: "Back to projects", exact: true }).click();
   await expect(journey).toBeFocused();
   await expect(page.getByRole("link", { name: /SendBook GitHub repository/ })).toHaveAttribute("href", "https://github.com/kaung-h-zaw/SendBook");
-  await expect(page.getByRole("link", { name: /IMKAUNG live demo/ })).toHaveAttribute("href", "https://imkaung.pages.dev/");
+  await expect(page.getByRole("link", { name: /KAUNG live demo/ })).toHaveAttribute("href", "https://imkaung.pages.dev/");
 });
 
 test("View CV opens the original PDF in a new tab", async ({ page, context, request }) => {
@@ -411,7 +411,7 @@ test("native scrolling keeps final content above the bottom safe area", async ({
   const viewport = page.viewportSize();
   expect(footer.y + footer.height).toBeLessThanOrEqual(viewport.height - (isPhone(testInfo) ? 36 : 100));
   await expect(page.getByRole("button", { name: "Return to home screen", exact: true })).toHaveCount(0);
-  expect(await page.locator("html").evaluate((element) => getComputedStyle(element).backgroundColor)).toBe("rgb(10, 10, 11)");
+  expect(await page.locator("html").evaluate((element) => getComputedStyle(element).backgroundColor)).toBe("rgb(22, 22, 22)");
   await expect(page.locator('meta[name="viewport"]')).toHaveAttribute("content", /viewport-fit=cover/);
 });
 

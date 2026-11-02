@@ -66,7 +66,7 @@ export const PROJECTS_DATA = [
   },
   {
     id: "imkaung",
-    title: "IMKAUNG",
+    title: "KAUNG",
     category: "Developer portfolio",
     desc: "A React and Tailwind portfolio presented as an OS desktop, with app windows and responsive phone navigation.",
     purpose: "Make projects, experience, skills, and contact details accessible through a desktop-inspired interface across desktop, tablet, and phone screens.",

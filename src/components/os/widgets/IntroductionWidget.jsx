@@ -4,7 +4,7 @@ import MultilingualGreeting from "../MultilingualGreeting";
 
 export default function IntroductionWidget({ onOpenAbout }) {
   return (
-    <div className="w-full box-border flex flex-col select-none pointer-events-auto bg-[#19191c]/85 backdrop-blur-xl border border-white/10 rounded-2xl p-3 md:p-4 xl:p-4 hover:border-white/10 transition-all duration-300">
+    <div className="w-full box-border flex flex-col select-none pointer-events-auto bg-[#1c1c1c] border border-white/10 rounded-2xl p-3 md:p-4 xl:p-4 hover:border-white/10 transition-all duration-300">
       {/* TOP SECTION */}
       <div className="flex justify-between items-start mb-3">
         <div className="overflow-hidden flex-1">

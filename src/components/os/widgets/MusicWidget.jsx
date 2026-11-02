@@ -66,7 +66,7 @@ export default function MusicWidget({ variant = "mobile" }) {
 
   if (variant === "compact") {
     return <button type="button" onClick={togglePlay} aria-label={isPlaying ? "Pause music" : "Play music"} aria-pressed={isPlaying}
-      className="native-widget flex h-full min-h-[112px] flex-col justify-between p-3.5 text-left transition-colors hover:bg-[#252528]">
+      className="native-widget flex h-full min-h-[112px] flex-col justify-between p-3.5 text-left transition-colors hover:bg-[#242424]">
       <span className="flex w-full items-center justify-between"><span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#353539] text-zinc-100"><Music size={15} aria-hidden="true" /></span>{isPlaying ? <Pause size={18} aria-hidden="true" /> : <Play size={18} aria-hidden="true" />}</span>
       <span><span className="block font-sans text-xs font-bold text-zinc-100">Lofi beats</span><span className="block font-sans text-[10px] text-zinc-300">{isPlaying ? "Now playing" : "Tap to play"}</span></span>
       <span className="block h-1 w-full overflow-hidden rounded-full bg-white/5"><span className="block h-full rounded-full bg-[#c4c4ca]" style={{ width: `${progress}%` }} /></span>
@@ -77,7 +77,7 @@ export default function MusicWidget({ variant = "mobile" }) {
     return (
       <div
         onClick={togglePlay}
-        className="w-full box-border bg-[#19191c]/85 border border-white/10 backdrop-blur-md hover:border-white/10 relative transition-all !p-0 overflow-hidden cursor-pointer group rounded-2xl flex flex-col"
+        className="w-full box-border bg-[#1c1c1c] border border-white/10 hover:border-white/10 relative transition-all !p-0 overflow-hidden cursor-pointer group rounded-2xl flex flex-col"
       >
         <div className="p-3 xl:p-3.5 2xl:p-4 bg-black/90 text-white flex justify-between items-center">
           <div className="flex gap-2 items-center w-full overflow-hidden">
@@ -100,7 +100,7 @@ export default function MusicWidget({ variant = "mobile" }) {
               className={`w-0.5 xl:w-1 bg-[#71717a] rounded-full ${isPlaying ? "h-2 xl:h-3 animate-pulse" : "h-1"}`}
             ></div>
             <div
-              className={`w-0.5 xl:w-1 bg-[#19191c]/85 rounded-full ${isPlaying ? "h-3 xl:h-4 animate-pulse delay-75" : "h-2"}`}
+              className={`w-0.5 xl:w-1 bg-[#1c1c1c] rounded-full ${isPlaying ? "h-3 xl:h-4 animate-pulse delay-75" : "h-2"}`}
             ></div>
             <div
               className={`w-0.5 xl:w-1 bg-white rounded-full ${isPlaying ? "h-2 xl:h-3 animate-pulse delay-150" : "h-1"}`}
@@ -152,7 +152,7 @@ export default function MusicWidget({ variant = "mobile" }) {
           togglePlay();
         }
       }}
-      className="w-full box-border bg-[#19191c]/85 backdrop-blur-md border border-white/10 p-3 md:p-4 rounded-2xl flex flex-col h-full relative active:scale-[0.99] transition-all cursor-pointer hover:border-white/10"
+      className="w-full box-border bg-[#1c1c1c] border border-white/10 p-3 md:p-4 rounded-2xl flex flex-col h-full relative active:scale-[0.99] transition-all cursor-pointer hover:border-white/10"
     >
       <div className="flex justify-between items-center border-b border-white/10 pb-2 md:pb-3 mb-2 md:mb-3">
         <div className="bg-black/90 p-1 md:p-1.5 rounded-lg">

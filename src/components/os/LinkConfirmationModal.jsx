@@ -41,7 +41,7 @@ export default function LinkConfirmationModal({ linkData, onClose }) {
     <div className="fixed inset-0 z-[999999] flex items-center justify-center bg-black/30 p-4 font-mono text-zinc-100" onClick={onClose}>
       <section ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby={titleId} aria-describedby={descriptionId}
         onClick={(event) => event.stopPropagation()}
-        className="w-full max-w-[440px] max-h-[calc(100dvh-32px)] overflow-y-auto rounded-2xl border border-white/10 bg-[#18181b] shadow-[0_24px_80px_rgba(0,0,0,0.22)]">
+        className="w-full max-w-[440px] max-h-[calc(100dvh-32px)] overflow-y-auto rounded-2xl border border-white/10 bg-[#1b1b1b] ">
         <div className="flex items-center justify-between border-b border-white/10 pl-5 pr-2 py-1">
           <span className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-widest text-zinc-400"><ExternalLink size={13} aria-hidden="true" />External link</span>
           <button type="button" onClick={onClose} aria-label="Close link dialog" className="flex h-11 w-11 items-center justify-center rounded-lg hover:bg-white/5"><X size={17} /></button>

@@ -17,7 +17,7 @@ export default function PhoneLayout({ apps, appOrder, openWindows, openWindow, c
   ];
   const goHome = () => { if (activeApp) minimizeWindow(activeApp.id); };
 
-  return <div className="native-phone fixed inset-0 overflow-hidden bg-[#0a0a0b]">
+  return <div className="native-phone fixed inset-0 overflow-hidden bg-[#161616]">
     <BackgroundLayers />
     <TopBar isPhone appActive={Boolean(activeApp)} />
     {!activeApp && <>
@@ -32,8 +32,8 @@ export default function PhoneLayout({ apps, appOrder, openWindows, openWindow, c
           </nav>
         </div>
       </main>
-      <nav aria-label="Phone dock" className="native-phone-dock fixed bottom-[12px] left-1/2 z-20 flex w-[calc(100%-32px)] max-w-[400px] -translate-x-1/2 items-center justify-around rounded-[28px] border border-white/10 bg-[#18181b]/65 px-3 py-3 shadow-[0_8px_32px_rgba(20,36,43,0.12)] backdrop-blur-xl" style={{ marginBottom: "var(--os-safe-bottom)" }}>
-        {["about", "projects", "skills", "contact"].map((id) => { const app = apps[id]; const Icon = app.mobileIcon || app.icon; return <button key={id} type="button" aria-label={`Open ${app.title} app`} onClick={() => openWindow(id)} className="flex h-12 w-12 items-center justify-center rounded-[17px] text-zinc-100 shadow-sm active:scale-95"><Icon size={48} strokeWidth={1.8} aria-hidden="true" /></button>; })}
+      <nav aria-label="Phone dock" className="native-phone-dock fixed bottom-[12px] left-1/2 z-20 flex w-[calc(100%-32px)] max-w-[400px] -translate-x-1/2 items-center justify-around rounded-[28px] border border-white/10 bg-[#1b1b1b] px-3 py-3 " style={{ marginBottom: "var(--os-safe-bottom)" }}>
+        {["about", "projects", "skills", "contact"].map((id) => { const app = apps[id]; const Icon = app.mobileIcon || app.icon; return <button key={id} type="button" aria-label={`Open ${app.title} app`} onClick={() => openWindow(id)} className="flex h-12 w-12 items-center justify-center rounded-[17px] text-zinc-100 active:scale-95"><Icon size={48} strokeWidth={1.8} aria-hidden="true" /></button>; })}
       </nav>
     </>}
     {activeApp && <Window key="active-window" title={activeApp.title} apps={apps} currentAppId={activeApp.id} appOrder={appOrder} onNavigate={openWindow} zIndex={50} onClose={() => closeWindow(activeApp.id)} isMobile onFocus={() => {}} onMinimize={goHome}>

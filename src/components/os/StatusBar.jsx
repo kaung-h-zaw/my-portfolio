@@ -24,7 +24,7 @@ export default function StatusBar({
       />
 
       <div role="navigation" aria-label="App dock" style={isTablet ? { bottom: "calc(var(--os-safe-bottom) + 12px)" } : undefined} className={`${isTablet ? "tablet-dock" : "desktop-dock"} fixed bottom-2 left-1/2 -translate-x-1/2 z-[9999] flex items-end select-none w-max max-w-[95vw]`}>
-        <div className="flex items-center gap-1.5 overflow-x-auto rounded-2xl border border-white/10 bg-[#18181b]/75 px-3 py-2.5 shadow-[0_8px_32px_rgba(20,36,43,0.16),inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-xl">
+        <div className="flex items-center gap-1.5 overflow-x-auto rounded-2xl border border-white/10 bg-[#1b1b1b] px-3 py-2.5 ">
           {/* 1. APPS */}
           {appOrder.map((appId) => {
             const app = apps[appId];
@@ -62,7 +62,7 @@ export default function StatusBar({
                 title={app.title}
                 className={`group relative shrink-0 w-12 h-12 flex items-center justify-center rounded-xl border transition-colors ${
                   isActive
-                    ? "border-white/10 bg-white/5 shadow-sm"
+                    ? "border-white/10 bg-white/5 "
                     : "border-transparent bg-transparent hover:border-white/10 hover:bg-white/5"
                 }`}
               >

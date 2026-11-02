@@ -14,7 +14,7 @@ const DesktopIcon = ({ title, icon: Icon, onClick }) => (
     className="flex flex-col items-center gap-2 active:scale-95 transition-transform group w-16 lg:w-[4.5rem] xl:w-20"
   >
     {/* Icon Container */}
-    <div className="w-14 h-14 lg:w-16 lg:h-16 xl:w-20 xl:h-20 flex items-center justify-center group-hover:-translate-y-1 group-active:translate-y-0 transition-transform drop-shadow-[0_8px_12px_rgba(0,0,0,0.25)]">
+    <div className="w-14 h-14 lg:w-16 lg:h-16 xl:w-20 xl:h-20 flex items-center justify-center group-hover:-translate-y-1 group-active:translate-y-0 transition-transform ">
       <Icon size={64} strokeWidth={1.8} className="w-full h-full" />
     </div>
     <span className="w-full font-sans font-medium text-[11px] lg:text-xs text-zinc-200 text-center leading-tight px-0.5 whitespace-nowrap overflow-hidden text-ellipsis">
@@ -74,7 +74,7 @@ export default function DesktopLayout({
 
       {/* 5. FOOTER BRANDING */}
       <div className="absolute bottom-20 xl:bottom-8 right-4 lg:right-6 xl:right-10 z-0 text-right text-white/75 pointer-events-none select-none hidden md:block origin-bottom-right">
-        <div className="text-2xl lg:text-3xl xl:text-4xl font-black tracking-tighter leading-none drop-shadow-sm">
+        <div className="text-2xl lg:text-3xl xl:text-4xl font-black tracking-tighter leading-none ">
           KAUNG OS
         </div>
         <div className="text-[9px] lg:text-[10px] xl:text-xs font-bold tracking-[0.3em] uppercase mt-1 text-white/60">

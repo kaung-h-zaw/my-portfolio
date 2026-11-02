@@ -77,7 +77,7 @@ export default function WeatherWidget({ variant = "mobile" }) {
 
   if (variant === "desktop") {
     return (
-      <div className="w-full box-border bg-[#19191c]/85 backdrop-blur-md border border-white/10 p-3 xl:p-4 rounded-2xl flex flex-col justify-between aspect-[2/1] relative hover:border-white/10 transition-all">
+      <div className="w-full box-border bg-[#1c1c1c] border border-white/10 p-3 xl:p-4 rounded-2xl flex flex-col justify-between aspect-[2/1] relative hover:border-white/10 transition-all">
         {/* TOP ROW */}
         <div className="flex justify-between items-start w-full">
           <span className="font-medium text-[9px] xl:text-[10px] 2xl:text-xs uppercase tracking-widest text-zinc-400 mt-1 shrink-0">
@@ -119,7 +119,7 @@ export default function WeatherWidget({ variant = "mobile" }) {
   }
 
   return (
-    <div className="bg-[#19191c]/85 backdrop-blur-md border border-white/10 p-3 md:p-4 rounded-2xl flex flex-col aspect-[4/3] relative hover:border-white/10 transition-all">
+    <div className="bg-[#1c1c1c] border border-white/10 p-3 md:p-4 rounded-2xl flex flex-col aspect-[4/3] relative hover:border-white/10 transition-all">
       <div className="flex justify-between items-center border-b border-white/10 pb-2 md:pb-3 mb-2 md:mb-3">
         <div className="bg-black/90 text-white px-2 py-0.5 md:px-2 md:py-1 rounded-lg text-[8px] md:text-[9px] font-mono font-medium tracking-widest whitespace-nowrap">
           {currentDate}

@@ -46,7 +46,7 @@ export default function TopBar({ onOpenApp, isPhone = false, isTablet = false, a
 
   if (isPhone || isTablet) {
     return (
-      <div className={`native-status fixed top-0 left-0 right-0 z-[9999] flex items-center justify-between px-5 select-none ${appActive ? "bg-[#1b1b1e] text-zinc-100" : "bg-transparent text-white/90"}`}
+      <div className={`native-status fixed top-0 left-0 right-0 z-[9999] flex items-center justify-between px-5 select-none ${appActive ? "bg-[#202020] text-zinc-100" : "bg-transparent text-white/90"}`}
         style={{ height: "calc(var(--os-safe-top) + 32px)", paddingTop: "var(--os-safe-top)" }}>
         <span className="text-xs font-semibold tabular-nums">
           {time.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: false })}
@@ -74,11 +74,11 @@ export default function TopBar({ onOpenApp, isPhone = false, isTablet = false, a
             />
           </picture>
 
-          <span className="truncate">IMKAUNG</span>
+          <span className="truncate">KAUNG</span>
         </div>
 
         <nav id="portfolio-menu" aria-label="Portfolio shortcuts"
-          className={`${menuOpen ? "flex" : "hidden"} absolute top-12 left-3 right-3 flex-col gap-1 rounded-xl border border-white/10 bg-[#1b1b1e] p-2 shadow-lg lg:static lg:flex lg:flex-row lg:items-center lg:gap-1 lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none`}>
+          className={`${menuOpen ? "flex" : "hidden"} absolute top-12 left-3 right-3 flex-col gap-1 rounded-xl border border-white/10 bg-[#202020] p-2 lg:static lg:flex lg:flex-row lg:items-center lg:gap-1 lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none`}>
           {[
             { id: "about", title: "About" },
             { id: "projects", title: "Projects" },

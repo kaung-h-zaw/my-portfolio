@@ -5,7 +5,7 @@
 :root {
   color-scheme: dark;
   --os-accent: #d4d4d8;
-  --os-surface: #141416;
+  --os-surface: #181818;
   --os-safe-top: env(safe-area-inset-top, 0px);
   --os-safe-bottom: env(safe-area-inset-bottom, 0px);
   --os-safe-left: env(safe-area-inset-left, 0px);
@@ -16,7 +16,7 @@ html, body, #root {
   width: 100%;
   height: 100%;
   min-height: 100%;
-  background-color: #0a0a0b;
+  background-color: #161616;
   overscroll-behavior: none;
 }
 html, body { overflow: hidden; }
@@ -55,11 +55,11 @@ a {
 
 @layer components {
   .os-panel {
-    @apply bg-[#111113]/80 backdrop-blur-xl border border-white/10;
+    @apply bg-[#191919] border border-white/10;
   }
 
   .os-panel-soft {
-    @apply bg-[#18181b]/80 backdrop-blur-md border border-white/10;
+    @apply bg-[#1b1b1b] border border-white/10;
   }
 }
 
@@ -104,9 +104,9 @@ a {
   .app-body { @apply font-sans text-base leading-relaxed text-zinc-300; }
   .app-badge { @apply rounded-full border border-zinc-300/20 bg-zinc-400/10 px-3 py-1.5 text-xs text-zinc-200; }
   .app-tag { @apply rounded-md border border-white/10 bg-white/5 px-2.5 py-1 text-xs text-zinc-300; }
-  .app-action { @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-zinc-200 px-4 py-2.5 text-sm font-semibold text-zinc-950 transition-colors hover:bg-white disabled:opacity-50 disabled:cursor-not-allowed; }
+  .app-action { @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-[#333333] px-4 py-2.5 text-sm font-semibold text-zinc-100 transition-colors hover:bg-[#414141] disabled:opacity-50 disabled:cursor-not-allowed; }
   .app-action-secondary { @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/5 px-4 py-2.5 text-sm font-medium text-zinc-200 transition-colors hover:bg-white/10 hover:border-white/25; }
-  .app-field { @apply w-full rounded-xl border border-white/15 bg-[#101012] px-3 py-3 font-sans text-base text-zinc-100 placeholder:text-zinc-500 transition-colors focus:bg-[#1b1b1f]; }
+  .app-field { @apply w-full rounded-xl border border-white/15 bg-[#161616] px-3 py-3 font-sans text-base text-zinc-100 placeholder:text-zinc-500 transition-colors focus:bg-[#212121]; }
 }
 
 /* Columns follow the app window, including when a desktop window is restored. */
@@ -152,7 +152,7 @@ a {
 /* Native home screens use fixed widget heights and icon sizes, independent of
    viewport aspect ratio, so cards never push the app grid behind the dock. */
 @layer components {
-  .native-widget { @apply rounded-[22px] border border-white/10 bg-[#19191c]/85 text-zinc-100 shadow-[0_12px_32px_rgba(0,0,0,0.2)] backdrop-blur-xl; }
+  .native-widget { @apply rounded-[22px] border border-white/10 bg-[#1c1c1c] text-zinc-100 ; }
 }
 .native-phone .native-icon-tile { width: 58px; height: 58px; }
 .native-phone-profile { height: 108px; }
@@ -203,39 +203,9 @@ a {
   .native-phone-profile .native-profile > span > span:nth-child(2) { font-size: 16px; line-height: 20px; }
 }
 
-/* Quiet graphite atmosphere shared across every device. */
-.os-wallpaper {
-  background: radial-gradient(ellipse at 75% 12%, #1a1a1d 0%, transparent 58%), #0a0a0b;
-}
-.os-wallpaper-glow {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse at 12% 80%, rgba(130, 130, 138, .06), transparent 50%),
-    radial-gradient(ellipse at 85% 100%, rgba(130, 130, 138, .04), transparent 48%);
-}
-.os-wallpaper-orbit {
-  position: absolute;
-  width: 130%;
-  height: 120%;
-  left: -15%;
-  top: 36%;
-  border-radius: 50%;
-  transform: rotate(-24deg);
-  background: radial-gradient(ellipse at 50% 0%, rgba(160, 160, 168, .055), transparent 55%);
-  box-shadow: 0 -30px 100px rgba(0,0,0,.18);
-}
-.os-wallpaper-grain {
-  position: absolute;
-  inset: 0;
-  opacity: .012;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-.native-icon-tile {
-  background: transparent;
-  border-color: transparent;
-  box-shadow: 0 4px 12px rgba(0,0,0,.12);
-}
+/* Matte charcoal, without atmospheric glow or reflective surfaces. */
+.os-wallpaper { background: #161616; }
+.native-icon-tile { background: transparent; border-color: transparent; box-shadow: none; }
 
 /* Distribute spare height across the home grid instead of leaving it all below. */
 .native-phone-home-content > header,

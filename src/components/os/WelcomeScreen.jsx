@@ -3,7 +3,7 @@ import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import BackgroundLayers from "./BackgroundLayers";
 
 const BOOT_LOGS = [
-  "INITIALIZING KAUNG OS v2.0...",
+  "INITIALIZING KAUNG v2.0...",
   "LOADING MEMORY BANKS [OK]",
   "MOUNTING FILE SYSTEM [OK]",
   "CONNECTING TO API NEXUS...",
@@ -94,19 +94,19 @@ export default function WelcomeScreen({ onComplete }) {
               className="text-center mb-6"
             >
               <h1 className="text-3xl sm:text-5xl font-black tracking-tighter text-white/90 leading-none">
-                KAUNG OS
+                KAUNG
               </h1>
               <div className="flex items-center justify-center gap-2 mt-2">
                 <div className="h-1 w-8 bg-white/10 rounded-full" />
                 <span className="text-[9px] sm:text-[10px] font-bold tracking-[0.3em] uppercase text-white/75">
-                  KAUNG OS · v2.0
+                  KAUNG · v2.0
                 </span>
                 <div className="h-1 w-8 bg-white/10 rounded-full" />
               </div>
             </motion.div>
 
             {/* Terminal Log Container */}
-            <div className="bg-white/10 backdrop-blur-sm border border-white/10 rounded-xl p-4 sm:p-6 shadow-[6px_6px_0px_rgba(0,0,0,0.06)]">
+            <div className="bg-white/10 border border-white/10 rounded-xl p-4 sm:p-6 ">
               <div
                 className="flex flex-col gap-1.5"
                 role="status"
