@@ -407,7 +407,7 @@ test("native scrolling keeps final content above the bottom safe area", async ({
   await scroller.evaluate((element) => { element.scrollTop = element.scrollHeight; });
   const footer = await page.locator(".app-page footer").boundingBox();
   const viewport = page.viewportSize();
-  expect(footer.y + footer.height).toBeLessThanOrEqual(viewport.height - (isPhone(testInfo) ? 36 : 156));
+  expect(footer.y + footer.height).toBeLessThanOrEqual(viewport.height - (isPhone(testInfo) ? 36 : 100));
   await expect(page.getByRole("button", { name: "Return to home screen", exact: true })).toHaveCount(0);
   expect(await page.locator("html").evaluate((element) => getComputedStyle(element).backgroundColor)).toBe("rgb(10, 10, 11)");
   await expect(page.locator('meta[name="viewport"]')).toHaveAttribute("content", /viewport-fit=cover/);
@@ -423,7 +423,8 @@ test("iPhone safe areas and changing browser height keep controls clear", async 
   const icons = page.getByRole("navigation", { name: "Home apps", exact: true });
   for (const icon of await icons.getByRole("button").all()) await expect(icon).toBeInViewport({ ratio: 1 });
   const dock = await page.getByRole("navigation", { name: "Phone dock", exact: true }).boundingBox();
-  expect(dock.y + dock.height).toBeLessThanOrEqual(744 - 34 - 60);
+  expect(dock.y + dock.height).toBeLessThanOrEqual(744 - 34 - 8);
+  expect(dock.y + dock.height).toBeGreaterThanOrEqual(744 - 34 - 20);
   await icons.getByRole("button", { name: "Contact", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Get In Touch", exact: true })).toBeVisible();
   for (const height of [844, 744, 700]) {

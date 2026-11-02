@@ -359,7 +359,7 @@ export default function Window({
       positionClass =
         "fixed top-[calc(var(--os-safe-top)+32px)] left-0 right-0 bottom-[calc(var(--os-safe-bottom)+20px)] z-50 !transform-none bg-[#141416]";
     } else if (isTablet) {
-      positionClass = "fixed top-[calc(var(--os-safe-top)+40px)] left-3 right-3 bottom-[calc(var(--os-safe-bottom)+156px)] z-50 rounded-[24px] !transform-none border border-white/20 bg-[#141416] shadow-xl";
+      positionClass = "fixed top-[calc(var(--os-safe-top)+40px)] left-3 right-3 bottom-[calc(var(--os-safe-bottom)+100px)] z-50 rounded-[24px] !transform-none border border-white/20 bg-[#141416] shadow-xl";
     } else {
       positionClass =
         "fixed top-11 left-3 right-3 xl:left-1 xl:right-1 bottom-[88px] z-50 rounded-2xl !transform-none border border-white/10 bg-[#141416]/95 backdrop-blur-md";

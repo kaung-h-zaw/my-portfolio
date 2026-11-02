@@ -21,7 +21,7 @@ export default function PhoneLayout({ apps, appOrder, openWindows, openWindow, c
     <BackgroundLayers />
     <TopBar isPhone appActive={Boolean(activeApp)} />
     {!activeApp && <>
-      <main className="native-phone-home absolute inset-x-0 overflow-y-auto overscroll-contain" style={{ top: "calc(var(--os-safe-top) + 32px)", bottom: "calc(var(--os-safe-bottom) + 156px)" }}>
+      <main className="native-phone-home absolute inset-x-0 overflow-y-auto overscroll-contain" style={{ top: "calc(var(--os-safe-top) + 32px)", bottom: "calc(var(--os-safe-bottom) + 100px)" }}>
         <div className="native-phone-home-content mx-auto flex w-full max-w-[480px] flex-col px-4 pb-6 pt-3">
           <header className="mb-4 flex items-end justify-between text-white"><div><p className="font-sans text-[11px] text-white/70">{new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}</p><h1 className="mt-1 font-sans text-xl font-semibold tracking-tight">Kaung OS</h1></div><span className="pb-1 font-mono text-[9px] tracking-widest text-white/60">v2.0</span></header>
           <div className="native-phone-profile mb-3"><ProfileWidget onOpenAbout={() => openWindow("about")} /></div>
@@ -32,7 +32,7 @@ export default function PhoneLayout({ apps, appOrder, openWindows, openWindow, c
           </nav>
         </div>
       </main>
-      <nav aria-label="Phone dock" className="native-phone-dock fixed bottom-[68px] left-1/2 z-20 flex w-[calc(100%-32px)] max-w-[400px] -translate-x-1/2 items-center justify-around rounded-[28px] border border-white/10 bg-[#18181b]/65 px-3 py-3 shadow-[0_8px_32px_rgba(20,36,43,0.12)] backdrop-blur-xl" style={{ marginBottom: "var(--os-safe-bottom)" }}>
+      <nav aria-label="Phone dock" className="native-phone-dock fixed bottom-[12px] left-1/2 z-20 flex w-[calc(100%-32px)] max-w-[400px] -translate-x-1/2 items-center justify-around rounded-[28px] border border-white/10 bg-[#18181b]/65 px-3 py-3 shadow-[0_8px_32px_rgba(20,36,43,0.12)] backdrop-blur-xl" style={{ marginBottom: "var(--os-safe-bottom)" }}>
         {["about", "projects", "skills", "contact"].map((id) => { const app = apps[id]; const Icon = app.mobileIcon || app.icon; return <button key={id} type="button" aria-label={`Open ${app.title} app`} onClick={() => openWindow(id)} className="flex h-12 w-12 items-center justify-center rounded-[17px] text-zinc-100 shadow-sm active:scale-95"><Icon size={48} strokeWidth={1.8} aria-hidden="true" /></button>; })}
       </nav>
     </>}
