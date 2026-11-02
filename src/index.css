@@ -236,3 +236,10 @@ a {
 .desktop-dock [aria-label="Professional profiles"] { padding: 0; background: transparent; }
 .tablet-dock > div { padding: 6px 8px; gap: 4px; }
 .tablet-dock [aria-label="Professional profiles"] { padding: 0; background: transparent; }
+
+/* About uses independent columns so shorter cards do not stretch into blank panels. */
+.app-about-page { min-height: 0; gap: 12px; }
+.app-about-grid { align-items: start; gap: 12px; }
+.app-about-page .app-panel { padding: 16px; }
+.app-about-page .app-panel h2 { margin-bottom: 12px; }
+.app-about-page footer { margin-top: 0; padding-top: 12px; }

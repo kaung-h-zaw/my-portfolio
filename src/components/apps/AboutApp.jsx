@@ -25,9 +25,10 @@ export default function AboutApp({ onOpenApp }) {
   };
 
   return (
-    <div className="app-page">
+    <div className="app-page app-about-page">
       <AppHeader icon={ProfileIcon} file="profile.exe" title="Kaung Htet Zaw" badge="Open to junior roles" />
       <div className="app-split app-about-grid">
+        <div className="flex flex-col gap-3">
         <section className="app-panel">
           <div className="flex items-center gap-3 sm:gap-4 mb-5">
             <picture className="shrink-0">
@@ -62,7 +63,17 @@ export default function AboutApp({ onOpenApp }) {
             </a>
           </div>
         </section>
-        <div className="space-y-4 sm:space-y-5">
+        <section className="app-panel">
+          <PanelTitle icon={Briefcase}>Recent experience</PanelTitle>
+          <div className="flex flex-wrap justify-between gap-2 mb-2">
+            <h3 className="text-base font-bold">Full-Stack Developer</h3><span className="app-badge">2024</span>
+          </div>
+          <p className="text-xs uppercase tracking-wide text-zinc-300 mb-3">QUT Capstone Project · Guinea Group</p>
+          <p className="app-body">Worked in a four-person capstone team to build a video and survey platform for research, contributing across React and Tailwind frontend work, plus Express and MySQL features for data handling and reporting.</p>
+          <button type="button" onClick={() => onOpenApp?.("experience")} className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-medium underline underline-offset-4">View experience <ArrowUpRight size={15} aria-hidden="true" /></button>
+        </section>
+        </div>
+        <div className="flex flex-col gap-3">
           <section className="app-panel">
             <PanelTitle icon={Code2}>Core stack</PanelTitle>
             <Tags items={STACK} label="Core technologies" />
@@ -82,22 +93,11 @@ export default function AboutApp({ onOpenApp }) {
             </div>
             <p role="status" className="font-sans text-sm text-zinc-300 mt-2">{copyError ? "Copy unavailable. You can use the email link above." : copied ? "Email address copied." : ""}</p>
           </section>
-        </div>
-      </div>
-      <div className="app-grid-two">
-        <section className="app-panel">
-          <PanelTitle icon={Briefcase}>Recent experience</PanelTitle>
-          <div className="flex flex-wrap justify-between gap-2 mb-2">
-            <h3 className="text-base font-bold">Full-Stack Developer</h3><span className="app-badge">2024</span>
-          </div>
-          <p className="text-xs uppercase tracking-wide text-zinc-300 mb-3">QUT Capstone Project · Guinea Group</p>
-          <p className="app-body">Worked in a four-person capstone team to build a video and survey platform for research, contributing across React and Tailwind frontend work, plus Express and MySQL features for data handling and reporting.</p>
-          <button type="button" onClick={() => onOpenApp?.("experience")} className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-medium underline underline-offset-4">View experience <ArrowUpRight size={15} aria-hidden="true" /></button>
-        </section>
         <section className="app-panel">
           <PanelTitle icon={Target}>Current focus</PanelTitle>
           <p className="app-body">Building stronger full-stack projects, improving frontend polish and UX quality, and getting more confident with backend development, APIs, and real-world product workflows.</p>
         </section>
+        </div>
       </div>
       <AppFooter file="profile.exe">© 2026 Kaung Htet Zaw</AppFooter>
     </div>
