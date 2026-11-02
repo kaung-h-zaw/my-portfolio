@@ -49,9 +49,9 @@ export default function AboutApp({ onOpenApp }) {
             <button type="button" onClick={() => onOpenApp?.("projects")} className="app-action">
               <FolderGit2 size={17} aria-hidden="true" /> View Projects
             </button>
-            <button type="button" onClick={() => onOpenApp?.("cv")} className="app-action-secondary">
+            <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="app-action-secondary">
               <FileText size={17} aria-hidden="true" /> View CV
-            </button>
+            </a>
           </div>
           <div className="flex flex-wrap gap-2">
             <a href="https://github.com/kaung-h-zaw" target="_blank" rel="noopener noreferrer" className="app-action-secondary px-3 text-xs">

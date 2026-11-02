@@ -105,22 +105,32 @@ test("case studies stay in one app and Back restores keyboard focus", async ({ p
   await expect(page.getByRole("link", { name: /IMKAUNG live demo/ })).toHaveAttribute("href", "https://imkaung.pages.dev/");
 });
 
-test("CV previews before download and supports zoom", async ({ page }) => {
+test("View CV opens the original PDF in a new tab", async ({ page, context, request }) => {
+  const pdf = await request.get("/resume.pdf");
+  expect(pdf.ok()).toBe(true);
+  expect(pdf.headers()["content-type"]).toContain("application/pdf");
+  expect((await pdf.body()).subarray(0, 5).toString()).toBe("%PDF-");
+  // Mock only the tab's document: headless browsers vary in native PDF support.
+  await context.route("**/resume.pdf", (route) => route.fulfill({ contentType: "text/html", body: "<title>PDF tab</title>" }));
   await visit(page);
-  await page.getByRole("button", { name: "View CV", exact: true }).last().click();
-  const canvas = page.getByRole("img", { name: "CV preview, page 1", exact: true });
-  await expect(canvas).toBeVisible();
-  expect(await canvas.evaluate((element) => element.width)).toBeGreaterThan(200);
-  await expect(page.getByRole("alert")).toHaveCount(0);
-  const originalWidth = await canvas.evaluate((element) => element.width);
-  await page.getByRole("button", { name: "Zoom in CV", exact: true }).click();
-  await expect(page.getByText("125%", { exact: true })).toBeVisible();
-  await expect.poll(() => canvas.evaluate((element) => element.width)).toBeGreaterThan(originalWidth);
-  await page.getByRole("button", { name: "125%", exact: true }).click();
-  await expect(page.getByRole("button", { name: "Fit width", exact: true })).toBeVisible();
-  const download = page.waitForEvent("download");
-  await page.getByRole("region", { name: / window$/ }).getByRole("link", { name: "Download PDF", exact: true }).click();
-  expect((await download).suggestedFilename()).toBe("Kaung-Htet-Zaw-CV.pdf");
+  const link = page.locator(".app-page").getByRole("link", { name: "View CV", exact: true });
+  await expect(link).toHaveAttribute("target", "_blank");
+  await expect(link).not.toHaveAttribute("download");
+  const tabPromise = page.waitForEvent("popup");
+  await link.click();
+  const tab = await tabPromise;
+  await tab.waitForLoadState();
+  expect(new URL(tab.url()).pathname).toBe("/resume.pdf");
+  expect(await tab.evaluate(() => window.opener)).toBe(null);
+  await tab.close();
+  await expect(page.getByRole("button", { name: "View Projects", exact: true })).toBeVisible();
+  const iconTabPromise = page.waitForEvent("popup");
+  await openApp(page, "CV");
+  const iconTab = await iconTabPromise;
+  await iconTab.waitForLoadState();
+  expect(new URL(iconTab.url()).pathname).toBe("/resume.pdf");
+  await iconTab.close();
+  await expect(page.getByRole("region", { name: / window$/ })).toHaveCount(1);
 });
 
 test("phone keeps a compact status bar and Home through rotation", async ({ page }, testInfo) => {
@@ -206,7 +216,7 @@ test("short laptop layouts keep actions reachable and restored windows stack col
     await page.setViewportSize(viewport);
     await openApp(page, "About_Me");
     await expect(page.getByRole("button", { name: "View Projects", exact: true })).toBeInViewport({ ratio: 1 });
-    await expect(page.locator(".app-page").getByRole("button", { name: "View CV", exact: true })).toBeInViewport({ ratio: 1 });
+    await expect(page.locator(".app-page").getByRole("link", { name: "View CV", exact: true })).toBeInViewport({ ratio: 1 });
     expect(await page.locator(".app-page").evaluate((e) => e.getBoundingClientRect().width)).toBeLessThanOrEqual(1160);
     await openApp(page, "Contact");
     const email = await page.locator('.app-page a[href^="mailto:"]').boundingBox();
@@ -263,15 +273,4 @@ test("external link dialog matches the OS and traps keyboard focus", async ({ pa
   expect(await popup.evaluate(() => window.opener)).toBe(null);
   await popup.close();
   await expect(dialog).toHaveCount(0);
-});
-
-
-test("CV preview failure offers the original PDF without blocking navigation", async ({ page }) => {
-  await page.route("**/resume.pdf", (route) => route.fulfill({ status: 404, body: "Unavailable during test" }));
-  await visit(page);
-  await page.locator(".app-page").getByRole("button", { name: "View CV", exact: true }).click();
-  await expect(page.getByRole("alert")).toContainText("The preview could not load");
-  await expect(page.getByRole("link", { name: "Download PDF", exact: true })).toHaveAttribute("href", "/resume.pdf");
-  await openApp(page, "About_Me");
-  await expect(page.getByRole("button", { name: "View Projects", exact: true })).toBeVisible();
 });
