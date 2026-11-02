@@ -256,5 +256,8 @@ a {
   .native-tablet .native-icon-tile { width: 88px; height: 88px; }
   .native-tablet .native-home-icon > span:last-child { font-size: 13px; }
 }
-.desktop-dock > div { padding-left: 14px; padding-right: 14px; gap: 8px; }
-.desktop-dock button { width: 60px; height: 60px; }
+.desktop-dock > div { padding: 6px 8px; gap: 4px; }
+.desktop-dock button { width: 52px; height: 52px; }
+.desktop-dock [aria-label="Professional profiles"] { padding: 0; background: transparent; }
+.tablet-dock > div { padding: 6px 8px; gap: 4px; }
+.tablet-dock [aria-label="Professional profiles"] { padding: 0; background: transparent; }
