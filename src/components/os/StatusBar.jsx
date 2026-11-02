@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import LinkConfirmationModal from "./LinkConfirmationModal";
-import { Github, Linkedin, Instagram } from "lucide-react";
+import { Github, Linkedin } from "lucide-react";
 
 export default function StatusBar({
   apps = {},
@@ -10,7 +10,6 @@ export default function StatusBar({
   onOpenApp,
   onFocusWindow,
   onMinimizeWindow,
-  isTablet = false,
 }) {
   const [activeLinkData, setActiveLinkData] = useState(null);
   const openWindowIds = new Set(openWindows.map((win) => win.id));
@@ -23,7 +22,7 @@ export default function StatusBar({
       />
 
       <div role="navigation" aria-label="App dock" className="fixed bottom-2 left-1/2 -translate-x-1/2 z-[9999] flex items-end select-none w-max max-w-[95vw]">
-        <div className="flex items-center os-panel rounded-2xl overflow-x-auto no-scrollbar px-4 py-3 gap-2">
+        <div className="flex items-center gap-1.5 overflow-x-auto rounded-2xl border border-white/30 bg-[#d8dfd8]/75 px-3 py-2.5 shadow-[0_8px_32px_rgba(20,36,43,0.16),inset_0_1px_0_rgba(255,255,255,0.25)] backdrop-blur-xl">
           {/* 1. APPS */}
           {appOrder.map((appId) => {
             const app = apps[appId];
@@ -59,10 +58,10 @@ export default function StatusBar({
                       : `Open ${app.title} window`
                 }
                 title={app.title}
-                className={`relative shrink-0 w-12 h-12 flex items-center justify-center rounded-xl transition-all ${
+                className={`group relative shrink-0 w-12 h-12 flex items-center justify-center rounded-xl border transition-colors ${
                   isActive
-                    ? "bg-black/5 scale-105"
-                    : "bg-transparent hover:bg-black/5 hover:scale-105"
+                    ? "border-black/10 bg-white/35 shadow-sm"
+                    : "border-transparent bg-transparent hover:border-black/10 hover:bg-white/25"
                 }`}
               >
                 {isLucideIcon ? (
@@ -103,76 +102,18 @@ export default function StatusBar({
             );
           })}
 
-          {/* DIVIDER */}
-          {appOrder.length > 0 && (
-            <div className="h-6 w-[1px] bg-black/10 mx-1 shrink-0"></div>
-          )}
-
-          {/* 2. SOCIALS */}
-          <div className="flex gap-2 shrink-0">
-            {!isTablet && (
-              <>
-                {/* GITHUB */}
-                <button
-                  onClick={() =>
-                    setActiveLinkData({
-                      title: "GitHub",
-                      href: "https://github.com/kaung-h-zaw",
-                      icon: Github,
-                    })
-                  }
-                  type="button"
-                  aria-label="Open GitHub profile"
-                  className="w-11 h-11 bg-transparent flex items-center justify-center rounded-xl hover:bg-black/5 hover:scale-105 transition-all group"
-                >
-                  <Github
-                    size={30}
-                    strokeWidth={2}
-                    className="text-black/30 group-hover:text-black/60 transition-all"
-                  />
-                </button>
-
-                {/* LINKEDIN */}
-                <button
-                  onClick={() =>
-                    setActiveLinkData({
-                      title: "LinkedIn",
-                      href: "https://linkedin.com/in/kaung-h-zaw",
-                      icon: Linkedin,
-                    })
-                  }
-                  type="button"
-                  aria-label="Open LinkedIn profile"
-                  className="w-11 h-11 bg-transparent flex items-center justify-center rounded-xl hover:bg-black/5 hover:scale-105 transition-all group"
-                >
-                  <Linkedin
-                    size={30}
-                    strokeWidth={2}
-                    className="text-black/30 group-hover:text-black/60 transition-all"
-                  />
-                </button>
-              </>
-            )}
-
-            {/* INSTAGRAM */}
-            <button
-              onClick={() =>
-                setActiveLinkData({
-                  title: "Instagram",
-                  href: "https://www.instagram.com/kaung.h.zaw/",
-                  icon: Instagram,
-                })
-              }
-              type="button"
-              aria-label="Open Instagram profile"
-              className="w-11 h-11 bg-transparent flex items-center justify-center rounded-xl hover:bg-black/5 hover:scale-105 transition-all group"
-            >
-              <Instagram
-                size={30}
-                strokeWidth={2}
-                className="text-black/30 group-hover:text-black/60 transition-all"
-              />
-            </button>
+          {appOrder.length > 0 && <div className="mx-2 h-7 w-px shrink-0 bg-black/15" aria-hidden="true" />}
+          <div role="group" aria-label="Professional profiles" className="flex shrink-0 gap-1 rounded-xl bg-black/[0.04] p-1">
+            {[
+              { title: "GitHub", href: "https://github.com/kaung-h-zaw", icon: Github },
+              { title: "LinkedIn", href: "https://linkedin.com/in/kaung-h-zaw", icon: Linkedin },
+            ].map((profile) => (
+              <button key={profile.title} type="button" onClick={() => setActiveLinkData(profile)}
+                aria-label={`Open ${profile.title} profile`} title={`${profile.title} · opens in a new tab`}
+                className="flex h-11 w-11 items-center justify-center rounded-lg border border-transparent text-black/65 transition-colors hover:border-black/10 hover:bg-white/40 hover:text-black">
+                <profile.icon size={23} strokeWidth={1.8} aria-hidden="true" />
+              </button>
+            ))}
           </div>
         </div>
       </div>

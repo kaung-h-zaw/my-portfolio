@@ -310,3 +310,21 @@ test("wide monitors open a centered window with working maximize and restore", a
   await expect(page.getByRole("button", { name: "Maximize window", exact: true })).toBeVisible();
   await expect.poll(async () => Math.round((await appWindow.boundingBox()).width)).toBe(1400);
 });
+
+
+test("dock groups GitHub and LinkedIn without Instagram", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name === "phone", "Phone uses its home screen instead of a dock");
+  await visit(page);
+  const dock = page.getByRole("navigation", { name: "App dock", exact: true });
+  const profiles = dock.getByRole("group", { name: "Professional profiles", exact: true });
+  await expect(profiles.getByRole("button")).toHaveCount(2);
+  await expect(dock.getByRole("button", { name: /Instagram/ })).toHaveCount(0);
+  for (const name of ["GitHub", "LinkedIn"]) {
+    const button = profiles.getByRole("button", { name: `Open ${name} profile`, exact: true });
+    await expect(button).toBeInViewport({ ratio: 1 });
+    await button.click();
+    await expect(page.getByRole("dialog").getByRole("heading", { name: `Open ${name}?`, exact: true })).toBeVisible();
+    await page.keyboard.press("Escape");
+    await expect(button).toBeFocused();
+  }
+});
