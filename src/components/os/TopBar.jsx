@@ -70,7 +70,7 @@ export default function TopBar({ onOpenApp, isPhone = false, isTablet = false, a
               src="/kaung-ink-avatar.png"
               alt="Kaung illustrated avatar"
               loading="eager"
-              className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 rounded-full border border-white/10 bg-[#e9e8e4] object-contain"
+              className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 rounded-[4px] border border-white/10 bg-[#e9e8e4] object-contain"
             />
           </picture>
 
