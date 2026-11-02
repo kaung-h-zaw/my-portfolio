@@ -22,10 +22,8 @@ function getDeviceType() {
 
 export default function OSContainer() {
   const [deviceType, setDeviceType] = useState(getDeviceType);
-  const [openWindows, setOpenWindows] = useState([
-    { id: "about", title: "About_Me", icon: ProfileIcon, zIndex: 21, minimized: false },
-  ]);
-  const [activeWindowId, setActiveWindowId] = useState("about");
+  const [openWindows, setOpenWindows] = useState([]);
+  const [activeWindowId, setActiveWindowId] = useState(null);
   const zTop = useRef(21);
   const [navDirection, setNavDirection] = useState(0);
   const [navigationMode, setNavigationMode] = useState("open");

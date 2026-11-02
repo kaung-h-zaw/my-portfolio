@@ -22,7 +22,7 @@ export default function StatusBar({
         onClose={() => setActiveLinkData(null)}
       />
 
-      <div role="navigation" aria-label="App dock" style={isTablet ? { bottom: "calc(env(safe-area-inset-bottom) + 44px)" } : undefined} className="fixed bottom-2 left-1/2 -translate-x-1/2 z-[9999] flex items-end select-none w-max max-w-[95vw]">
+      <div role="navigation" aria-label="App dock" style={isTablet ? { bottom: "calc(var(--os-safe-bottom) + 68px)" } : undefined} className="fixed bottom-2 left-1/2 -translate-x-1/2 z-[9999] flex items-end select-none w-max max-w-[95vw]">
         <div className="flex items-center gap-1.5 overflow-x-auto rounded-2xl border border-white/30 bg-[#d8dfd8]/75 px-3 py-2.5 shadow-[0_8px_32px_rgba(20,36,43,0.16),inset_0_1px_0_rgba(255,255,255,0.25)] backdrop-blur-xl">
           {/* 1. APPS */}
           {appOrder.map((appId) => {
@@ -109,7 +109,7 @@ export default function StatusBar({
               { title: "GitHub", href: "https://github.com/kaung-h-zaw", icon: GitHubIcon },
               { title: "LinkedIn", href: "https://linkedin.com/in/kaung-h-zaw", icon: LinkedInIcon },
             ].map((profile) => (
-              <button key={profile.title} type="button" onClick={() => setActiveLinkData(profile)}
+              <button key={profile.title} type="button" onClick={(event) => setActiveLinkData({ ...profile, returnFocus: event.currentTarget })}
                 aria-label={`Open ${profile.title} profile`} title={`${profile.title} · opens in a new tab`}
                 className="flex h-11 w-11 items-center justify-center rounded-lg border border-transparent text-black/65 transition-colors hover:border-black/10 hover:bg-white/40 hover:text-black">
                 <profile.icon size={30} strokeWidth={1.8} aria-hidden="true" />

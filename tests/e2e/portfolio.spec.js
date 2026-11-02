@@ -1,6 +1,8 @@
 import { test, expect } from "@playwright/test";
 
 const errors = new WeakMap();
+const isPhone = (testInfo) => testInfo.project.name.startsWith("phone");
+const isNative = (testInfo) => isPhone(testInfo) || testInfo.project.name === "tablet";
 
 test.beforeEach(async ({ page }) => {
   errors.set(page, []);
@@ -19,17 +21,23 @@ test.afterEach(async ({ page }) => {
 async function visit(page) {
   await page.addInitScript(() => sessionStorage.setItem("hasVisitedThisSession", "true"));
   await page.goto("/");
+  await page.getByRole("button", { name: /^About(?:_| )Me$/ }).click();
   await expect(page.getByRole("button", { name: "View Projects", exact: true })).toBeVisible();
 }
 
-test("boots as KAUNG OS and opens one About window", async ({ page }, testInfo) => {
+test("boots as KAUNG OS and shows the home screen before opening apps", async ({ page }, testInfo) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { name: "KAUNG OS", exact: true })).toBeVisible();
   await expect(page.getByText(/KAUNG_SPACE/)).toHaveCount(0);
+  const about = page.getByRole("button", { name: /^About(?:_| )Me$/ });
+  await expect(about).toBeVisible();
+  await expect(page.getByRole("region", { name: / window$/ })).toHaveCount(0);
+  await expect(page.locator(".greeting-text")).toHaveCount(1);
+  await about.click();
   await expect(page.getByRole("button", { name: "View Projects", exact: true })).toBeVisible();
   await expect(page.getByRole("region", { name: / window$/ })).toHaveCount(1);
-  if (["phone", "tablet"].includes(testInfo.project.name)) {
-    await expect(page.getByRole("button", { name: "Return to home screen", exact: true })).toBeVisible();
+  if (isNative(testInfo)) {
+    await expect(page.getByRole("button", { name: "Return to home screen", exact: true })).toHaveCount(0);
   } else {
     await expect(page.getByRole("region", { name: / window$/ }).getByText("KAUNG OS · v2.0", { exact: true })).toBeVisible();
   }
@@ -70,7 +78,7 @@ test("delayed app loading never blinks or overlaps the window", async ({ page })
 
 test("Desktop or Home reveals apps and reopens the current app", async ({ page }, testInfo) => {
   await visit(page);
-  const phone = testInfo.project.name === "phone";
+  const phone = isPhone(testInfo);
   await page.getByRole("button", { name: phone ? "Go to home screen" : "Show desktop", exact: true }).click();
   await expect(page.getByRole("region", { name: / window$/ })).toHaveCount(0);
   if (phone) {
@@ -138,7 +146,7 @@ test("View CV opens the original PDF in a new tab", async ({ page, context, requ
 });
 
 test("phone keeps a compact status bar and Home through rotation", async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== "phone", "Phone-specific status bar");
+  test.skip(!isPhone(testInfo), "Phone-specific status bar");
   await visit(page);
   for (const viewport of [{ width: 320, height: 700 }, { width: 844, height: 390 }, { width: 390, height: 844 }]) {
     await page.setViewportSize(viewport);
@@ -171,7 +179,7 @@ async function openApp(page, name) {
 
 test("redesigned pages remain readable without horizontal overflow", async ({ page }, testInfo) => {
   await visit(page);
-  if (testInfo.project.name === "phone") await page.setViewportSize({ width: 320, height: 700 });
+  if (isPhone(testInfo)) await page.setViewportSize({ width: 320, height: 700 });
   for (const [app, title] of [["About_Me", "Kaung Htet Zaw"], ["Projects", "Project Archive"], ["Experience", "Work History"], ["Education", "Academic History"], ["Contact", "Get In Touch"]]) {
     await openApp(page, app);
     await expect(page.getByRole("heading", { name: title, exact: true, level: 1 })).toBeVisible();
@@ -317,7 +325,7 @@ test("wide monitors open a centered window with working maximize and restore", a
 
 
 test("dock groups GitHub and LinkedIn without Instagram", async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name === "phone", "Phone uses its home screen instead of a dock");
+  test.skip(isPhone(testInfo), "Phone uses its home screen instead of a dock");
   await visit(page);
   const dock = page.getByRole("navigation", { name: "App dock", exact: true });
   const profiles = dock.getByRole("group", { name: "Professional profiles", exact: true });
@@ -335,9 +343,9 @@ test("dock groups GitHub and LinkedIn without Instagram", async ({ page }, testI
 
 
 test("phone and tablet have compact home screens with matching profile icons", async ({ page }, testInfo) => {
-  test.skip(!["phone", "tablet"].includes(testInfo.project.name), "Device home screens");
+  test.skip(!isNative(testInfo), "Device home screens");
   await visit(page);
-  const phone = testInfo.project.name === "phone";
+  const phone = isPhone(testInfo);
   for (const viewport of phone ? [{ width: 320, height: 744 }, { width: 390, height: 844 }] : [{ width: 768, height: 744 }, { width: 1024, height: 600 }]) {
     await page.setViewportSize(viewport);
     await page.getByRole("button", { name: /^(Show desktop|Go to home screen)$/ }).click();
@@ -366,5 +374,66 @@ test("phone and tablet have compact home screens with matching profile icons", a
       expect(Math.round(box.width)).toBe(viewport.width);
     }
     expect(await page.locator(".os-content").evaluate((e) => e.scrollWidth <= e.clientWidth + 1)).toBe(true);
+  }
+});
+
+
+test("the shared greeting types all six languages and respects reduced motion", async ({ page }) => {
+  await page.clock.install();
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.addInitScript(() => sessionStorage.setItem("hasVisitedThisSession", "true"));
+  await page.goto("/");
+  const greeting = page.locator(".greeting-text");
+  await expect(greeting).toHaveCount(1);
+  const seen = new Set();
+  for (let step = 0; step < 105 && seen.size < 6; step++) {
+    const current = await greeting.evaluate((element) => ({ language: element.dataset.language, full: element.dataset.fullGreeting, visible: element.querySelector("[data-visible-greeting]").textContent }));
+    if (current.full === current.visible) seen.add(current.language);
+    await page.clock.runFor(400);
+  }
+  expect([...seen].sort()).toEqual(["en", "es", "fr", "ja", "my", "th"]);
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect(greeting).toHaveAttribute("data-reduced-motion", "true");
+  await expect(greeting.locator("[data-visible-greeting]")).toHaveText("HELLO");
+  await page.clock.runFor(5000);
+  await expect(greeting.locator("[data-visible-greeting]")).toHaveText("HELLO");
+});
+
+test("native scrolling keeps final content above the bottom safe area", async ({ page }, testInfo) => {
+  test.skip(!isNative(testInfo), "Native bottom edge spacing");
+  await visit(page);
+  await openApp(page, "Contact");
+  const scroller = page.locator(".os-content");
+  await scroller.evaluate((element) => { element.scrollTop = element.scrollHeight; });
+  const footer = await page.locator(".app-page footer").boundingBox();
+  const viewport = page.viewportSize();
+  expect(footer.y + footer.height).toBeLessThanOrEqual(viewport.height - (isPhone(testInfo) ? 36 : 156));
+  await expect(page.getByRole("button", { name: "Return to home screen", exact: true })).toHaveCount(0);
+  expect(await page.locator("html").evaluate((element) => getComputedStyle(element).backgroundColor)).toBe("rgb(62, 85, 95)");
+  await expect(page.locator('meta[name="viewport"]')).toHaveAttribute("content", /viewport-fit=cover/);
+});
+
+
+test("iPhone safe areas and changing browser height keep controls clear", async ({ page }, testInfo) => {
+  test.skip(!isPhone(testInfo), "iPhone safe-area layout");
+  await page.addInitScript(() => sessionStorage.setItem("hasVisitedThisSession", "true"));
+  await page.setViewportSize({ width: 390, height: 744 });
+  await page.goto("/");
+  await page.addStyleTag({ content: ":root { --os-safe-top: 47px; --os-safe-bottom: 34px; }" });
+  const icons = page.getByRole("navigation", { name: "Home apps", exact: true });
+  for (const icon of await icons.getByRole("button").all()) await expect(icon).toBeInViewport({ ratio: 1 });
+  const dock = await page.getByRole("navigation", { name: "Phone dock", exact: true }).boundingBox();
+  expect(dock.y + dock.height).toBeLessThanOrEqual(744 - 34 - 60);
+  await icons.getByRole("button", { name: "Contact", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "Get In Touch", exact: true })).toBeVisible();
+  for (const height of [844, 744, 700]) {
+    await page.setViewportSize({ width: 390, height });
+    const scroller = page.locator(".os-content");
+    await expect.poll(async () => {
+      await scroller.evaluate((element) => { element.scrollTop = element.scrollHeight; });
+      const footer = await page.locator(".app-page footer").boundingBox();
+      return footer.y + footer.height;
+    }).toBeLessThanOrEqual(height - 74);
+    await expect(page.getByRole("region", { name: / window$/ })).toHaveCount(1);
   }
 });

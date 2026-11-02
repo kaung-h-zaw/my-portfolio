@@ -1,5 +1,6 @@
 import React from "react";
 import { ArrowUpRight } from "lucide-react";
+import MultilingualGreeting from "./MultilingualGreeting";
 
 export function HomeIcon({ title, label = title.replace(/_/g, " "), icon: Icon, onClick }) {
   return <button type="button" aria-label={title} onClick={onClick} className="native-home-icon group flex min-w-0 flex-col items-center gap-1.5 rounded-xl py-1 active:scale-95 transition-transform">
@@ -13,13 +14,7 @@ export function HomeIcon({ title, label = title.replace(/_/g, " "), icon: Icon, 
 export function ProfileWidget({ onOpenAbout }) {
   return <button type="button" onClick={onOpenAbout} aria-label="Open Kaung's profile" className="native-widget native-profile flex h-full w-full items-center gap-3 p-4 text-left transition-colors hover:bg-[#dce3d8]">
     <img src="/me-nb.webp" alt="" width="48" height="48" className="native-profile-avatar h-12 w-12 shrink-0 rounded-2xl border border-black/10 bg-white/30 object-cover" />
-    <span className="min-w-0 flex-1"><span className="block font-sans text-[10px] font-semibold uppercase tracking-widest text-[#526967]">Hello, I’m Kaung</span><span className="mt-1 block font-sans text-lg font-bold leading-tight tracking-tight text-[#263d3e]">Kaung Htet Zaw</span><span className="mt-1 block font-sans text-xs leading-snug text-[#49615f]">Junior full-stack developer</span></span>
+    <span className="min-w-0 flex-1"><span className="native-profile-greeting flex h-7 items-center font-mono text-xl font-bold leading-relaxed text-[#365858]"><MultilingualGreeting /></span><span className="mt-1 block font-sans text-lg font-bold leading-tight tracking-tight text-[#263d3e]">Kaung Htet Zaw</span><span className="mt-1 block font-sans text-xs leading-snug text-[#49615f]">Junior full-stack developer</span></span>
     <ArrowUpRight size={16} className="native-profile-arrow shrink-0 text-[#55706d]" aria-hidden="true" />
-  </button>;
-}
-
-export function HomeIndicator({ onClick, appActive = false }) {
-  return <button type="button" onClick={onClick} aria-label="Return to home screen" className="native-home-indicator fixed bottom-0 left-1/2 z-[10001] flex h-11 w-32 -translate-x-1/2 items-end justify-center pb-2" style={{ marginBottom: "env(safe-area-inset-bottom)" }}>
-    <span className={`h-1 w-24 rounded-full ${appActive ? "bg-[#384f50]/65" : "bg-white/75"}`} />
   </button>;
 }

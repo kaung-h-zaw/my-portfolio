@@ -17,6 +17,7 @@ export default defineConfig({
     { name: "wide", use: { browserName: "chromium", viewport: { width: 1920, height: 1080 } } },
     { name: "laptop", use: { browserName: "chromium", viewport: { width: 1440, height: 650 } } },
     { name: "tablet", use: { browserName: "chromium", viewport: { width: 768, height: 1024 }, hasTouch: true } },
+    { name: "phone-webkit", use: { browserName: "webkit", viewport: { width: 390, height: 744 }, hasTouch: true, isMobile: true, deviceScaleFactor: 3 } },
     { name: "phone", use: { browserName: "chromium", viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true } },
   ],
   webServer: {

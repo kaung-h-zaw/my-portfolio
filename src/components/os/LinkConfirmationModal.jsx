@@ -11,7 +11,7 @@ export default function LinkConfirmationModal({ linkData, onClose }) {
 
   useEffect(() => {
     if (!linkData) return undefined;
-    const previousFocus = document.activeElement;
+    const previousFocus = linkData.returnFocus || document.activeElement;
     const root = document.getElementById("root");
     const wasInert = root?.inert;
     if (root) root.inert = true;

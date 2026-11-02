@@ -2,8 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --os-safe-top: env(safe-area-inset-top, 0px);
+  --os-safe-bottom: env(safe-area-inset-bottom, 0px);
+  --os-safe-left: env(safe-area-inset-left, 0px);
+  --os-safe-right: env(safe-area-inset-right, 0px);
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  background-color: #3e555f;
+  overscroll-behavior: none;
+}
+html, body { overflow: hidden; }
+
 body {
-  @apply bg-zinc-50 text-neutral-900 font-mono antialiased;
+  @apply text-neutral-900 font-mono antialiased;
   margin: 0;
   padding: 0;
 }
@@ -136,8 +152,8 @@ a {
   .native-widget { @apply rounded-[22px] border border-white/20 bg-[#d4dfd5]/85 text-[#2b4446] shadow-[0_4px_16px_rgba(20,36,43,0.08)] backdrop-blur-lg; }
 }
 .native-phone .native-icon-tile { width: 58px; height: 58px; }
-.native-phone-profile { height: 96px; }
-.native-phone-widgets { height: 116px; }
+.native-phone-profile { height: 108px; }
+.native-phone-widgets { height: 112px; }
 .native-tablet .native-icon-tile { width: 72px; height: 72px; border-radius: 23px; }
 .native-tablet .native-home-icon { gap: 8px; }
 .native-tablet .native-home-icon > span:last-child { font-size: 12px; }
@@ -159,7 +175,27 @@ a {
   .native-tablet-home > div { padding-top: 4px; }
   .native-tablet-home header { margin-bottom: 12px; }
   .native-tablet-home header > div > p { display: none; }
-  .native-tablet-widgets { height: 132px; margin-bottom: 20px; }
+  .native-tablet-widgets { height: 120px; margin-bottom: 16px; }
   .native-tablet .native-icon-tile { width: 60px; height: 60px; border-radius: 20px; }
-  .native-tablet-apps { row-gap: 12px; }
+  .native-tablet-apps { row-gap: 8px; }
+}
+
+.native-phone-home, .native-tablet-home {
+  scroll-padding-bottom: 24px;
+}
+.native-phone-home { padding-left: var(--os-safe-left); padding-right: var(--os-safe-right); }
+.native-status { padding-left: max(20px, var(--os-safe-left)); padding-right: max(20px, var(--os-safe-right)); }
+.native-phone .os-titlebar { padding-left: max(12px, var(--os-safe-left)); padding-right: max(12px, var(--os-safe-right)); }
+.native-phone .os-content { padding-left: max(4px, var(--os-safe-left)); padding-right: max(4px, var(--os-safe-right)); }
+.native-profile-greeting .greeting-text { line-height: 1.4; }
+@media (max-height: 780px) and (max-width: 639px) {
+  .native-phone-home-content { padding-top: 8px; }
+  .native-phone-home header { margin-bottom: 8px; }
+  .native-phone-profile { height: 96px; }
+  .native-phone-widgets { margin-bottom: 12px; }
+  .native-phone-apps { row-gap: 4px; }
+  .native-phone .native-icon-tile { width: 54px; height: 54px; }
+  .native-phone-profile .native-profile { padding: 14px; }
+  .native-phone-profile .native-profile-greeting { height: 24px; font-size: 18px; }
+  .native-phone-profile .native-profile > span > span:nth-child(2) { font-size: 16px; line-height: 20px; }
 }

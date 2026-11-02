@@ -357,9 +357,9 @@ export default function Window({
   if (isMaximized) {
     if (isMobile) {
       positionClass =
-        "fixed top-[calc(env(safe-area-inset-top)+32px)] left-0 right-0 bottom-0 z-50 !transform-none bg-[#c4cecc]";
+        "fixed top-[calc(var(--os-safe-top)+32px)] left-0 right-0 bottom-[calc(var(--os-safe-bottom)+20px)] z-50 !transform-none bg-[#c4cecc]";
     } else if (isTablet) {
-      positionClass = "fixed top-[calc(env(safe-area-inset-top)+40px)] left-3 right-3 bottom-[calc(env(safe-area-inset-bottom)+132px)] z-50 rounded-[24px] !transform-none border border-white/20 bg-[#c4cecc] shadow-xl";
+      positionClass = "fixed top-[calc(var(--os-safe-top)+40px)] left-3 right-3 bottom-[calc(var(--os-safe-bottom)+156px)] z-50 rounded-[24px] !transform-none border border-white/20 bg-[#c4cecc] shadow-xl";
     } else {
       positionClass =
         "fixed top-11 left-3 right-3 xl:left-1 xl:right-1 bottom-[88px] z-50 rounded-2xl !transform-none border border-black/20 bg-gray-300/80 backdrop-blur-md";
@@ -504,8 +504,8 @@ export default function Window({
             )}
           </div>
 
-          <div style={isMobile ? { paddingBottom: 44 } : undefined} className="os-content relative z-0 min-h-0 flex-1 overflow-auto border-t border-black/10 bg-[#c4cecc]/95 backdrop-blur-sm p-1 sm:p-3">
-            <div key={currentAppId || title} className="h-full">
+          <div style={isCompactHeader ? { paddingBottom: 32, scrollPaddingBottom: 32 } : undefined} className="os-content relative z-0 min-h-0 flex-1 overflow-auto border-t border-black/10 bg-[#c4cecc]/95 backdrop-blur-sm p-1 sm:p-3">
+            <div key={currentAppId || title} className={isCompactHeader ? "min-h-full" : "h-full"}>
               <Suspense
                 fallback={
                   <div className="h-full w-full flex items-center justify-center text-[10px] uppercase tracking-widest text-black/50">

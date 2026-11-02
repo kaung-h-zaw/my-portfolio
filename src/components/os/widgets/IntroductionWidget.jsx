@@ -1,52 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { useReducedMotion } from "framer-motion";
+import React from "react";
 import { ArrowUpRight } from "lucide-react";
-
-const GREETINGS = [
-  "HELLO",
-  "สวัสดี",
-  "မင်္ဂလာပါ",
-  "HOLA",
-  "BONJOUR",
-  "こんにちは",
-];
+import MultilingualGreeting from "../MultilingualGreeting";
 
 export default function IntroductionWidget({ onOpenAbout }) {
-  const reducedMotion = useReducedMotion();
-  const [text, setText] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [loopNum, setLoopNum] = useState(0);
-  const [typingSpeed, setTypingSpeed] = useState(150);
-
-  useEffect(() => {
-    if (reducedMotion) return undefined;
-    const i = loopNum % GREETINGS.length;
-    const fullText = GREETINGS[i];
-
-    if (!isDeleting && text === fullText) {
-      const pause = setTimeout(() => setIsDeleting(true), 2500);
-      return () => clearTimeout(pause);
-    }
-
-    const handleTyping = () => {
-      if (isDeleting) {
-        setText(fullText.substring(0, text.length - 1));
-        setTypingSpeed(40);
-      } else {
-        setText(fullText.substring(0, text.length + 1));
-        setTypingSpeed(120);
-      }
-
-      if (isDeleting && text === "") {
-        setIsDeleting(false);
-        setLoopNum(loopNum + 1);
-      }
-    };
-
-    const timer = setTimeout(handleTyping, typingSpeed);
-    return () => clearTimeout(timer);
-  }, [text, isDeleting, loopNum, typingSpeed, reducedMotion]);
-
   return (
     <div className="w-full box-border flex flex-col select-none pointer-events-auto bg-white/40 backdrop-blur-md border border-black/10 rounded-2xl p-3 md:p-4 xl:p-4 hover:border-black/15 transition-all duration-300">
       {/* TOP SECTION */}
@@ -57,9 +13,8 @@ export default function IntroductionWidget({ onOpenAbout }) {
           </span>
 
           {/* Greeting text */}
-          <h1 className="font-black tracking-tight text-black/80 uppercase leading-none text-2xl md:text-3xl lg:text-2xl xl:text-3xl 2xl:text-4xl h-7 md:h-8 lg:h-7 xl:h-9 flex items-center whitespace-nowrap">
-            {reducedMotion ? GREETINGS[0] : text}
-            {!reducedMotion && <span aria-hidden="true" className="w-1.5 h-[0.75em] xl:w-2 bg-black/60 animate-pulse ml-1.5 block shrink-0"></span>}
+          <h1 className="font-black tracking-tight text-black/80 uppercase leading-[1.4] text-2xl md:text-3xl lg:text-2xl xl:text-3xl 2xl:text-4xl h-10 xl:h-11 2xl:h-[52px] flex items-center whitespace-nowrap">
+            <MultilingualGreeting cursorClassName="bg-black/60" />
           </h1>
         </div>
 
@@ -79,7 +34,7 @@ export default function IntroductionWidget({ onOpenAbout }) {
         </span>
 
         {/* Name */}
-        <h2 className="font-black text-black/80 tracking-tight leading-none text-2xl md:text-3xl lg:text-lg xl:text-xl 2xl:text-2xl uppercase mb-2 md:mb-1 group-hover:underline decoration-2 underline-offset-4 truncate w-full">
+        <h2 className="font-black text-black/80 tracking-tight leading-[1.4] text-2xl md:text-3xl lg:text-lg xl:text-xl 2xl:text-2xl uppercase mb-2 md:mb-1 group-hover:underline decoration-2 underline-offset-4 truncate w-full">
           Kaung Htet Zaw
         </h2>
 

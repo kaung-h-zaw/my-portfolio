@@ -131,7 +131,7 @@ export default function ContactApp() {
               <PanelTitle icon={MessageCircle}>Elsewhere</PanelTitle>
               <div className="app-social-grid grid gap-2">
                 {socials.map((social) => (
-                  <button key={social.name} type="button" onClick={() => setActiveLinkData({ title: social.name, href: social.href, icon: social.icon })}
+                  <button key={social.name} type="button" onClick={(event) => setActiveLinkData({ title: social.name, href: social.href, icon: social.icon, returnFocus: event.currentTarget })}
                     className="app-tile flex min-h-11 items-center gap-3 text-left text-sm hover:bg-white/40 transition-colors">
                     <social.icon size={17} className="shrink-0" aria-hidden="true" /><span className="flex-1">{social.name}</span><ArrowUpRight size={15} aria-hidden="true" />
                   </button>

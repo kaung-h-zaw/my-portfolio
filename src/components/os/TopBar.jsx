@@ -47,7 +47,7 @@ export default function TopBar({ onOpenApp, isPhone = false, isTablet = false, a
   if (isPhone || isTablet) {
     return (
       <div className={`native-status fixed top-0 left-0 right-0 z-[9999] flex items-center justify-between px-5 select-none ${appActive ? "bg-[#d1d9d4] text-[#293d3f]" : "bg-transparent text-white/90"}`}
-        style={{ height: "calc(env(safe-area-inset-top) + 32px)", paddingTop: "env(safe-area-inset-top)" }}>
+        style={{ height: "calc(var(--os-safe-top) + 32px)", paddingTop: "var(--os-safe-top)" }}>
         <span className="text-xs font-semibold tabular-nums">
           {time.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: false })}
         </span>

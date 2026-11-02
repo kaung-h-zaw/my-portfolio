@@ -75,7 +75,7 @@ export default function EducationApp() {
                     <h3 className="text-sm font-bold leading-relaxed mb-3">{certificate.name}</h3>
                     <p className="font-sans text-sm text-black/65">{certificate.issuer} · {certificate.date}</p>
                     {certificate.link && (
-                      <button type="button" onClick={() => setActiveLinkData({ title: certificate.name, href: certificate.link, icon: Award })}
+                      <button type="button" onClick={(event) => setActiveLinkData({ title: certificate.name, href: certificate.link, icon: Award, returnFocus: event.currentTarget })}
                         aria-label={`Verify ${certificate.name}`} className="app-action-secondary mt-3">
                         Verify certificate <ExternalLink size={14} aria-hidden="true" />
                       </button>
