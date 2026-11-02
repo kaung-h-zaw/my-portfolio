@@ -73,10 +73,7 @@ export default function WelcomeScreen({ onComplete }) {
           transition={{ duration: 0.5, ease: "easeInOut" }}
           className="fixed inset-0 z-[9999] font-mono flex items-center justify-center"
         >
-          <BackgroundLayers
-            gradient="linear-gradient(160deg, #d6d2cc 0%, #e2deda 50%, #d8d4cf 100%)"
-            showGrain={true}
-          />
+          <BackgroundLayers />
 
           {/* Terminal*/}
           <div className="relative z-10 w-full max-w-[92vw] sm:max-w-2xl px-6 md:px-12 flex flex-col gap-2">
@@ -96,20 +93,20 @@ export default function WelcomeScreen({ onComplete }) {
               transition={{ duration: 0.5 }}
               className="text-center mb-6"
             >
-              <h1 className="text-3xl sm:text-5xl font-black tracking-tighter text-black/70 leading-none">
+              <h1 className="text-3xl sm:text-5xl font-black tracking-tighter text-white/90 leading-none">
                 KAUNG OS
               </h1>
               <div className="flex items-center justify-center gap-2 mt-2">
-                <div className="h-1 w-8 bg-black/60 rounded-full" />
-                <span className="text-[9px] sm:text-[10px] font-bold tracking-[0.3em] uppercase text-gray-800">
+                <div className="h-1 w-8 bg-white/50 rounded-full" />
+                <span className="text-[9px] sm:text-[10px] font-bold tracking-[0.3em] uppercase text-white/75">
                   KAUNG OS · v2.0
                 </span>
-                <div className="h-1 w-8 bg-black/60 rounded-full" />
+                <div className="h-1 w-8 bg-white/50 rounded-full" />
               </div>
             </motion.div>
 
             {/* Terminal Log Container */}
-            <div className="bg-white/30 backdrop-blur-sm border border-black/10 rounded-xl p-4 sm:p-6 shadow-[6px_6px_0px_rgba(0,0,0,0.06)]">
+            <div className="bg-white/70 backdrop-blur-sm border border-black/10 rounded-xl p-4 sm:p-6 shadow-[6px_6px_0px_rgba(0,0,0,0.06)]">
               <div
                 className="flex flex-col gap-1.5"
                 role="status"

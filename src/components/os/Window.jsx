@@ -21,7 +21,6 @@ const APP_SHORT_LABELS = {
   skills: "SKL",
   education: "EDU",
   contact: "CNT",
-  cv: "CV",
 };
 
 export default function Window({
@@ -394,7 +393,7 @@ export default function Window({
         <div className="flex flex-col h-full rounded-2xl">
           {/* TITLE BAR */}
           <div
-            className={`os-titlebar relative z-20 shrink-0 select-none bg-[#f1efea] ${
+            className={`os-titlebar relative z-20 shrink-0 select-none bg-[#e3e5df] ${
               isCompactHeader ? "h-9 px-2 flex items-center" : isSmallScreen ? "h-9 px-3" : "h-10 px-3"
             } cursor-grab active:cursor-grabbing`}
           >
@@ -500,7 +499,7 @@ export default function Window({
             )}
           </div>
 
-          <div className="os-content relative z-0 min-h-0 flex-1 overflow-auto border-t border-black/10 bg-gray-300/60 backdrop-blur-sm p-1 sm:p-3">
+          <div className="os-content relative z-0 min-h-0 flex-1 overflow-auto border-t border-black/10 bg-[#c4cecc]/95 backdrop-blur-sm p-1 sm:p-3">
             <div key={currentAppId || title} className="h-full">
               <Suspense
                 fallback={

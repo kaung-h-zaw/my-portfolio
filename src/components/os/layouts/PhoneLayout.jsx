@@ -36,7 +36,7 @@ const MobileAppIcon = ({ app, onClick }) => {
           />
         )}
       </div>
-      <span className="font-medium font-mono text-[10px] text-black/70 uppercase tracking-tight px-1 text-center">
+      <span className="font-medium font-mono text-[10px] text-[#263838] bg-[#e4e8e1]/80 rounded-md uppercase tracking-tight px-2 py-1 text-center">
         {app.title}
       </span>
     </button>
@@ -70,7 +70,7 @@ const MobileLinkIcon = ({ title, icon, onClick }) => {
           />
         )}
       </div>
-      <span className="font-medium font-mono text-[10px] text-black/70 uppercase tracking-tight px-1 text-center">
+      <span className="font-medium font-mono text-[10px] text-[#263838] bg-[#e4e8e1]/80 rounded-md uppercase tracking-tight px-2 py-1 text-center">
         {title}
       </span>
     </button>
@@ -112,7 +112,7 @@ export default function PhoneLayout({
     <div
       className="fixed inset-0 w-full h-full overflow-hidden overscroll-none"
       style={{
-        background: "linear-gradient(180deg, #cccccc 0%, #dcdcdc 100%)",
+        background: "#657d7d",
       }}
     >
       {/* 1. BACKGROUND WALLPAPER - Extended to cover safe areas */}
@@ -120,7 +120,7 @@ export default function PhoneLayout({
         className="absolute inset-0 z-0 pointer-events-none"
         style={{ top: "-100px", bottom: "-100px" }}
       >
-        <BackgroundLayers gradient="linear-gradient(180deg, #cccccc 0%, #dcdcdc 100%)" />
+        <BackgroundLayers />
       </div>
 
       {/* 2. TOP BAR */}

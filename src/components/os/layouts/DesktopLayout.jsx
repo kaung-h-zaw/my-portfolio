@@ -53,10 +53,7 @@ export default function DesktopLayout({
           right: "-100px",
         }}
       >
-        <BackgroundLayers
-          gradient="linear-gradient(160deg, #d6d2cc 0%, #e2deda 50%, #d8d4cf 100%)"
-          showGrain={true}
-        />
+        <BackgroundLayers />
       </div>
 
       {/* 2. TOP BAR */}
@@ -82,11 +79,11 @@ export default function DesktopLayout({
       </div>
 
       {/* 5. FOOTER BRANDING */}
-      <div className="absolute bottom-20 xl:bottom-8 right-4 lg:right-6 xl:right-10 z-0 text-right opacity-50 mix-blend-multiply pointer-events-none select-none hidden md:block origin-bottom-right">
-        <div className="text-2xl lg:text-3xl xl:text-4xl font-black tracking-tighter text-black leading-none drop-shadow-sm">
+      <div className="absolute bottom-20 xl:bottom-8 right-4 lg:right-6 xl:right-10 z-0 text-right text-white/75 pointer-events-none select-none hidden md:block origin-bottom-right">
+        <div className="text-2xl lg:text-3xl xl:text-4xl font-black tracking-tighter leading-none drop-shadow-sm">
           KAUNG OS
         </div>
-        <div className="text-[9px] lg:text-[10px] xl:text-xs font-bold tracking-[0.3em] uppercase mt-1 text-gray-800">
+        <div className="text-[9px] lg:text-[10px] xl:text-xs font-bold tracking-[0.3em] uppercase mt-1 text-white/60">
           v2.0 • SYSTEM READY
         </div>
       </div>

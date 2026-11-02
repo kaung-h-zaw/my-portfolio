@@ -9,7 +9,7 @@ const ContactApp = lazy(() => import("../apps/ContactApp"));
 const ExperienceApp = lazy(() => import("../apps/ExperienceApp"));
 const EducationApp = lazy(() => import("../apps/EducationApp"));
 
-import { ProfileIcon, SkillsIcon, ProjectsIcon, ExperienceIcon, EducationIcon, ContactIcon, CVIcon } from "./AppIcons";
+import { ProfileIcon, SkillsIcon, ProjectsIcon, ExperienceIcon, EducationIcon, ContactIcon } from "./AppIcons";
 
 function getDeviceType() {
   const width = window.innerWidth;
@@ -36,7 +36,6 @@ export default function OSContainer() {
     "skills",
     "education",
     "contact",
-    "cv",
   ];
 
   useEffect(() => {
@@ -91,16 +90,11 @@ export default function OSContainer() {
         mobileIcon: ContactIcon,
         component: ContactApp,
       },
-      cv: { id: "cv", title: "CV", icon: CVIcon, mobileIcon: CVIcon, href: "/resume.pdf" },
     }),
     [],
   );
 
   const openWindow = (id, options = {}) => {
-    if (apps[id]?.href) {
-      window.open(apps[id].href, "_blank", "noopener,noreferrer");
-      return;
-    }
     const { source = "open" } = options;
     const currentWindowId = openWindows[0]?.id || activeWindowId;
     const currentIndex = appOrder.indexOf(currentWindowId);

@@ -22,6 +22,3 @@ export function EducationIcon(props) {
 export function ContactIcon(props) {
   return <IconFrame {...props}><rect x="5" y="9" width="38" height="31" rx="6" fill="#c4ceca" /><path d="m7 13 14 12a5 5 0 0 0 6 0l14-12M7 37l12-11m22 11L29 26" /><path d="M11 5h26" strokeOpacity=".4" /></IconFrame>;
 }
-export function CVIcon(props) {
-  return <IconFrame {...props}><path d="M12 5h17l10 10v25a3 3 0 0 1-3 3H12a3 3 0 0 1-3-3V8a3 3 0 0 1 3-3Z" fill="#eee9dc" /><path d="M29 5v10h10" fill="#d4c6ad" /><circle cx="20" cy="23" r="4" fill="#b6c5c9" /><path d="M14 33a6 6 0 0 1 12 0m4-11h3m-3 6h3M15 38h18" /></IconFrame>;
-}

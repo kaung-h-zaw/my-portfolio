@@ -75,7 +75,7 @@ export default function TabletLayout({
     <div className="fixed inset-0 flex flex-col overflow-hidden text-black select-none bg-[#EFE5D9]">
       {/* 1. BACKGROUND */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <BackgroundLayers gradient="linear-gradient(180deg, #dcdcdc 0%, #cccccc 100%)" />
+        <BackgroundLayers />
       </div>
 
       {/* 2. TOP MENU BAR */}

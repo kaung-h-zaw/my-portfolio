@@ -124,13 +124,13 @@ test("View CV opens the original PDF in a new tab", async ({ page, context, requ
   expect(await tab.evaluate(() => window.opener)).toBe(null);
   await tab.close();
   await expect(page.getByRole("button", { name: "View Projects", exact: true })).toBeVisible();
-  const iconTabPromise = page.waitForEvent("popup");
-  await openApp(page, "CV");
-  const iconTab = await iconTabPromise;
-  await iconTab.waitForLoadState();
-  expect(new URL(iconTab.url()).pathname).toBe("/resume.pdf");
-  await iconTab.close();
+  await page.getByRole("button", { name: /^Choose section, current:/ }).click();
+  await expect(page.locator(".os-titlebar").getByRole("button", { name: /^CV/ })).toHaveCount(0);
+  await page.getByRole("button", { name: "Close app search", exact: true }).click();
   await expect(page.getByRole("region", { name: / window$/ })).toHaveCount(1);
+  await page.getByRole("button", { name: /^(Show desktop|Go to home screen)$/ }).click();
+  await expect(page.getByRole("button", { name: "CV", exact: true })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: /^(Open|Focus|Minimize) CV window$/ })).toHaveCount(0);
 });
 
 test("phone keeps a compact status bar and Home through rotation", async ({ page }, testInfo) => {
