@@ -1,3 +1,4 @@
+import { AppSkeleton } from "../ui/LoadingSkeleton";
 import React, { useState, useRef, useEffect, Suspense } from "react";
 import Draggable from "react-draggable";
 import { AnimatePresence, motion } from "framer-motion";
@@ -509,9 +510,7 @@ export default function Window({
             <div key={currentAppId || title} className={isCompactHeader ? "min-h-full" : "h-full"}>
               <Suspense
                 fallback={
-                  <div className="h-full w-full flex items-center justify-center text-[10px] uppercase tracking-widest text-zinc-400">
-                    Loading...
-                  </div>
+                  <AppSkeleton label={currentLabel.replace(/_/g, " ")} section={currentAppId} />
                 }
               >
                 {children}

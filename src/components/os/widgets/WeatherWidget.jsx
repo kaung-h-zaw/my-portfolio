@@ -1,12 +1,9 @@
+import { WeatherSkeleton } from "../../ui/LoadingSkeleton";
 import React, { useState, useEffect } from "react";
 import { CloudSun, CloudRain, Sun, Cloud } from "lucide-react";
 
 export default function WeatherWidget({ variant = "mobile" }) {
-  const [weather, setWeather] = useState({
-    temp: "--",
-    description: "Loading",
-    icon: CloudSun,
-  });
+  const [weather, setWeather] = useState(null);
 
   const [currentDate, setCurrentDate] = useState("");
 
@@ -64,6 +61,8 @@ export default function WeatherWidget({ variant = "mobile" }) {
       .toUpperCase();
     setCurrentDate(`${shortDay}, ${dateStr}`);
   }, []);
+
+  if (!weather) return <WeatherSkeleton variant={variant} />;
 
   const WeatherIcon = weather.icon;
 

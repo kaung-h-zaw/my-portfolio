@@ -1,3 +1,4 @@
+import PreviewImage from "../ui/PreviewImage";
 import { ProjectsIcon } from "../os/AppIcons";
 import React, { useLayoutEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowUpRight, ExternalLink, Github, FolderOpen } from "lucide-react";
@@ -67,8 +68,7 @@ export default function ProjectsApp() {
               )}
               {selected.image && (
                 <figure className="app-panel">
-                  <img src={selected.image} alt={`${selected.title} application screenshot`}
-                    width="1440" height="900" className="w-full rounded-lg border border-white/10 bg-white/5" />
+                  <PreviewImage src={selected.image} alt={`${selected.title} application screenshot`} />
                   <figcaption className="text-xs text-zinc-300 mt-2">{selected.imageCaption || `${selected.title} · application preview`}</figcaption>
                 </figure>
               )}
@@ -140,8 +140,8 @@ export default function ProjectsApp() {
                 <h2 id={`project-${project.id}`} className="text-xl font-bold leading-snug mb-3">{project.title}</h2>
                 <div className="grid gap-4 mb-4">
                   <p className="app-body">{project.desc}</p>
-                  {project.image && <img src={project.image} alt={`${project.title} application screenshot`} loading="lazy" width="1440" height="900"
-                    className="order-first app-project-image w-full aspect-[16/10] object-cover object-top rounded-lg border border-white/10 bg-white/5" />}
+                  {project.image && <PreviewImage src={project.image} alt={`${project.title} application screenshot`} loading="lazy"
+                    className="order-first app-project-image w-full" />}
                 </div>
                 {project.team && <p className="text-xs text-zinc-300 mb-4">{project.team}</p>}
                 <ul className="list-disc pl-5 space-y-1 font-sans text-sm leading-relaxed text-zinc-200 mb-4">

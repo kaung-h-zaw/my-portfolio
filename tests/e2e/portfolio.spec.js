@@ -48,8 +48,10 @@ test("boots as KAUNG, opens About on desktop, and keeps native home screens", as
 });
 
 test("delayed app loading never blinks or overlaps the window", async ({ page }) => {
+  let releaseApp;
+  const appReady = new Promise((resolve) => { releaseApp = resolve; });
   await page.route(/\/assets\/ProjectsApp-.*\.js$/, async (route) => {
-    await new Promise((resolve) => setTimeout(resolve, 650));
+    await appReady;
     await route.continue();
   });
   await visit(page);
@@ -73,7 +75,14 @@ test("delayed app loading never blinks or overlaps the window", async ({ page })
     requestAnimationFrame(sample);
   });
   await page.getByRole("button", { name: "View Projects", exact: true }).click();
+  try {
+    await expect(page.getByRole("status", { name: "Loading Projects", exact: true })).toBeVisible();
+    await expect(page.getByText("Loading...", { exact: true })).toHaveCount(0);
+  } finally {
+    releaseApp();
+  }
   await expect(page.getByRole("heading", { name: "Project Archive", exact: true })).toBeVisible();
+  await expect(page.getByRole("status", { name: "Loading Projects", exact: true })).toHaveCount(0);
   await page.waitForFunction(() => window.__portfolioSamplingDone);
   const samples = await page.evaluate(() => window.__portfolioSamples);
   expect(samples.length).toBeGreaterThan(5);
@@ -108,8 +117,9 @@ test("case studies stay in one app and Back restores keyboard focus", async ({ p
   await expect(page.getByText("4 projects", { exact: true })).toBeVisible();
   const tubePartyCard = page.getByRole("article").filter({ has: page.getByRole("heading", { name: "TubeParty", exact: true }) });
   const preview = tubePartyCard.getByRole("img");
-  const previewBox = await preview.boundingBox();
-  const summaryBox = await preview.locator("..").boundingBox();
+  const previewFrame = preview.locator("..");
+  const previewBox = await previewFrame.boundingBox();
+  const summaryBox = await previewFrame.locator("..").boundingBox();
   expect(Math.abs(previewBox.width - summaryBox.width)).toBeLessThan(2);
   const tubeParty = page.getByRole("button", { name: "View TubeParty case study", exact: true });
   await tubeParty.focus();
@@ -186,8 +196,9 @@ test("phone keeps an inset rounded window and Home through rotation", async ({ p
     const appWindow = page.getByRole("region", { name: / window$/ });
     await expect(appWindow).toHaveCount(1);
     const box = await appWindow.boundingBox();
-    expect(box).toMatchObject({ x: 8, y: 8, width: viewport.width - 16, height: viewport.height - 8 });
+    expect(box).toMatchObject({ x: 8, y: 8, width: viewport.width - 16, height: viewport.height - 16 });
     expect(await appWindow.evaluate((element) => getComputedStyle(element).borderTopLeftRadius)).toBe("24px");
+    expect(await appWindow.evaluate((element) => getComputedStyle(element).borderBottomLeftRadius)).toBe("24px");
     expect(await page.locator(".os-content").evaluate((element) => element.scrollWidth <= element.clientWidth + 1)).toBe(true);
   }
 });
@@ -480,7 +491,7 @@ test("iPhone safe areas and changing browser height keep controls clear", async 
     const appWindow = page.getByRole("region", { name: / window$/ });
     const box = await appWindow.boundingBox();
     expect(box.y).toBe(55);
-    expect(box.y + box.height).toBe(height);
+    expect(box.y + box.height).toBe(height - 8);
     const scroller = page.locator(".os-content");
     await expect.poll(async () => {
       await scroller.evaluate((element) => { element.scrollTop = element.scrollHeight; });
@@ -489,4 +500,48 @@ test("iPhone safe areas and changing browser height keep controls clear", async 
     }).toBeLessThanOrEqual(height - 74);
     await expect(page.getByRole("region", { name: / window$/ })).toHaveCount(1);
   }
+});
+
+
+test("weather skeleton resolves and respects reduced motion", async ({ page }) => {
+  let releaseWeather;
+  const weatherReady = new Promise((resolve) => { releaseWeather = resolve; });
+  await page.route("https://api.open-meteo.com/**", async (route) => {
+    await weatherReady;
+    await route.fulfill({ json: { current_weather: { temperature: 29, weathercode: 2 } } });
+  });
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.addInitScript(() => sessionStorage.setItem("hasVisitedThisSession", "true"));
+  await page.goto("/");
+  const skeleton = page.getByRole("status", { name: "Loading weather", exact: true });
+  try {
+    await expect(skeleton).toBeVisible();
+    expect(await skeleton.locator(".skeleton").first().evaluate((element) => getComputedStyle(element).animationName)).toBe("none");
+  } finally {
+    releaseWeather();
+  }
+  await expect(skeleton).toHaveCount(0);
+  await expect(page.getByText("Partly Cloudy", { exact: true })).toBeVisible();
+});
+
+
+test("project previews show a skeleton until the image loads", async ({ page }) => {
+  let releaseImage;
+  const imageReady = new Promise((resolve) => { releaseImage = resolve; });
+  await page.route("**/tubeparty-preview.jpg", async (route) => {
+    await imageReady;
+    await route.continue();
+  });
+  await visit(page);
+  await page.getByRole("button", { name: "View Projects", exact: true }).click();
+  const skeleton = page.getByRole("status", { name: "Loading TubeParty application screenshot", exact: true });
+  try {
+    await skeleton.scrollIntoViewIfNeeded();
+    await expect(skeleton).toBeVisible();
+  } finally {
+    releaseImage();
+  }
+  await expect(skeleton).toHaveCount(0);
+  const image = page.getByRole("img", { name: "TubeParty application screenshot", exact: true });
+  await expect.poll(() => image.evaluate((element) => element.complete && element.naturalWidth > 0)).toBe(true);
 });
