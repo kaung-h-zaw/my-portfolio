@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import TopBar from "../TopBar";
 import Window from "../Window";
 import WeatherWidget from "../widgets/WeatherWidget";
 import MusicWidget from "../widgets/MusicWidget";
@@ -19,9 +18,8 @@ export default function PhoneLayout({ apps, appOrder, openWindows, openWindow, c
 
   return <div className="native-phone fixed inset-0 overflow-hidden bg-[#161616]">
     <BackgroundLayers />
-    <TopBar isPhone appActive={Boolean(activeApp)} />
     {!activeApp && <>
-      <main className="native-phone-home absolute inset-x-0 overflow-y-auto overscroll-contain" style={{ top: "calc(var(--os-safe-top) + 32px)", bottom: "calc(var(--os-safe-bottom) + 100px)" }}>
+      <main className="native-phone-home absolute inset-x-0 overflow-y-auto overscroll-contain" style={{ top: "calc(var(--os-safe-top) + 16px)", bottom: "calc(var(--os-safe-bottom) + 100px)" }}>
         <div className="native-phone-home-content mx-auto flex min-h-full w-full max-w-[480px] flex-col px-4 pb-6 pt-3">
           <header className="mb-4 flex items-end justify-between text-white"><div><p className="font-sans text-[11px] text-white/70">{new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}</p><h1 className="mt-1 font-sans text-xl font-semibold tracking-tight">Kaung OS</h1></div><span className="pb-1 font-mono text-[9px] tracking-widest text-white/60">v2.0</span></header>
           <div className="native-phone-profile mb-3"><ProfileWidget onOpenAbout={() => openWindow("about")} /></div>

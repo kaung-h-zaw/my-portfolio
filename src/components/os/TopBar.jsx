@@ -1,12 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Wifi, BatteryFull, Volume2, Search, Menu, X } from "lucide-react";
 
-export default function TopBar({
-  onOpenApp,
-  isPhone = false,
-  isTablet = false,
-  appActive = false,
-}) {
+export default function TopBar({ onOpenApp }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
   const menuButtonRef = useRef(null);
@@ -49,32 +44,6 @@ export default function TopBar({
     });
   };
 
-  if (isPhone || isTablet) {
-    return (
-      <div
-        className={`native-status fixed top-0 left-0 right-0 z-[9999] flex items-center justify-between px-5 select-none ${appActive ? "bg-transparent text-zinc-100" : "bg-transparent text-white/90"}`}
-        style={{
-          height: "calc(var(--os-safe-top) + 32px)",
-          paddingTop: "var(--os-safe-top)",
-        }}
-      >
-        <span className="text-xs font-semibold tabular-nums">
-          {time.toLocaleTimeString("en-US", {
-            hour: "numeric",
-            minute: "2-digit",
-            hour12: false,
-          })}
-        </span>
-        <div
-          className="flex items-center gap-2"
-          aria-label={isTablet ? "Tablet status" : "Phone status"}
-        >
-          <Wifi size={14} aria-hidden="true" />
-          <BatteryFull size={18} aria-hidden="true" />
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div

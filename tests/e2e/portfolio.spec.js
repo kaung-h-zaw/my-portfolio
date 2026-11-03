@@ -175,18 +175,18 @@ test("View CV opens the original PDF in a new tab", async ({ page, context, requ
 });
 
 test("phone keeps an inset rounded window and Home through rotation", async ({ page }, testInfo) => {
-  test.skip(!isPhone(testInfo), "Phone-specific status bar");
+  test.skip(!isPhone(testInfo), "Phone window layout");
   await visit(page);
   for (const viewport of [{ width: 320, height: 700 }, { width: 844, height: 390 }, { width: 390, height: 844 }]) {
     await page.setViewportSize(viewport);
-    await expect(page.getByLabel("Phone status", { exact: true })).toBeVisible();
+    await expect(page.getByLabel("Phone status", { exact: true })).toHaveCount(0);
     await expect(page.getByRole("button", { name: "Open portfolio menu", exact: true })).toHaveCount(0);
     await expect(page.getByRole("button", { name: "Go to home screen", exact: true })).toBeVisible();
     expect((await page.locator(".os-titlebar").boundingBox()).height).toBe(48);
     const appWindow = page.getByRole("region", { name: / window$/ });
     await expect(appWindow).toHaveCount(1);
     const box = await appWindow.boundingBox();
-    expect(box).toMatchObject({ x: 8, y: 40, width: viewport.width - 16, height: viewport.height - 56 });
+    expect(box).toMatchObject({ x: 8, y: 8, width: viewport.width - 16, height: viewport.height - 8 });
     expect(await appWindow.evaluate((element) => getComputedStyle(element).borderTopLeftRadius)).toBe("24px");
     expect(await page.locator(".os-content").evaluate((element) => element.scrollWidth <= element.clientWidth + 1)).toBe(true);
   }
@@ -396,7 +396,7 @@ test("phone and tablet have compact home screens with matching profile icons", a
     await page.setViewportSize(viewport);
     await page.getByRole("button", { name: /^(Show desktop|Go to home screen)$/ }).click();
     await expect(page.getByRole("region", { name: / window$/ })).toHaveCount(0);
-    await expect(page.getByLabel(phone ? "Phone status" : "Tablet status", { exact: true })).toBeVisible();
+    await expect(page.getByLabel(phone ? "Phone status" : "Tablet status", { exact: true })).toHaveCount(0);
     await expect(page.getByRole("button", { name: "Open portfolio menu", exact: true })).toHaveCount(0);
     const icons = page.getByRole("navigation", { name: "Home apps", exact: true });
     await expect(icons.getByRole("button")).toHaveCount(8);
@@ -477,6 +477,10 @@ test("iPhone safe areas and changing browser height keep controls clear", async 
   await expect(page.getByRole("heading", { name: "Get In Touch", exact: true })).toBeVisible();
   for (const height of [844, 744, 700]) {
     await page.setViewportSize({ width: 390, height });
+    const appWindow = page.getByRole("region", { name: / window$/ });
+    const box = await appWindow.boundingBox();
+    expect(box.y).toBe(55);
+    expect(box.y + box.height).toBe(height);
     const scroller = page.locator(".os-content");
     await expect.poll(async () => {
       await scroller.evaluate((element) => { element.scrollTop = element.scrollHeight; });

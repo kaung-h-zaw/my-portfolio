@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Window from "../Window";
-import TopBar from "../TopBar";
 import StatusBar from "../StatusBar";
 import WeatherWidget from "../widgets/WeatherWidget";
 import MusicWidget from "../widgets/MusicWidget";
@@ -20,8 +19,7 @@ export default function TabletLayout({ apps, appOrder, openWindows, activeWindow
 
   return <div className="native-tablet fixed inset-0 overflow-hidden bg-[#161616]">
     <BackgroundLayers />
-    <TopBar isTablet appActive={Boolean(activeApp)} />
-    {!activeApp && <main className="native-tablet-home absolute inset-x-0 overflow-y-auto overscroll-contain px-7" style={{ top: "calc(var(--os-safe-top) + 48px)", bottom: "calc(var(--os-safe-bottom) + 100px)" }}>
+    {!activeApp && <main className="native-tablet-home absolute inset-x-0 overflow-y-auto overscroll-contain px-7" style={{ top: "calc(var(--os-safe-top) + 16px)", bottom: "calc(var(--os-safe-bottom) + 100px)" }}>
       <div className="native-tablet-home-content mx-auto flex min-h-full w-full max-w-[960px] flex-col py-4">
         <header className="mb-6 flex items-end justify-between gap-4 text-white"><div><p className="font-sans text-xs text-white/65">Make yourself at home</p><h1 className="mt-1 font-sans text-[28px] font-semibold tracking-tight">Kaung OS</h1></div><p className="pb-1 font-sans text-xs text-white/75">{new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}</p></header>
         <section aria-label="Home widgets" className="native-tablet-widgets mb-8 grid grid-cols-[1.5fr_1fr_1fr] gap-3"><ProfileWidget onOpenAbout={() => openWindow("about")} /><WeatherWidget variant="compact" /><MusicWidget variant="compact" /></section>

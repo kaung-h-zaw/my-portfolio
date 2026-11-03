@@ -69,11 +69,12 @@ a {
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.32), 0 2px 8px rgba(0, 0, 0, 0.18);
 }
 .os-phone-window {
-  top: calc(var(--os-safe-top) + 40px);
+  top: calc(var(--os-safe-top) + 8px);
   right: calc(var(--os-safe-right) + 8px);
-  bottom: calc(var(--os-safe-bottom) + 16px);
+  bottom: 0;
   left: calc(var(--os-safe-left) + 8px);
-  border-radius: 24px;
+  border-radius: 24px 24px 0 0;
+  border-bottom: 0;
 }
 
 .os-content {

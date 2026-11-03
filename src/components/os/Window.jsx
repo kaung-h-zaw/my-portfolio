@@ -359,7 +359,7 @@ export default function Window({
       positionClass =
         "os-phone-window fixed z-50 !transform-none bg-[#181818]";
     } else if (isTablet) {
-      positionClass = "fixed top-[calc(var(--os-safe-top)+40px)] left-3 right-3 bottom-[calc(var(--os-safe-bottom)+100px)] z-50 rounded-[24px] !transform-none border border-white/20 bg-[#181818] ";
+      positionClass = "fixed top-[calc(var(--os-safe-top)+8px)] left-3 right-3 bottom-[calc(var(--os-safe-bottom)+100px)] z-50 rounded-[24px] !transform-none border border-white/20 bg-[#181818] ";
     } else {
       positionClass =
         "fixed inset-0 z-50 !transform-none bg-[#181818] ";
@@ -505,7 +505,7 @@ export default function Window({
             )}
           </div>
 
-          <div style={isCompactHeader ? { paddingBottom: 32, scrollPaddingBottom: 32 } : undefined} className="os-content relative z-0 min-h-0 flex-1 overflow-auto border-t border-white/10 bg-[#181818] p-1 sm:p-3">
+          <div style={isCompactHeader ? { paddingBottom: isMobile ? "calc(var(--os-safe-bottom) + 32px)" : 32, scrollPaddingBottom: isMobile ? "calc(var(--os-safe-bottom) + 32px)" : 32 } : undefined} className="os-content relative z-0 min-h-0 flex-1 overflow-auto border-t border-white/10 bg-[#181818] p-1 sm:p-3">
             <div key={currentAppId || title} className={isCompactHeader ? "min-h-full" : "h-full"}>
               <Suspense
                 fallback={
