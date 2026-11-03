@@ -129,11 +129,11 @@ a {
   .app-detail-sidebar-links { display: block; }
   .app-detail-sidebar { position: sticky; top: 0; }
 }
-.app-project-card { container: project-card / inline-size; }
-@container project-card (min-width: 480px) {
-  .app-project-summary { grid-template-columns: minmax(0, 1fr) 140px; }
-  .app-project-summary .app-project-image { order: 1; }
-}
+.app-page.app-projects-page { max-width: 1680px; }
+.app-project-detail { max-width: 1440px; }
+/* A maximized desktop app occupies the whole viewport, including the OS chrome. */
+.desktop-layout:has([data-desktop-maximized="true"]) .desktop-chrome { display: none; }
+.desktop-layout:has([data-desktop-maximized="true"]) .desktop-windows { z-index: 10000; }
 /* Laptop browser chrome leaves less height: reduce decoration, keep readable text
    and 44px controls, and leave scrolling inside the app above the OS dock. */
 @media (min-width: 1025px) and (max-height: 800px) {

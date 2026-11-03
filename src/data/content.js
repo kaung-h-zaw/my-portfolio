@@ -41,7 +41,7 @@ export const PROJECTS_DATA = [
       { title: "Discover the next track", detail: "Explore suggestions seeded by the current song, favorites, and server listening history, then add a pick directly to the queue." },
     ],
     image: "/tubeparty-preview.jpg",
-    imageCaption: "TubeParty · music discovery in the guest dashboard",
+    imageCaption: "TubeParty · international music search with video artwork",
     decisions: [
       { title: "Discord-aware access", detail: "NextAuth handles Discord login, and the dashboard lists servers where the user has Manage Server or Administrator permissions." },
       { title: "Separate playback and interface", detail: "A Next.js dashboard connects to an Express backend. Discord.js and Lavalink handle voice playback, while WebSockets deliver live updates." },

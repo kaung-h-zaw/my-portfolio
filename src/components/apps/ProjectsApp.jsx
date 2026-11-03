@@ -28,9 +28,9 @@ export default function ProjectsApp() {
   };
 
   return (
-    <div ref={rootRef} className="app-page">
+    <div ref={rootRef} className="app-page app-projects-page">
       {selected ? (
-        <article className="w-full max-w-5xl mx-auto">
+        <article className="app-project-detail w-full mx-auto">
           <button type="button" onClick={() => setSelectedId(null)}
             className="inline-flex min-h-11 items-center gap-2 rounded border border-white/10 px-3 py-2 text-xs font-bold hover:bg-white/5 mb-5">
             <ArrowLeft size={15} aria-hidden="true" /> Back to projects
@@ -138,7 +138,7 @@ export default function ProjectsApp() {
                   <span className="text-xs text-zinc-300">{project.date}</span>
                 </div>
                 <h2 id={`project-${project.id}`} className="text-xl font-bold leading-snug mb-3">{project.title}</h2>
-                <div className={`grid gap-4 mb-4 ${project.image ? "app-project-summary" : ""}`}>
+                <div className="grid gap-4 mb-4">
                   <p className="app-body">{project.desc}</p>
                   {project.image && <img src={project.image} alt={`${project.title} application screenshot`} loading="lazy" width="1440" height="900"
                     className="order-first app-project-image w-full aspect-[16/10] object-cover object-top rounded-lg border border-white/10 bg-white/5" />}

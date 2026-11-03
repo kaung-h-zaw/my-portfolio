@@ -362,7 +362,7 @@ export default function Window({
       positionClass = "fixed top-[calc(var(--os-safe-top)+40px)] left-3 right-3 bottom-[calc(var(--os-safe-bottom)+100px)] z-50 rounded-[24px] !transform-none border border-white/20 bg-[#181818] ";
     } else {
       positionClass =
-        "fixed top-11 left-3 right-3 xl:left-1 xl:right-1 bottom-[80px] z-50 rounded-2xl !transform-none border border-white/10 bg-[#181818] ";
+        "fixed inset-0 z-50 !transform-none bg-[#181818] ";
     }
   } else {
     positionClass =
@@ -385,6 +385,7 @@ export default function Window({
         ref={nodeRef}
         role="region"
         aria-label={`${title.replace(/_/g, " ")} window`}
+        data-desktop-maximized={!isCompactHeader && isMaximized ? "true" : undefined}
         tabIndex={-1}
         style={{
           zIndex,
@@ -519,7 +520,7 @@ export default function Window({
           </div>
           {!isCompactHeader && <footer className="flex h-6 shrink-0 items-center justify-between gap-2 border-t border-white/10 bg-white/5 px-3 text-[10px] text-zinc-300">
             <span className="whitespace-nowrap font-medium">KAUNG OS · v2.0</span>
-            <span className="truncate">{isMobile ? "Home shows all apps" : "Use the dock below to switch apps"}</span>
+            <span className="truncate">{isMobile ? "Home shows all apps" : "Choose a section above to switch apps"}</span>
           </footer>}
         </div>
       </div>

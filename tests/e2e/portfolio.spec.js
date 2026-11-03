@@ -106,6 +106,11 @@ test("case studies stay in one app and Back restores keyboard focus", async ({ p
 
   await expect(page.getByRole("button", { name: "View JourneyHub case study", exact: true })).toHaveCount(0);
   await expect(page.getByText("4 projects", { exact: true })).toBeVisible();
+  const tubePartyCard = page.getByRole("article").filter({ has: page.getByRole("heading", { name: "TubeParty", exact: true }) });
+  const preview = tubePartyCard.getByRole("img");
+  const previewBox = await preview.boundingBox();
+  const summaryBox = await preview.locator("..").boundingBox();
+  expect(Math.abs(previewBox.width - summaryBox.width)).toBeLessThan(2);
   const tubeParty = page.getByRole("button", { name: "View TubeParty case study", exact: true });
   await tubeParty.focus();
   await page.keyboard.press("Enter");
@@ -338,9 +343,14 @@ test("wide monitors open a centered window with working maximize and restore", a
   }
   await page.getByRole("button", { name: "Maximize window", exact: true }).click();
   await expect(page.getByRole("button", { name: "Restore window", exact: true })).toBeVisible();
-  expect((await appWindow.boundingBox()).width).toBeGreaterThan(1550);
+  const maximizedBox = await appWindow.boundingBox();
+  expect(maximizedBox).toMatchObject({ x: 0, y: 0, width: 1600, height: 900 });
+  await expect(page.getByRole("navigation", { name: "App dock", exact: true })).toBeHidden();
+  await expect(page.locator(".desktop-chrome > div").first()).toBeHidden();
   await page.getByRole("button", { name: "Restore window", exact: true }).click();
   await expect.poll(async () => Math.round((await appWindow.boundingBox()).width)).toBe(1400);
+  await expect(page.getByRole("navigation", { name: "App dock", exact: true })).toBeVisible();
+  await expect(page.locator(".desktop-chrome > div").first()).toBeVisible();
   await openApp(page, "Projects");
   await expect.poll(async () => Math.round((await appWindow.boundingBox()).width)).toBe(1400);
   expect(await page.locator(".os-content").evaluate((e) => e.scrollWidth <= e.clientWidth + 1)).toBe(true);

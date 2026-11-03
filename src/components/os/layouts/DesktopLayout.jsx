@@ -36,7 +36,7 @@ export default function DesktopLayout({
   minimizeWindow,
 }) {
   return (
-    <div className="absolute inset-0 w-full h-full overflow-hidden">
+    <div className="desktop-layout absolute inset-0 w-full h-full overflow-hidden">
       {/* 1. BACKGROUND */}
       <div
         className="absolute z-0 pointer-events-none"
@@ -51,7 +51,9 @@ export default function DesktopLayout({
       </div>
 
       {/* 2. TOP BAR */}
-      <TopBar onOpenApp={openWindow} />
+      <div className="desktop-chrome">
+        <TopBar onOpenApp={openWindow} />
+      </div>
 
       {/* 3. LEFT ICONS AREA — fixed from top bar to above dock */}
       <div className="absolute z-10 top-14 lg:top-16 xl:top-16 left-8 grid grid-flow-col grid-rows-4 content-start gap-4 lg:gap-6 pointer-events-none px-4 pb-4 transition-transform duration-300">
@@ -83,7 +85,7 @@ export default function DesktopLayout({
       </div>
 
       {/* 6. WINDOWS LAYER */}
-      <div className="absolute inset-0 z-20 pointer-events-none pb-20">
+      <div className="desktop-windows absolute inset-0 z-20 pointer-events-none pb-20">
         <AnimatePresence>
           {openWindows.map((win) => {
             if (win.minimized) return null;
@@ -115,15 +117,17 @@ export default function DesktopLayout({
       </div>
 
       {/* 7. BOTTOM DOCK */}
-      <StatusBar
-        apps={apps}
-        appOrder={appOrder}
-        openWindows={openWindows}
-        activeWindowId={activeWindowId}
-        onOpenApp={openWindow}
-        onFocusWindow={focusWindow}
-        onMinimizeWindow={minimizeWindow}
-      />
+      <div className="desktop-chrome">
+        <StatusBar
+          apps={apps}
+          appOrder={appOrder}
+          openWindows={openWindows}
+          activeWindowId={activeWindowId}
+          onOpenApp={openWindow}
+          onFocusWindow={focusWindow}
+          onMinimizeWindow={minimizeWindow}
+        />
+      </div>
     </div>
   );
 }
