@@ -105,11 +105,15 @@ test("case studies stay in one app and Back restores keyboard focus", async ({ p
   await expect(page.getByRole("button", { name: "View Guinea Group Capstone case study", exact: true })).toBeFocused();
 
   await expect(page.getByRole("button", { name: "View JourneyHub case study", exact: true })).toHaveCount(0);
-  await expect(page.getByText("5 projects", { exact: true })).toBeVisible();
+  await expect(page.getByText("4 projects", { exact: true })).toBeVisible();
   const tubeParty = page.getByRole("button", { name: "View TubeParty case study", exact: true });
   await tubeParty.focus();
   await page.keyboard.press("Enter");
   await expect(page.getByRole("heading", { name: "TubeParty", exact: true })).toBeFocused();
+  await expect(page.getByRole("heading", { name: "How it works", exact: true })).toBeVisible();
+  const tubepartyImage = page.getByRole("img", { name: "TubeParty application screenshot", exact: true });
+  await expect(tubepartyImage).toBeVisible();
+  await expect.poll(() => tubepartyImage.evaluate((element) => element.complete && element.naturalWidth > 0)).toBe(true);
   await expect(page.getByRole("heading", { name: "Technical decisions", exact: true })).toBeVisible();
   await expect(page.getByRole("link", { name: /TubeParty GitHub repository/ })).toHaveAttribute("href", "https://github.com/kaung-h-zaw/tube-party-bot");
   await expect(page.getByRole("region", { name: / window$/ })).toHaveCount(1);
@@ -119,6 +123,10 @@ test("case studies stay in one app and Back restores keyboard focus", async ({ p
 
   await page.getByRole("button", { name: "View Linkfolio case study", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Linkfolio", exact: true })).toBeFocused();
+  await expect(page.getByRole("heading", { name: "How it works", exact: true })).toBeVisible();
+  const linkfolioImage = page.getByRole("img", { name: "Linkfolio application screenshot", exact: true });
+  await expect(linkfolioImage).toBeVisible();
+  await expect.poll(() => linkfolioImage.evaluate((element) => element.complete && element.naturalWidth > 0)).toBe(true);
   await expect(page.getByText("Portfolio generation from saved resumes", { exact: true })).toBeVisible();
   await expect(page.getByRole("link", { name: /Linkfolio (live demo|GitHub repository)/ })).toHaveCount(0);
   await page.getByRole("button", { name: "Back to projects", exact: true }).click();
@@ -130,7 +138,7 @@ test("case studies stay in one app and Back restores keyboard focus", async ({ p
   await expect.poll(() => image.evaluate((element) => element.complete && element.naturalWidth > 0)).toBe(true);
   await page.getByRole("button", { name: "Back to projects", exact: true }).click();
   await expect(page.getByRole("link", { name: /SendBook GitHub repository/ })).toHaveAttribute("href", "https://github.com/kaung-h-zaw/SendBook");
-  await expect(page.getByRole("link", { name: /KAUNG live demo/ })).toHaveAttribute("href", "https://imkaung.pages.dev/");
+  await expect(page.getByRole("button", { name: "View KAUNG case study", exact: true })).toHaveCount(0);
 });
 
 test("View CV opens the original PDF in a new tab", async ({ page, context, request }) => {

@@ -52,11 +52,24 @@ export default function ProjectsApp() {
                   {selected.features.map((feature) => <li key={feature}>{feature}</li>)}
                 </ul>
               </section>
+              {selected.workflow?.length > 0 && (
+                <section className="app-panel" aria-labelledby="project-workflow">
+                  <SectionTitle id="project-workflow">How it works</SectionTitle>
+                  <ol className="list-decimal pl-5 space-y-4 font-sans text-base leading-relaxed text-zinc-200">
+                    {selected.workflow.map((step) => (
+                      <li key={step.title}>
+                        <h3 className="font-bold">{step.title}</h3>
+                        <p>{step.detail}</p>
+                      </li>
+                    ))}
+                  </ol>
+                </section>
+              )}
               {selected.image && (
                 <figure className="app-panel">
                   <img src={selected.image} alt={`${selected.title} application screenshot`}
                     width="1440" height="900" className="w-full rounded-lg border border-white/10 bg-white/5" />
-                  <figcaption className="text-xs text-zinc-300 mt-2">{selected.title} · application preview</figcaption>
+                  <figcaption className="text-xs text-zinc-300 mt-2">{selected.imageCaption || `${selected.title} · application preview`}</figcaption>
                 </figure>
               )}
               {selected.contribution?.length > 0 && (

@@ -34,7 +34,14 @@ export const PROJECTS_DATA = [
     category: "Discord music bot & dashboard",
     desc: "A Discord music bot with a web dashboard for shared playback, queue management, favorites, and music discovery.",
     purpose: "Let Discord communities listen together and manage their server’s music through a browser dashboard connected to the bot.",
-    features: ["Discord login and server selection", "Shared playback and queue controls", "Saved favorites", "YouTube Music recommendations", "Live dashboard updates"],
+    features: ["Discord login and manageable server selection", "Play, pause, skip, and reorder the shared queue", "Favorites and artist discovery", "Recommendations based on listening history", "Live playback and dashboard updates", "Responsive desktop and mobile controls"],
+    workflow: [
+      { title: "Open a server", detail: "Sign in with Discord and choose a server you manage to open its music dashboard." },
+      { title: "Build a shared queue", detail: "Search for music, add tracks, and manage playback together. Save favorites to return to songs later." },
+      { title: "Discover the next track", detail: "Explore suggestions seeded by the current song, favorites, and server listening history, then add a pick directly to the queue." },
+    ],
+    image: "/tubeparty-preview.jpg",
+    imageCaption: "TubeParty · music discovery in the guest dashboard",
     decisions: [
       { title: "Discord-aware access", detail: "NextAuth handles Discord login, and the dashboard lists servers where the user has Manage Server or Administrator permissions." },
       { title: "Separate playback and interface", detail: "A Next.js dashboard connects to an Express backend. Discord.js and Lavalink handle voice playback, while WebSockets deliver live updates." },
@@ -49,7 +56,14 @@ export const PROJECTS_DATA = [
     category: "Resume & portfolio builder",
     desc: "A resume and portfolio builder with editable templates, resume import, public portfolio pages, messaging, and analytics.",
     purpose: "Help people turn their professional experience into a resume and a shareable portfolio, using the same saved content for both.",
-    features: ["Template-based resume editor", "PDF, Word, and text resume import", "Portfolio generation from saved resumes", "Custom public URLs and privacy controls", "Visitor messages and portfolio analytics"],
+    features: ["Template-based resume editor with live preview", "PDF, Word, and text resume import", "Portfolio generation from saved resumes", "Custom public URLs and privacy controls", "Visitor messages and portfolio analytics", "Account limits, premium templates, and administration"],
+    workflow: [
+      { title: "Create or import a resume", detail: "Choose a template and enter professional details, or import an existing PDF, Word, or text resume and review the extracted content." },
+      { title: "Edit and reuse your content", detail: "Adjust sections and design in the editor, then generate a portfolio from the saved resume without re-entering your professional history." },
+      { title: "Publish and follow up", detail: "Choose a custom URL, make the portfolio public, and use the workspace to review visitor messages and analytics." },
+    ],
+    image: "/linkfolio-preview.jpg",
+    imageCaption: "Linkfolio · landing page and example resume preview",
     decisions: [
       { title: "Shared professional content", detail: "Resume and portfolio views use the same saved document, so users can reuse their experience and education across both formats." },
       { title: "Relational storage across environments", detail: "The Express API stores accounts and professional content in SQLite locally, with PostgreSQL support for Supabase deployments." },
@@ -75,24 +89,7 @@ export const PROJECTS_DATA = [
     code: "https://github.com/kaung-h-zaw/SendBook",
     date: "Oct 2024",
   },
-  {
-    id: "imkaung",
-    title: "KAUNG",
-    category: "Developer portfolio",
-    desc: "A React and Tailwind portfolio presented as an OS desktop, with app windows and responsive phone navigation.",
-    purpose: "Make projects, experience, skills, and contact details accessible through a desktop-inspired interface across desktop, tablet, and phone screens.",
-    features: ["Desktop app windows and dock", "Responsive phone home screen", "CV download and contact form", "Weather and music widgets", "Keyboard navigation and reduced-motion support"],
-    decisions: [
-      { title: "One active window", detail: "A shared window frame switches between apps without stacking outgoing and incoming windows." },
-      { title: "Responsive navigation", detail: "Larger screens use a desktop and dock. Phones use a compact status bar and a labeled Home action, including in landscape." },
-      { title: "Recruiter shortcuts", detail: "About opens automatically, with direct actions for projects, CV, GitHub, and LinkedIn. A visible Desktop action reveals the OS beneath a maximized window." },
-    ],
-    image: "/imkaung-preview.jpg",
-    tags: ["React", "Tailwind CSS", "Vite", "Framer Motion", "Cloudflare Pages"],
-    link: "https://imkaung.pages.dev/",
-    code: "https://github.com/kaung-h-zaw/my-portfolio",
-    date: "Dec 2025",
-  },
+
 ];
 
 export const SKILLS_DATA = {
