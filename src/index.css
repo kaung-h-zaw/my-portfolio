@@ -63,6 +63,19 @@ a {
   }
 }
 
+/* Quiet edges separate app windows from the charcoal wallpaper. */
+.os-window-raised {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.32), 0 2px 8px rgba(0, 0, 0, 0.18);
+}
+.os-phone-window {
+  top: calc(var(--os-safe-top) + 40px);
+  right: calc(var(--os-safe-right) + 8px);
+  bottom: calc(var(--os-safe-bottom) + 16px);
+  left: calc(var(--os-safe-left) + 8px);
+  border-radius: 24px;
+}
+
 .os-content {
   container: app-window / inline-size;
   overscroll-behavior: contain;
@@ -188,8 +201,8 @@ a {
 }
 .native-phone-home { padding-left: var(--os-safe-left); padding-right: var(--os-safe-right); }
 .native-status { padding-left: max(20px, var(--os-safe-left)); padding-right: max(20px, var(--os-safe-right)); }
-.native-phone .os-titlebar { padding-left: max(12px, var(--os-safe-left)); padding-right: max(12px, var(--os-safe-right)); }
-.native-phone .os-content { padding-left: max(4px, var(--os-safe-left)); padding-right: max(4px, var(--os-safe-right)); }
+.native-phone .os-titlebar { padding-left: 12px; padding-right: 12px; }
+.native-phone .os-content { padding-left: 4px; padding-right: 4px; }
 .native-profile-greeting .greeting-text { line-height: 1.4; }
 @media (max-height: 780px) and (max-width: 639px) {
   .native-phone-home-content { padding-top: 8px; }
@@ -210,7 +223,11 @@ a {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)'/%3E%3C/svg%3E");
   background-size: 160px 160px;
 }
-.native-icon-tile { background: transparent; border-color: transparent; box-shadow: none; }
+.native-icon-tile {
+  background: #222222;
+  border-color: rgba(255, 255, 255, 0.07);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.16);
+}
 
 /* Distribute spare height across the home grid instead of leaving it all below. */
 .native-phone-home-content > header,

@@ -174,7 +174,7 @@ test("View CV opens the original PDF in a new tab", async ({ page, context, requ
   await expect(page.getByRole("button", { name: /^(Open|Focus|Minimize) CV window$/ })).toHaveCount(0);
 });
 
-test("phone keeps a compact status bar and Home through rotation", async ({ page }, testInfo) => {
+test("phone keeps an inset rounded window and Home through rotation", async ({ page }, testInfo) => {
   test.skip(!isPhone(testInfo), "Phone-specific status bar");
   await visit(page);
   for (const viewport of [{ width: 320, height: 700 }, { width: 844, height: 390 }, { width: 390, height: 844 }]) {
@@ -183,7 +183,12 @@ test("phone keeps a compact status bar and Home through rotation", async ({ page
     await expect(page.getByRole("button", { name: "Open portfolio menu", exact: true })).toHaveCount(0);
     await expect(page.getByRole("button", { name: "Go to home screen", exact: true })).toBeVisible();
     expect((await page.locator(".os-titlebar").boundingBox()).height).toBe(48);
-    await expect(page.getByRole("region", { name: / window$/ })).toHaveCount(1);
+    const appWindow = page.getByRole("region", { name: / window$/ });
+    await expect(appWindow).toHaveCount(1);
+    const box = await appWindow.boundingBox();
+    expect(box).toMatchObject({ x: 8, y: 40, width: viewport.width - 16, height: viewport.height - 56 });
+    expect(await appWindow.evaluate((element) => getComputedStyle(element).borderTopLeftRadius)).toBe("24px");
+    expect(await page.locator(".os-content").evaluate((element) => element.scrollWidth <= element.clientWidth + 1)).toBe(true);
   }
 });
 
@@ -413,8 +418,8 @@ test("phone and tablet have compact home screens with matching profile icons", a
     await expect(page.getByRole("button", { name: "Restore window", exact: true })).toHaveCount(0);
     if (phone) {
       const box = await appWindow.boundingBox();
-      expect(box.x).toBe(0);
-      expect(Math.round(box.width)).toBe(viewport.width);
+      expect(box.x).toBe(8);
+      expect(Math.round(box.width)).toBe(viewport.width - 16);
     }
     expect(await page.locator(".os-content").evaluate((e) => e.scrollWidth <= e.clientWidth + 1)).toBe(true);
   }

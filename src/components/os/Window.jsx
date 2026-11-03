@@ -357,7 +357,7 @@ export default function Window({
   if (isMaximized) {
     if (isMobile) {
       positionClass =
-        "fixed top-[calc(var(--os-safe-top)+32px)] left-0 right-0 bottom-[calc(var(--os-safe-bottom)+20px)] z-50 !transform-none bg-[#181818]";
+        "os-phone-window fixed z-50 !transform-none bg-[#181818]";
     } else if (isTablet) {
       positionClass = "fixed top-[calc(var(--os-safe-top)+40px)] left-3 right-3 bottom-[calc(var(--os-safe-bottom)+100px)] z-50 rounded-[24px] !transform-none border border-white/20 bg-[#181818] ";
     } else {
@@ -393,7 +393,7 @@ export default function Window({
             ? {}
             : { width: restoredWidth, height: restoredHeight }),
         }}
-        className={`outline-none bg-[#181818] flex flex-col overflow-hidden ${positionClass} pointer-events-auto`}
+        className={`os-window ${!isMaximized || isCompactHeader ? "os-window-raised" : ""} outline-none bg-[#181818] flex flex-col overflow-hidden ${positionClass} pointer-events-auto`}
         onMouseDown={onFocus}
       >
         <div className={`flex flex-col h-full ${isMobile ? "" : "rounded-2xl"}`}>
@@ -408,7 +408,7 @@ export default function Window({
                 <button type="button" onClick={onMinimize}
                   aria-label={isMobile ? "Go to home screen" : "Show desktop"} title="Return to all apps"
                   className="flex h-10 shrink-0 items-center gap-1 rounded-xl px-1 font-sans text-sm font-semibold text-zinc-100 hover:bg-white/5">
-                  {isMobile ? <ChevronLeft size={18} aria-hidden="true" /> : <House size={18} aria-hidden="true" />} Home
+                  <House size={18} aria-hidden="true" /> Home
                 </button>
                 {currentApp && (
                   <div ref={pickerRef} className="min-w-0 flex-1">
