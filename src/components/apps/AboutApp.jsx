@@ -26,7 +26,7 @@ export default function AboutApp({ onOpenApp }) {
 
   return (
     <div className="app-page app-about-page">
-      <AppHeader icon={ProfileIcon} file="profile.exe" title="Kaung Htet Zaw" badge="Open to junior roles" />
+      <AppHeader icon={ProfileIcon} file="profile.exe" title="Kaung Htet Zaw" badge="Open to opportunities" />
       <div className="app-split app-about-grid">
         <div className="flex flex-col gap-3">
         <section className="app-panel">
@@ -38,11 +38,11 @@ export default function AboutApp({ onOpenApp }) {
             </picture>
             <div>
               <p className="app-eyebrow mb-2 normal-case">Hello, I’m Kaung Htet Zaw, alias Kaung.</p>
-              <h2 className="text-base sm:text-2xl font-bold leading-tight">Junior Full-Stack Developer</h2>
+              <h2 className="text-base sm:text-2xl font-bold leading-tight">Full Stack Developer</h2>
             </div>
           </div>
           <p className="app-body mb-5">
-            Junior Full-Stack Developer with hands-on experience building responsive web apps in React,
+            Full Stack Developer with hands-on experience building responsive web apps in React,
             JavaScript, and Tailwind, with additional work in Express, databases, and full-stack project
             delivery through both capstone and personal projects.
           </p>
@@ -66,7 +66,7 @@ export default function AboutApp({ onOpenApp }) {
         <section className="app-panel">
           <PanelTitle icon={Briefcase}>Recent experience</PanelTitle>
           <div className="flex flex-wrap justify-between gap-2 mb-2">
-            <h3 className="text-base font-bold">Full-Stack Developer</h3><span className="app-badge">2024</span>
+            <h3 className="text-base font-bold">Full Stack Developer</h3><span className="app-badge">2024</span>
           </div>
           <p className="text-xs uppercase tracking-wide text-zinc-300 mb-3">QUT Capstone Project · Guinea Group</p>
           <p className="app-body">Worked in a four-person capstone team to build a video and survey platform for research, contributing across React and Tailwind frontend work, plus Express and MySQL features for data handling and reporting.</p>

@@ -40,7 +40,7 @@ export default function IntroductionWidget({ onOpenAbout }) {
 
         <div className="w-full flex justify-between items-center">
           <div className="inline-block bg-zinc-400/15 text-zinc-200 px-2 py-1 font-mono font-medium tracking-wider text-[8px] md:text-[9px] lg:text-[8px] xl:text-[9px] uppercase group-hover:bg-zinc-400/25 transition-all rounded-md">
-            Junior Full-Stack Developer
+            Full Stack Developer
           </div>
 
           <span className="text-[9px] font-medium uppercase opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 text-zinc-400 shrink-0">

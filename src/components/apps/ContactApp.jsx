@@ -85,8 +85,8 @@ export default function ContactApp() {
     <>
       <LinkConfirmationModal linkData={activeLinkData} onClose={() => setActiveLinkData(null)} />
       <div className="app-page">
-        <AppHeader icon={ContactIcon} file="contact.msg" title="Get In Touch" badge="Open to junior roles" />
-        <p className="app-body max-w-2xl">For junior frontend or full-stack opportunities, or a conversation about my projects, send a message below.</p>
+        <AppHeader icon={ContactIcon} file="contact.msg" title="Get In Touch" badge="Open to opportunities" />
+        <p className="app-body max-w-2xl">For frontend or full-stack opportunities, or a conversation about my projects, send a message below.</p>
         <div className="app-split">
           <section className="app-panel">
             <PanelTitle icon={Send}>Send a message</PanelTitle>

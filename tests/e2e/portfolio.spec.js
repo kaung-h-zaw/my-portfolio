@@ -290,7 +290,7 @@ test("experience only lists the QUT capstone role", async ({ page }) => {
   await openApp(page, "Experience");
   await expect(page.getByText("1 role", { exact: true })).toBeVisible();
   await expect(page.locator(".app-page")).not.toContainText(/freelance|present/i);
-  await expect(page.getByRole("heading", { name: "Full-Stack Developer", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Full Stack Developer", exact: true })).toBeVisible();
 });
 
 test("external link dialog matches the OS and traps keyboard focus", async ({ page, context }) => {

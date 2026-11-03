@@ -7,7 +7,7 @@ export default function ExperienceApp() {
   const experiences = [
     {
       id: "EXP_001",
-      role: "Full-Stack Developer",
+      role: "Full Stack Developer",
       company: "The Guinea Group & QUT",
       location: "Brisbane, AU",
       period: "Feb 2024 - Nov 2024",

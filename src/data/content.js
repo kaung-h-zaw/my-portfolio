@@ -17,7 +17,7 @@ export const PROJECTS_DATA = [
     purpose: "Support research participants through video and survey tasks, while giving researchers tools for participant data, survey management, reporting, and exports.",
     context: "The Guinea Group & Queensland University of Technology",
     team: "Four-person capstone team",
-    role: "Full-Stack Developer",
+    role: "Full Stack Developer",
     contribution: [
       "Built and refined authentication, survey selection, embedded video playback, and response interfaces with JavaScript, React, and Tailwind.",
       "Contributed to Express and MySQL features for participant data, survey management, reporting, and exports.",
