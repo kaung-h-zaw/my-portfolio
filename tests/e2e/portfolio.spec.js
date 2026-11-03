@@ -104,19 +104,31 @@ test("case studies stay in one app and Back restores keyboard focus", async ({ p
   await page.getByRole("button", { name: "Back to projects", exact: true }).click();
   await expect(page.getByRole("button", { name: "View Guinea Group Capstone case study", exact: true })).toBeFocused();
 
-  const journey = page.getByRole("button", { name: "View JourneyHub case study", exact: true });
-  await journey.focus();
+  await expect(page.getByRole("button", { name: "View JourneyHub case study", exact: true })).toHaveCount(0);
+  await expect(page.getByText("5 projects", { exact: true })).toBeVisible();
+  const tubeParty = page.getByRole("button", { name: "View TubeParty case study", exact: true });
+  await tubeParty.focus();
   await page.keyboard.press("Enter");
-  await expect(page.getByRole("heading", { name: "JourneyHub", exact: true })).toBeFocused();
+  await expect(page.getByRole("heading", { name: "TubeParty", exact: true })).toBeFocused();
   await expect(page.getByRole("heading", { name: "Technical decisions", exact: true })).toBeVisible();
-  const image = page.getByRole("img", { name: "JourneyHub application screenshot", exact: true });
-  await expect(image).toBeVisible();
-  await expect.poll(() => image.evaluate((element) => element.complete && element.naturalWidth > 0)).toBe(true);
-  await expect(page.getByRole("link", { name: /JourneyHub live demo/ })).toHaveAttribute("href", "https://journeyhub-planner.vercel.app/");
+  await expect(page.getByRole("link", { name: /TubeParty GitHub repository/ })).toHaveAttribute("href", "https://github.com/kaung-h-zaw/tube-party-bot");
   await expect(page.getByRole("region", { name: / window$/ })).toHaveCount(1);
   expect(await page.locator(".os-content").evaluate((element) => element.scrollWidth <= element.clientWidth + 1)).toBe(true);
   await page.getByRole("button", { name: "Back to projects", exact: true }).click();
-  await expect(journey).toBeFocused();
+  await expect(tubeParty).toBeFocused();
+
+  await page.getByRole("button", { name: "View Linkfolio case study", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "Linkfolio", exact: true })).toBeFocused();
+  await expect(page.getByText("Portfolio generation from saved resumes", { exact: true })).toBeVisible();
+  await expect(page.getByRole("link", { name: /Linkfolio (live demo|GitHub repository)/ })).toHaveCount(0);
+  await page.getByRole("button", { name: "Back to projects", exact: true }).click();
+  await expect(page.getByRole("button", { name: "View Linkfolio case study", exact: true })).toBeFocused();
+
+  await page.getByRole("button", { name: "View SendBook case study", exact: true }).click();
+  const image = page.getByRole("img", { name: "SendBook application screenshot", exact: true });
+  await expect(image).toBeVisible();
+  await expect.poll(() => image.evaluate((element) => element.complete && element.naturalWidth > 0)).toBe(true);
+  await page.getByRole("button", { name: "Back to projects", exact: true }).click();
   await expect(page.getByRole("link", { name: /SendBook GitHub repository/ })).toHaveAttribute("href", "https://github.com/kaung-h-zaw/SendBook");
   await expect(page.getByRole("link", { name: /KAUNG live demo/ })).toHaveAttribute("href", "https://imkaung.pages.dev/");
 });
