@@ -130,10 +130,39 @@ a {
 }
 .app-skill-list, .app-form-grid, .app-social-grid { grid-template-columns: minmax(0, 1fr); }
 .app-detail-sidebar-links { display: none; }
+.education-section-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.education-section-title { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 650; letter-spacing: -0.015em; }
+.education-section-title svg { color: #a1a1aa; }
+.education-section-count { font-family: monospace; font-size: 10px; color: #a1a1aa; }
+.education-credential-gallery { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+.education-gallery-item { min-width: 0; display: grid; grid-template-columns: 36px minmax(0, 1fr); align-items: center; gap: 10px; padding: 13px; border: 1px solid #3a3a3a; border-radius: 4px; background: #202020; }
+.education-gallery-emblem { display: flex; justify-content: center; align-items: center; width: 36px; height: 36px; border: 1px solid #505058; border-radius: 50%; color: #d1d1d8; font-family: ui-monospace, monospace; font-size: 14px; }
+.education-gallery-copy { min-width: 0; }
+.education-gallery-title { font-size: 13px; font-weight: 600; line-height: 1.4; letter-spacing: -0.015em; }
+.education-gallery-meta { margin-top: 3px; font-size: 11px; line-height: 1.5; color: #a1a1aa; }
+.education-gallery-actions { grid-column: 2; display: flex; flex-direction: column; align-items: flex-start; }
+.education-gallery-credential { padding: 8px 12px; gap: 7px; border-radius: 8px; font-size: 12px; font-weight: 500; }
+.education-gallery-note { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; font-size: 11px; color: #a1a1aa; }
+.education-gallery-credential:focus-visible { outline: 2px solid #d4d4d8; outline-offset: 3px; }
+.education-language-strip { display: grid; gap: 16px; border-top: 1px solid rgb(255 255 255 / 0.1); padding: 18px 0 4px; }
+.education-language-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.education-language-list > div + div { padding-left: 20px; border-left: 1px solid rgb(255 255 255 / 0.1); }
+.education-language-list dt { color: #e4e4e7; font-size: 14px; font-weight: 600; }
+.education-language-list dd { margin-top: 4px; font-size: 12px; color: #a1a1aa; line-height: 1.5; }
 @container app-window (min-width: 600px) {
+  .education-credential-gallery { display: flex; flex-wrap: wrap; }
+  .education-gallery-item { display: flex; flex: 1 1 calc(50% - 6px); flex-direction: column; align-items: stretch; gap: 0; padding: 18px 12px 8px; text-align: center; }
+  .education-gallery-emblem { width: 44px; height: 44px; margin: 0 auto 14px; font-size: 17px; }
+  .education-gallery-copy { flex: 1; }
+  .education-gallery-title { font-size: 14px; }
+  .education-gallery-actions { flex-direction: row; justify-content: center; gap: 20px; border-top: 1px solid #343434; margin-top: 16px; padding-top: 4px; }
+  .education-language-strip { grid-template-columns: 160px minmax(0, 1fr); align-items: center; }
+  .education-language-list { display: flex; gap: 32px; }
+  .education-language-list > div + div { padding-left: 32px; }
   .app-skill-list, .app-form-grid, .app-social-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @container app-window (min-width: 900px) {
+  .education-gallery-item { flex-basis: calc(33.333% - 8px); }
   .app-split { grid-template-columns: minmax(0, 1.5fr) minmax(280px, 1fr); }
   .app-grid-two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .app-experience-grid { grid-template-columns: 220px minmax(0, 1fr); }

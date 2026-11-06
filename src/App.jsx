@@ -2,14 +2,24 @@ import { MotionConfig } from "framer-motion";
 import { useState } from "react";
 import WelcomeScreen from "./components/os/WelcomeScreen";
 import Desktop from "./components/os/OSContainer";
+import { readRoute } from "./lib/navigation";
 
 function App() {
   const [showWelcome, setShowWelcome] = useState(() => {
-    return !sessionStorage.getItem("hasVisitedThisSession");
+    if (readRoute().appId) return false;
+    try {
+      return !sessionStorage.getItem("hasVisitedThisSession");
+    } catch {
+      return true;
+    }
   });
 
   const handleWelcomeComplete = () => {
-    sessionStorage.setItem("hasVisitedThisSession", "true");
+    try {
+      sessionStorage.setItem("hasVisitedThisSession", "true");
+    } catch {
+      // Storage can be disabled; entering the portfolio should still work.
+    }
     setShowWelcome(false);
   };
 

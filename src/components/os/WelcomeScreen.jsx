@@ -29,7 +29,8 @@ export default function WelcomeScreen({ onComplete }) {
     let currentLog = 0;
     const logInterval = setInterval(() => {
       if (currentLog < BOOT_LOGS.length) {
-        setBootLogs((prev) => [...prev, BOOT_LOGS[currentLog]]);
+        const log = BOOT_LOGS[currentLog];
+        setBootLogs((prev) => [...prev, log]);
         currentLog++;
       } else {
         clearInterval(logInterval);

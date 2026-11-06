@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Wifi, BatteryFull, Volume2, Search, Menu, X } from "lucide-react";
+import { Wifi, BatteryFull, Volume2, Menu, X } from "lucide-react";
 
 export default function TopBar({ onOpenApp }) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -110,39 +110,20 @@ export default function TopBar({ onOpenApp }) {
         >
           {menuOpen ? <X size={18} /> : <Menu size={18} />}
         </button>
-        <div className="hidden sm:flex items-center gap-2 sm:gap-3 text-zinc-400">
-          <button
-            type="button"
-            aria-label="Search"
-            className="hover:text-zinc-400 transition-colors"
-          >
-            <Search size={14} strokeWidth={2} className="sm:w-4 sm:h-4" />
-          </button>
-          <button
-            type="button"
-            aria-label="Volume"
-            className="hover:text-zinc-400 transition-colors"
-          >
+        <div aria-hidden="true" className="hidden sm:flex items-center gap-2 sm:gap-3 text-zinc-400">
+          <span>
             <Volume2 size={14} strokeWidth={2} className="sm:w-4 sm:h-4" />
-          </button>
-          <button
-            type="button"
-            aria-label="Wi-Fi"
-            className="hover:text-zinc-400 transition-colors"
-          >
+          </span>
+          <span>
             <Wifi size={14} strokeWidth={2} className="sm:w-4 sm:h-4" />
-          </button>
-          <button
-            type="button"
-            aria-label="Battery"
-            className="hover:text-zinc-400 transition-colors"
-          >
+          </span>
+          <span>
             <BatteryFull
               size={16}
               strokeWidth={2}
               className="sm:w-[18px] sm:h-[18px]"
             />
-          </button>
+          </span>
         </div>
 
         <span className="font-medium text-[10px] sm:text-xs tracking-wider text-zinc-400">

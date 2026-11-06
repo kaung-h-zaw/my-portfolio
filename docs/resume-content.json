@@ -1,0 +1,104 @@
+{
+  "name": "Kaung Htet Zaw",
+  "title": "Full Stack Developer",
+  "location": "Bangkok, Thailand",
+  "phone": "+66 63 947 3379",
+  "email": "kaunghtetzaw.inbox@gmail.com",
+  "portfolio": "https://imkaung.pages.dev/",
+  "github": "https://github.com/kaung-h-zaw",
+  "linkedin": "https://www.linkedin.com/in/kaung-h-zaw/",
+  "summary": "Full Stack Developer building responsive web applications with React, Next.js, TypeScript, Node.js, and Express. Hands-on industry experience through QUT's industry capstone with The Guinea Group, alongside personal projects in music playback, resume editing, and file transfer.",
+  "skills": [
+    ["Frontend", "JavaScript, TypeScript, React, Next.js, HTML, CSS, Tailwind CSS"],
+    ["Backend", "Node.js, Express, REST APIs, WebSockets, Python"],
+    ["Databases", "MySQL, PostgreSQL, SQLite, MongoDB, Redis"],
+    ["Tools", "Git, GitHub, Docker, Figma, Agile/Scrum"]
+  ],
+  "experience": [
+    {
+      "title": "Full Stack Developer (Industry Capstone)",
+      "organization": "The Guinea Group / Queensland University of Technology",
+      "period": "Feb 2024 - Nov 2024",
+      "location": "Brisbane, Australia",
+      "bullets": [
+        "Completed an industry capstone in a four-person team for The Guinea Group, building a confidential research platform with React, JavaScript, and Tailwind CSS.",
+        "Built authentication, survey selection, embedded video playback, and response interfaces.",
+        "Contributed to Express and MySQL features for participant data, survey management, reporting, and exports.",
+        "Worked with Docker and Python services supporting multimodal research workflows; collaborated through Agile planning, weekly client meetings, and supervisor reviews."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "TubeParty",
+      "stack": "Next.js, TypeScript, Node.js, Express, WebSockets",
+      "link": "https://github.com/kaung-h-zaw/tube-party-bot",
+      "linkLabel": "GitHub",
+      "bullets": [
+        "Developed a Discord music bot and responsive dashboard with sign-in, shared queues, playback controls, saved favorites, and live WebSocket updates.",
+        "Added music discovery using the current song, favorites, and listening history, with cached recommendations and fallback searches."
+      ]
+    },
+    {
+      "name": "Linkfolio",
+      "stack": "React, Vite, Tailwind CSS, Express, SQLite, PostgreSQL",
+      "link": "https://imkaung.pages.dev/#/projects/linkfolio",
+      "linkLabel": "Case study",
+      "bullets": [
+        "Built a resume and portfolio builder with editable templates, document import, live previews, public portfolio pages, messaging, and analytics.",
+        "Used shared professional content across resumes and portfolios, with an Express API, SQLite storage, and PostgreSQL support."
+      ]
+    },
+    {
+      "name": "SendBook",
+      "stack": "Next.js, TypeScript, Redis, Vercel Blob",
+      "link": "https://send-book.vercel.app/",
+      "linkLabel": "Live demo",
+      "bullets": [
+        "Account-free ebook transfer app with QR pairing or a four-character code, short-lived sessions, and automatic file cleanup.",
+        "Validates session tokens, file extensions, and upload size before accepting files."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "program": "Information Technology studies (Computer Science)",
+      "institution": "Queensland University of Technology",
+      "period": "Jul 2023 - Dec 2024",
+      "detail": ""
+    },
+    {
+      "program": "Pearson BTEC Level 5 Higher National Diploma in Computing",
+      "institution": "GUSTO College",
+      "period": "Awarded Sep 2022",
+      "detail": "Distinction."
+    }
+  ],
+  "certifications": [
+    {
+      "name": "Full-Stack Engineer",
+      "issuer": "Codecademy",
+      "date": "Nov 2026",
+      "link": "https://www.codecademy.com/profiles/kaunghzaw/certificates/ffd0f42cce1a44e9a0108b365047a0a6"
+    },
+    {
+      "name": "Back-End Engineer",
+      "issuer": "Codecademy",
+      "date": "Nov 2026",
+      "link": "https://www.codecademy.com/profiles/kaunghzaw/certificates/810f53d14de24b938cc13c7c2af1e686"
+    },
+    {
+      "name": "Front-End Engineer",
+      "issuer": "Codecademy",
+      "date": "Sep 2026",
+      "link": "https://www.codecademy.com/profiles/kaunghzaw/certificates/2682884a0719474f96407efe432fdd87"
+    },
+    {
+      "name": "Meta Front-End Developer Professional Certificate",
+      "issuer": "Coursera",
+      "date": "Oct 2024",
+      "link": "https://coursera.org/verify/professional-cert/NQPRLMXDWBTB"
+    }
+  ],
+  "languages": "Burmese (native); English (B2)"
+}

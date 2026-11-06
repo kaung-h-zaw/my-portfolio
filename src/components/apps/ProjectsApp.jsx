@@ -1,16 +1,24 @@
 import PreviewImage from "../ui/PreviewImage";
 import { ProjectsIcon } from "../os/AppIcons";
-import React, { useLayoutEffect, useRef, useState } from "react";
-import { ArrowLeft, ArrowUpRight, ExternalLink, Github, FolderOpen } from "lucide-react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { ArrowLeft, ArrowUpRight, ExternalLink, Github, Copy, Check, LockKeyhole } from "lucide-react";
 import { AppHeader, AppFooter, PanelTitle, Tags } from "./AppLayout";
 import { PROJECTS_DATA } from "../../data/content";
+import { getProjectUrl, navigateTo, usePortfolioRoute } from "../../lib/navigation";
 
 export default function ProjectsApp() {
-  const [selectedId, setSelectedId] = useState(null);
+  const { projectId: selectedId } = usePortfolioRoute();
   const rootRef = useRef(null);
   const listScroll = useRef(0);
-  const lastProject = useRef(null);
+  const hasListScroll = useRef(false);
+  const lastProject = useRef(selectedId);
   const selected = PROJECTS_DATA.find((project) => project.id === selectedId);
+
+  useEffect(() => {
+    const original = document.title;
+    document.title = `${selected?.title || (selectedId ? "Project not found" : "Projects")} | KAUNG`;
+    return () => { document.title = original; };
+  }, [selected, selectedId]);
 
   useLayoutEffect(() => {
     const scroller = rootRef.current?.closest(".os-content");
@@ -18,31 +26,56 @@ export default function ProjectsApp() {
     if (selectedId) {
       rootRef.current?.querySelector("h1")?.focus({ preventScroll: true });
     } else if (lastProject.current) {
-      rootRef.current?.querySelector(`[data-project-id="${lastProject.current}"]`)?.focus({ preventScroll: true });
+      const card = [...(rootRef.current?.querySelectorAll("[data-project-id]") || [])]
+        .find((element) => element.dataset.projectId === lastProject.current);
+      card?.focus({ preventScroll: true });
+      if (!hasListScroll.current) card?.scrollIntoView({ block: "nearest" });
     }
   }, [selectedId]);
 
   const openDetails = (id) => {
     listScroll.current = rootRef.current?.closest(".os-content")?.scrollTop || 0;
+    hasListScroll.current = true;
     lastProject.current = id;
-    setSelectedId(id);
+    navigateTo("projects", id);
   };
 
   return (
     <div ref={rootRef} className="app-page app-projects-page">
-      {selected ? (
+      {selectedId && !selected ? (
+        <section className="app-panel">
+          <h1 tabIndex={-1} className="text-xl font-bold mb-3">Project not found</h1>
+          <p className="app-body mb-4">This project link is unavailable. Browse the archive to see my current work.</p>
+          <button type="button" onClick={() => navigateTo("projects")} className="app-action">Back to projects</button>
+        </section>
+      ) : selected ? (
         <article className="app-project-detail w-full mx-auto">
-          <button type="button" onClick={() => setSelectedId(null)}
+          <button type="button" onClick={() => navigateTo("projects")}
             className="inline-flex min-h-11 items-center gap-2 rounded border border-white/10 px-3 py-2 text-xs font-bold hover:bg-white/5 mb-5">
             <ArrowLeft size={15} aria-hidden="true" /> Back to projects
           </button>
           <div className="app-panel mb-5">
             <AppHeader icon={ProjectsIcon} file={`projects.dir / ${selected.category}`} title={selected.title} badge={selected.date} focusable />
             <p className="app-body mt-4 max-w-3xl">{selected.desc}</p>
+            {selected.confidential && <ConfidentialProjectNotice />}
+            <ProjectShare key={selected.id} project={selected} />
             <div className="app-detail-mobile-links mt-4"><ProjectLinks project={selected} /></div>
           </div>
           <div className="app-detail-grid">
             <div className="space-y-6">
+              {selected.outcomes?.length > 0 && (
+                <section className="app-panel" aria-labelledby="project-outcomes">
+                  <SectionTitle id="project-outcomes">What the platform supports</SectionTitle>
+                  <div className="space-y-4">
+                    {selected.outcomes.map((outcome) => (
+                      <div key={outcome.title}>
+                        <h3 className="text-sm font-bold mb-1">{outcome.title}</h3>
+                        <p className="app-body">{outcome.detail}</p>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              )}
               <section className="app-panel" aria-labelledby="project-purpose">
                 <SectionTitle id="project-purpose">The project</SectionTitle>
                 <p className="font-sans text-base leading-relaxed text-zinc-200">{selected.purpose}</p>
@@ -143,6 +176,7 @@ export default function ProjectsApp() {
                   {project.image && <PreviewImage src={project.image} alt={`${project.title} application screenshot`} loading="lazy"
                     className="order-first app-project-image w-full" />}
                 </div>
+                {project.confidential && <div className="mb-4"><ConfidentialProjectNotice compact /></div>}
                 {project.team && <p className="text-xs text-zinc-300 mb-4">{project.team}</p>}
                 <ul className="list-disc pl-5 space-y-1 font-sans text-sm leading-relaxed text-zinc-200 mb-4">
                   {project.features.slice(0, 3).map((feature) => <li key={feature}>{feature}</li>)}
@@ -168,8 +202,44 @@ export default function ProjectsApp() {
   );
 }
 
+function ProjectShare({ project }) {
+  const [status, setStatus] = useState("");
+  const timer = useRef(null);
+  const url = getProjectUrl(project.id);
+  useEffect(() => () => clearTimeout(timer.current), []);
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(url);
+      setStatus("copied");
+      clearTimeout(timer.current);
+      timer.current = setTimeout(() => setStatus(""), 2000);
+    } catch {
+      setStatus("manual");
+    }
+  };
+
+  return (
+    <div className="mt-4">
+      <button type="button" onClick={copy} className="app-action-secondary" aria-label={`Copy link to ${project.title}`}>
+        {status === "copied" ? <Check size={15} aria-hidden="true" /> : <Copy size={15} aria-hidden="true" />}
+        {status === "copied" ? "Link copied" : "Copy project link"}
+      </button>
+      <p role="status" className="text-sm text-zinc-300 mt-2">{status === "copied" ? "Project link copied." : status === "manual" ? "Copy this link to share the project:" : ""}</p>
+      {status === "manual" && <input aria-label={`${project.title} share link`} readOnly value={url} onFocus={(event) => event.currentTarget.select()} className="app-field mt-2" />}
+    </div>
+  );
+}
+
 function SectionTitle({ id, children }) {
   return <PanelTitle id={id}>{children}</PanelTitle>;
+}
+
+function ConfidentialProjectNotice({ compact = false }) {
+  return <p className={`flex items-start gap-2 text-sm leading-relaxed text-zinc-300 ${compact ? "" : "mt-4"}`}>
+    <LockKeyhole size={15} className="shrink-0 mt-0.5" aria-hidden="true" />
+    <span>{compact ? "Confidential client project" : "Confidential client project. Screenshots, source code, and live demo links are private."}</span>
+  </p>;
 }
 
 function TechList({ project }) {
@@ -177,7 +247,7 @@ function TechList({ project }) {
 }
 
 function ProjectLinks({ project, secondary = false }) {
-  if (!project.link && !project.code) return null;
+  if (project.confidential || (!project.link && !project.code)) return null;
   return (
     <div className="flex flex-wrap gap-2">
       {project.link && <a href={project.link} target="_blank" rel="noopener noreferrer"

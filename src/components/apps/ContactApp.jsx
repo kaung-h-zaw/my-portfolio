@@ -48,6 +48,12 @@ export default function ContactApp() {
   async function handleSubmit(e) {
     e.preventDefault();
     if (sending || !formRef.current) return;
+    const form = formRef.current;
+    for (const name of ["name", "message"]) {
+      const input = form.elements.namedItem(name);
+      input.setCustomValidity(input.value.trim() ? "" : "Please enter more than spaces.");
+    }
+    if (!form.reportValidity()) return;
     setSending(true);
     setStatus(null);
 
@@ -55,17 +61,17 @@ export default function ContactApp() {
       await emailjs.sendForm(
         "service_ph76too",
         "template_7vf40oe",
-        formRef.current,
+        form,
         "XJIjjnPJ0vuApI2QB",
       );
 
-      setSending(false);
+      if (formRef.current !== form) return;
       setStatus("sent");
-      formRef.current.reset();
-    } catch (err) {
-      console.error("Error sending email:", err);
-      setSending(false);
-      setStatus("error");
+      form.reset();
+    } catch {
+      if (formRef.current === form) setStatus("error");
+    } finally {
+      if (formRef.current === form) setSending(false);
     }
   }
 
@@ -95,20 +101,20 @@ export default function ContactApp() {
               <div className="app-form-grid grid gap-4">
                 <div>
                   <label htmlFor="contact-name" className="block text-xs font-bold uppercase tracking-wide mb-2">Name *</label>
-                  <input id="contact-name" name="name" autoComplete="name" required placeholder="Your name" className="app-field" />
+                  <input id="contact-name" name="name" autoComplete="name" required maxLength={100} readOnly={sending} onInput={(event) => event.currentTarget.setCustomValidity("")} placeholder="Your name" className="app-field" />
                 </div>
                 <div>
                   <label htmlFor="contact-email" className="block text-xs font-bold uppercase tracking-wide mb-2">Email *</label>
-                  <input id="contact-email" name="email" type="email" autoComplete="email" required placeholder="Your email address" className="app-field" />
+                  <input id="contact-email" name="email" type="email" autoComplete="email" required maxLength={254} readOnly={sending} placeholder="Your email address" className="app-field" />
                 </div>
               </div>
               <div>
                 <label htmlFor="contact-phone" className="block text-xs font-bold uppercase tracking-wide mb-2">Phone (optional)</label>
-                <input id="contact-phone" name="phone" type="tel" autoComplete="tel" placeholder="Include your country code" className="app-field" />
+                <input id="contact-phone" name="phone" type="tel" autoComplete="tel" maxLength={40} readOnly={sending} placeholder="Include your country code" className="app-field" />
               </div>
               <div>
                 <label htmlFor="contact-message" className="block text-xs font-bold uppercase tracking-wide mb-2">Message *</label>
-                <textarea id="contact-message" name="message" required rows={4} placeholder="Tell me about the opportunity or your question" className="app-field resize-y min-h-[112px]" />
+                <textarea id="contact-message" name="message" required rows={4} maxLength={5000} readOnly={sending} onInput={(event) => event.currentTarget.setCustomValidity("")} placeholder="Tell me about the opportunity or your question" className="app-field resize-y min-h-[112px]" />
               </div>
               {status === "sent" && <p role="status" className="app-tile flex items-center gap-2 font-sans text-sm"><Check size={17} aria-hidden="true" /> Message sent successfully!</p>}
               {status === "error" && <p role="alert" className="app-tile font-sans text-sm leading-relaxed">Message could not be sent. Please try again or <a className="underline" href={`mailto:${email}`}>email me directly</a>.</p>}

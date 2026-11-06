@@ -1,4 +1,5 @@
 import { AppSkeleton } from "../ui/LoadingSkeleton";
+import ErrorBoundary from "../ui/ErrorBoundary";
 import React, { useState, useRef, useEffect, Suspense } from "react";
 import Draggable from "react-draggable";
 import { AnimatePresence, motion } from "framer-motion";
@@ -508,6 +509,7 @@ export default function Window({
 
           <div style={isCompactHeader ? { paddingBottom: isMobile ? "calc(var(--os-safe-bottom) + 32px)" : 32, scrollPaddingBottom: isMobile ? "calc(var(--os-safe-bottom) + 32px)" : 32 } : undefined} className="os-content relative z-0 min-h-0 flex-1 overflow-auto border-t border-white/10 bg-[#181818] p-1 sm:p-3">
             <div key={currentAppId || title} className={isCompactHeader ? "min-h-full" : "h-full"}>
+              <ErrorBoundary key={currentAppId || title} section={currentLabel}>
               <Suspense
                 fallback={
                   <AppSkeleton label={currentLabel.replace(/_/g, " ")} section={currentAppId} />
@@ -515,6 +517,7 @@ export default function Window({
               >
                 {children}
               </Suspense>
+              </ErrorBoundary>
             </div>
           </div>
           {!isCompactHeader && <footer className="flex h-6 shrink-0 items-center justify-between gap-2 border-t border-white/10 bg-white/5 px-3 text-[10px] text-zinc-300">

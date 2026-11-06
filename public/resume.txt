@@ -1,0 +1,51 @@
+Kaung Htet Zaw
+Full Stack Developer
+Bangkok, Thailand | +66 63 947 3379 | kaunghtetzaw.inbox@gmail.com
+Portfolio: https://imkaung.pages.dev/
+GitHub: https://github.com/kaung-h-zaw
+LinkedIn: https://www.linkedin.com/in/kaung-h-zaw/
+
+SUMMARY
+Full Stack Developer building responsive web applications with React, Next.js, TypeScript, Node.js, and Express. Hands-on industry experience through QUT's industry capstone with The Guinea Group, alongside personal projects in music playback, resume editing, and file transfer.
+
+TECHNICAL SKILLS
+Frontend: JavaScript, TypeScript, React, Next.js, HTML, CSS, Tailwind CSS
+Backend: Node.js, Express, REST APIs, WebSockets, Python
+Databases: MySQL, PostgreSQL, SQLite, MongoDB, Redis
+Tools: Git, GitHub, Docker, Figma, Agile/Scrum
+
+PROFESSIONAL EXPERIENCE
+Full Stack Developer (Industry Capstone)
+The Guinea Group / Queensland University of Technology | Feb 2024 - Nov 2024 | Brisbane, Australia
+- Completed an industry capstone in a four-person team for The Guinea Group, building a confidential research platform with React, JavaScript, and Tailwind CSS.
+- Built authentication, survey selection, embedded video playback, and response interfaces.
+- Contributed to Express and MySQL features for participant data, survey management, reporting, and exports.
+- Worked with Docker and Python services supporting multimodal research workflows; collaborated through Agile planning, weekly client meetings, and supervisor reviews.
+
+PROJECTS
+TubeParty | Next.js, TypeScript, Node.js, Express, WebSockets
+- Developed a Discord music bot and responsive dashboard with sign-in, shared queues, playback controls, saved favorites, and live WebSocket updates.
+- Added music discovery using the current song, favorites, and listening history, with cached recommendations and fallback searches.
+GitHub: https://github.com/kaung-h-zaw/tube-party-bot
+Linkfolio | React, Vite, Tailwind CSS, Express, SQLite, PostgreSQL
+- Built a resume and portfolio builder with editable templates, document import, live previews, public portfolio pages, messaging, and analytics.
+- Used shared professional content across resumes and portfolios, with an Express API, SQLite storage, and PostgreSQL support.
+Case study: https://imkaung.pages.dev/#/projects/linkfolio
+SendBook | Next.js, TypeScript, Redis, Vercel Blob
+- Account-free ebook transfer app with QR pairing or a four-character code, short-lived sessions, and automatic file cleanup.
+- Validates session tokens, file extensions, and upload size before accepting files.
+Live demo: https://send-book.vercel.app/
+
+EDUCATION
+Information Technology studies (Computer Science)
+Queensland University of Technology | Jul 2023 - Dec 2024
+Pearson BTEC Level 5 Higher National Diploma in Computing
+GUSTO College | Awarded Sep 2022 | Distinction.
+
+CERTIFICATIONS
+Full-Stack Engineer | Codecademy | Nov 2026
+Back-End Engineer | Codecademy | Nov 2026
+Front-End Engineer | Codecademy | Sep 2026
+Meta Front-End Developer Professional Certificate | Coursera | Oct 2024
+
+Languages: Burmese (native); English (B2)

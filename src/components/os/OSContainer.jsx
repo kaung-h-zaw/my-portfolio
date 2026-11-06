@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useMemo, useRef, lazy } from "react";
+import React, { useState, useEffect, useLayoutEffect, useMemo, useRef, lazy } from "react";
+import { navigateTo, readRoute, usePortfolioRoute } from "../../lib/navigation";
 import DesktopLayout from "./layouts/DesktopLayout";
 import TabletLayout from "./layouts/TabletLayout";
 import PhoneLayout from "./layouts/PhoneLayout";
@@ -21,11 +22,10 @@ function getDeviceType() {
 }
 
 export default function OSContainer() {
+  const route = usePortfolioRoute();
   const [deviceType, setDeviceType] = useState(getDeviceType);
-  const [openWindows, setOpenWindows] = useState(() => getDeviceType() === "desktop" ? [{
-    id: "about", title: "About_Me", icon: ProfileIcon, zIndex: 21, minimized: false,
-  }] : []);
-  const [activeWindowId, setActiveWindowId] = useState(() => getDeviceType() === "desktop" ? "about" : null);
+  const [openWindows, setOpenWindows] = useState([]);
+  const [activeWindowId, setActiveWindowId] = useState(null);
   const zTop = useRef(21);
   const [navDirection, setNavDirection] = useState(0);
   const [navigationMode, setNavigationMode] = useState("open");
@@ -94,6 +94,24 @@ export default function OSContainer() {
     [],
   );
 
+  useLayoutEffect(() => {
+    const appId = route.appId || (getDeviceType() === "desktop" ? "about" : "home");
+    if (appId === "home") {
+      setOpenWindows((previous) => previous.map((item) => ({ ...item, minimized: true })));
+      setActiveWindowId(null);
+      return;
+    }
+    const app = apps[appId];
+    zTop.current += 1;
+    const zIndex = zTop.current;
+    setOpenWindows((previous) => {
+      const existing = previous.find((item) => item.id === appId);
+      if (existing && !existing.minimized) return previous;
+      return [{ id: appId, title: app.title, icon: app.icon, zIndex, minimized: false }];
+    });
+    setActiveWindowId(appId);
+  }, [apps, route.appId]);
+
   const openWindow = (id, options = {}) => {
     const { source = "open" } = options;
     const currentWindowId = openWindows[0]?.id || activeWindowId;
@@ -118,30 +136,17 @@ export default function OSContainer() {
       return;
     }
 
-    const app = apps[id];
-    if (!app) return;
-    const offset = openWindows.length * 24;
-    const maxX = Math.max(0, window.innerWidth - 680);
-    const maxY = Math.max(0, window.innerHeight - 520);
-    const defaultPos = {
-      x: Math.min(60 + offset, maxX),
-      y: Math.min(50 + offset, maxY),
-    };
-
-    zTop.current += 1;
-    setOpenWindows([{
-      id, title: app.title, icon: app.icon,
-      zIndex: zTop.current, defaultPos, minimized: false,
-    }]);
-    setActiveWindowId(id);
+    if (apps[id]) navigateTo(id);
   };
 
   const closeWindow = (id) => {
     setOpenWindows((prev) => prev.filter((w) => w.id !== id));
     if (activeWindowId === id) setActiveWindowId(null);
+    navigateTo("home");
   };
 
   const focusWindow = (id) => {
+    if (readRoute().appId !== id) navigateTo(id);
     zTop.current += 1;
     const nextZ = zTop.current;
     setOpenWindows((prev) => prev.map((w) =>
@@ -155,6 +160,7 @@ export default function OSContainer() {
       prev.map((w) => (w.id === id ? { ...w, minimized: true } : w)),
     );
     setActiveWindowId(null);
+    navigateTo("home");
   };
 
   const layoutProps = {

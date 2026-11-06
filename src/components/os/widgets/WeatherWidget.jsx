@@ -8,6 +8,9 @@ export default function WeatherWidget({ variant = "mobile" }) {
   const [currentDate, setCurrentDate] = useState("");
 
   useEffect(() => {
+    const controller = new AbortController();
+    let disposed = false;
+    const timeout = setTimeout(() => controller.abort(), 8000);
     const fetchWeather = async () => {
       try {
         const apiUrl = "https://api.open-meteo.com/v1/forecast";
@@ -16,10 +19,11 @@ export default function WeatherWidget({ variant = "mobile" }) {
 
         const res = await fetch(
           `${apiUrl}?latitude=${lat}&longitude=${lon}&current_weather=true`,
+          { signal: controller.signal },
         );
         if (!res.ok) throw new Error("Weather request failed");
         const data = await res.json();
-        if (!data?.current_weather) throw new Error("Missing weather data");
+        if (!Number.isFinite(data?.current_weather?.temperature) || !Number.isFinite(data?.current_weather?.weathercode)) throw new Error("Invalid weather data");
         const current = data.current_weather;
 
         let desc = "Clear";
@@ -27,22 +31,30 @@ export default function WeatherWidget({ variant = "mobile" }) {
         if (current.weathercode >= 1 && current.weathercode <= 3) {
           desc = "Partly Cloudy";
           Icon = CloudSun;
-        } else if (current.weathercode >= 51 && current.weathercode <= 67) {
+        } else if ((current.weathercode >= 51 && current.weathercode <= 67) || (current.weathercode >= 80 && current.weathercode <= 82)) {
           desc = "Rain";
           Icon = CloudRain;
         } else if (current.weathercode >= 45 && current.weathercode <= 48) {
           desc = "Fog/Haze";
           Icon = Cloud;
+        } else if (current.weathercode >= 95) {
+          desc = "Thunderstorm";
+          Icon = CloudRain;
+        } else if (current.weathercode !== 0) {
+          desc = "Cloudy";
+          Icon = Cloud;
         }
 
+        if (disposed) return;
         setWeather({
           temp: Math.round(current.temperature),
           description: desc,
           icon: Icon,
         });
-      } catch (error) {
-        console.error("Weather fetch error:", error);
-        setWeather({ temp: "32", description: "Hazy Sun", icon: CloudSun });
+      } catch {
+        if (!disposed) setWeather({ temp: null, description: "Weather unavailable", icon: Cloud });
+      } finally {
+        clearTimeout(timeout);
       }
     };
 
@@ -60,6 +72,11 @@ export default function WeatherWidget({ variant = "mobile" }) {
       })
       .toUpperCase();
     setCurrentDate(`${shortDay}, ${dateStr}`);
+    return () => {
+      disposed = true;
+      clearTimeout(timeout);
+      controller.abort();
+    };
   }, []);
 
   if (!weather) return <WeatherSkeleton variant={variant} />;
@@ -69,7 +86,7 @@ export default function WeatherWidget({ variant = "mobile" }) {
   if (variant === "compact") {
     return <section aria-label="Bangkok weather" className="native-widget flex h-full min-h-[112px] flex-col justify-between p-3.5">
       <p className="font-sans text-xs font-semibold text-zinc-300">Bangkok</p>
-      <div className="flex items-center justify-between gap-1"><span className="font-sans text-[32px] font-semibold leading-none tracking-tight text-zinc-100">{weather.temp}°</span><WeatherIcon size={26} strokeWidth={1.6} className="shrink-0 text-zinc-300" aria-hidden="true" /></div>
+      <div className="flex items-center justify-between gap-1"><span className="font-sans text-[32px] font-semibold leading-none tracking-tight text-zinc-100">{weather.temp === null ? "—" : `${weather.temp}°`}</span><WeatherIcon size={26} strokeWidth={1.6} className="shrink-0 text-zinc-300" aria-hidden="true" /></div>
       <p className="font-sans text-[10px] leading-tight text-zinc-300">{weather.description}</p>
     </section>;
   }
@@ -92,10 +109,10 @@ export default function WeatherWidget({ variant = "mobile" }) {
           <div className="flex flex-col overflow-hidden pr-2">
             <div className="flex items-baseline gap-1">
               <span className="font-black text-3xl xl:text-4xl 2xl:text-5xl tracking-tighter leading-none text-zinc-200">
-                {weather.temp}
+                {weather.temp ?? "—"}
               </span>
               <span className="font-bold text-lg xl:text-xl text-zinc-300">
-                °C
+                {weather.temp !== null && "°C"}
               </span>
             </div>
             <div className="flex items-center gap-1.5 ">
@@ -132,7 +149,7 @@ export default function WeatherWidget({ variant = "mobile" }) {
           </span>
           <div>
             <span className="font-black text-4xl md:text-5xl leading-none mt-1 block text-zinc-200">
-              {weather.temp}°
+              {weather.temp === null ? "—" : `${weather.temp}°`}
             </span>
             <span className="text-[9px] md:text-[10px] font-medium uppercase tracking-wide mt-1 md:mt-2 block truncate max-w-[80px] md:max-w-[100px] text-zinc-400">
               {weather.description}

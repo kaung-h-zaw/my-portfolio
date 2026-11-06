@@ -236,12 +236,56 @@ test("redesigned pages remain readable without horizontal overflow", async ({ pa
 test("certificate verification dialog remains keyboard accessible", async ({ page }) => {
   await visit(page);
   await openApp(page, "Education");
-  const verify = page.getByRole("button", { name: "Verify Meta Front-End Developer Professional Certificate", exact: true });
+  const verify = page.getByRole("button", { name: "Credentials for Meta Front-End Developer Professional Certificate", exact: true });
   await verify.click();
   await expect(page.getByRole("dialog")).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(page.getByRole("dialog")).toHaveCount(0);
   await expect(verify).toBeFocused();
+});
+
+test("credential gallery shows every certificate and preserves its links", async ({ page }) => {
+  await visit(page);
+  await openApp(page, "Education");
+  const gallery = page.getByRole("region", { name: "Certifications", exact: true });
+  await expect(gallery.getByRole("article")).toHaveCount(5);
+  await expect(gallery.getByRole("button", { name: /syllabus/i })).toHaveCount(0);
+  const credentials = [
+    ["Back-End Engineer", "https://www.codecademy.com/profiles/kaunghzaw/certificates/810f53d14de24b938cc13c7c2af1e686"],
+    ["Full-Stack Engineer", "https://www.codecademy.com/profiles/kaunghzaw/certificates/ffd0f42cce1a44e9a0108b365047a0a6"],
+    ["Front-End Engineer", "https://www.codecademy.com/profiles/kaunghzaw/certificates/2682884a0719474f96407efe432fdd87"],
+    ["Meta Front-End Developer Professional Certificate", "https://coursera.org/verify/professional-cert/NQPRLMXDWBTB"],
+  ];
+  for (const [name, href] of credentials) {
+    const verify = gallery.getByRole("button", { name: `Credentials for ${name}`, exact: true });
+    await verify.click();
+    await expect(page.getByRole("dialog").getByRole("link", { name: "Open link", exact: true })).toHaveAttribute("href", href);
+    await page.keyboard.press("Escape");
+    await expect(verify).toBeFocused();
+  }
+  const englishCertificate = gallery.getByRole("article", { name: "English for Academic Purposes 2 Extended", exact: true });
+  await expect(englishCertificate).toBeVisible();
+  await expect(englishCertificate.getByRole("button")).toHaveCount(0);
+  const languages = page.getByRole("region", { name: "Languages", exact: true });
+  await expect(languages.getByText("Burmese", { exact: true })).toBeVisible();
+  await expect(languages.getByText("B2 · Upper intermediate", { exact: true })).toBeVisible();
+});
+
+test("education focuses on studies and industry capstone appears in experience", async ({ page }) => {
+  await visit(page);
+  await openApp(page, "Education");
+  await expect(page.getByRole("heading", { name: "Information Technology (Computer Science)", exact: true })).toBeVisible();
+  await expect(page.getByText(/Computer Science coursework in software development/)).toBeVisible();
+  await expect(page.locator(".app-page").getByText(/capstone/i)).toHaveCount(0);
+  await expect(page.getByText(/Phase[s]? 1|Phase[s]? 2/i)).toHaveCount(0);
+  await expect(page.getByText(/Withdrawn|Degree not completed/i)).toHaveCount(0);
+  await expect(page.getByText("2 education entries", { exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Higher National Diploma (Computing)", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "English for Academic Purposes 2 Extended", exact: true })).toBeVisible();
+  await openApp(page, "Experience");
+  await expect(page.getByText(/Gained hands-on industry experience as a Full Stack Developer/)).toBeVisible();
+  await expect(page.getByText(/Collaborated in a four-person team to develop a confidential research platform/)).toBeVisible();
+  await expect(page.locator(".app-page").getByText(/two.semester|two semesters|Phase[s]? [12]/i)).toHaveCount(0);
 });
 
 test("contact form handles failed and successful submissions without sending real mail", async ({ page }) => {

@@ -1,5 +1,45 @@
 import { FileText, Cpu, Folder, Mail } from "lucide-react";
 
+// Add public verification URLs to `link`; optional IDs appear below the issuer.
+export const CERTIFICATIONS_DATA = [
+  {
+    name: "Back-End Engineer",
+    type: "Career Path",
+    issuer: "Codecademy",
+    date: "Nov 2026",
+    credentialId: "",
+    link: "https://www.codecademy.com/profiles/kaunghzaw/certificates/810f53d14de24b938cc13c7c2af1e686",
+  },
+  {
+    name: "Full-Stack Engineer",
+    type: "Career Path",
+    issuer: "Codecademy",
+    date: "Nov 2026",
+    credentialId: "",
+    link: "https://www.codecademy.com/profiles/kaunghzaw/certificates/ffd0f42cce1a44e9a0108b365047a0a6",
+  },
+  {
+    name: "Front-End Engineer",
+    type: "Career Path",
+    issuer: "Codecademy",
+    date: "Sep 2026",
+    credentialId: "",
+    link: "https://www.codecademy.com/profiles/kaunghzaw/certificates/2682884a0719474f96407efe432fdd87",
+  },
+  {
+    name: "Meta Front-End Developer Professional Certificate",
+    issuer: "Coursera",
+    date: "Oct 2024",
+    link: "https://coursera.org/verify/professional-cert/NQPRLMXDWBTB",
+  },
+  {
+    name: "English for Academic Purposes 2 Extended",
+    issuer: "QUT College",
+    date: "Jun 2023",
+    link: null,
+  },
+];
+
 export const DESKTOP_ICONS = [
   { id: "about", title: "About_Me", icon: FileText, type: "txt" },
   { id: "skills", title: "Skills_v2", icon: Cpu, type: "exe" },
@@ -13,16 +53,22 @@ export const PROJECTS_DATA = [
     title: "Guinea Group Capstone",
     category: "QUT capstone",
     featured: true,
+    confidential: true,
     desc: "A video and survey platform for The Guinea Group, developed during QUT’s capstone program for pressure-based decision-making research.",
     purpose: "Support research participants through video and survey tasks, while giving researchers tools for participant data, survey management, reporting, and exports.",
     context: "The Guinea Group & Queensland University of Technology",
     team: "Four-person capstone team",
     role: "Full Stack Developer",
+    outcomes: [
+      { title: "A guided participant experience", detail: "Authentication, survey selection, embedded video playback, and response interfaces bring the participant tasks into one platform." },
+      { title: "Tools for the research team", detail: "Participant data management, survey administration, reporting, and exports support the researchers’ workflow." },
+      { title: "Multimodal research workflows", detail: "Python-based services support audio emotion analysis, camera-based emotion capture, and eye tracking alongside the video and survey tasks." },
+    ],
     contribution: [
       "Built and refined authentication, survey selection, embedded video playback, and response interfaces with JavaScript, React, and Tailwind.",
       "Contributed to Express and MySQL features for participant data, survey management, reporting, and exports.",
       "Worked with Docker and Python-based services supporting audio emotion analysis, camera-based emotion capture, and eye-tracking workflows.",
-      "Collaborated through Agile planning, weekly client discussions, and fortnightly supervisor reviews across two semesters.",
+      "Collaborated through Agile planning, weekly client discussions, and regular reviews with the QUT supervisor.",
     ],
     features: ["Video and survey task flows", "Participant data management", "Reporting and exports", "Multimodal research workflows"],
     tags: ["React", "Tailwind CSS", "Express", "MySQL", "Python", "Docker", "AWS"],

@@ -19,6 +19,7 @@ A modern, interactive personal portfolio website showcasing my projects, skills,
 - Smooth page transitions and scroll-based animations
 - Functional contact form integrated with EmailJS
 - Project case studies with screenshots, features, technologies, and documented technical decisions
+- Shareable case-study URLs such as `/#/projects/tubeparty`, with browser history, direct opening, and copy-link controls
 - Featured QUT capstone with existing team contribution details
 
 ## Getting Started
@@ -83,6 +84,7 @@ The suite builds the production app and checks wide monitor, desktop, short lapt
 `.github/workflows/ci.yml` runs lint and the browser checks on pushes and pull requests to `main`. Failures save browser screenshots and traces as workflow artifacts. Test output is ignored by Git.
 
 Project content and source references: [docs/project-content.md](docs/project-content.md).
+Resume source and rebuilding: [docs/resume.md](docs/resume.md).
 Google account steps still required for indexing: [docs/search-console.md](docs/search-console.md).
 
 ## License

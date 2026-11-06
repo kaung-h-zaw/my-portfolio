@@ -13,13 +13,12 @@ export default function ExperienceApp() {
       period: "Feb 2024 - Nov 2024",
       status: "completed",
       description:
-        "Delivered a two-semester capstone platform for pressure-based decision-making research, working in a four-person team across frontend development, backend features, and multimodal data workflows.",
+        "Gained hands-on industry experience as a Full Stack Developer through QUT’s industry capstone with The Guinea Group. Collaborated in a four-person team to develop a confidential research platform, working closely with the client and university supervisors.",
       highlights: [
         "Built and refined core product flows in JavaScript, React, and Tailwind, including authentication, survey selection, embedded video playback, and response interfaces",
         "Contributed to Express and MySQL features for participant data, survey management, reporting, and export functionality",
         "Worked with Docker and Python-based services to support audio emotion analysis, camera-based emotion capture, and eye-tracking workflows",
         "Delivered the project using Agile planning, with weekly client discussions and fortnightly reviews with the QUT capstone supervisor",
-        "Collaborated closely within a four-person team to complete the platform across the full two-semester delivery period",
       ],
       stack: ["JavaScript", "React", "Tailwind", "Express", "MySQL", "Python", "Docker", "AWS"],
     },
@@ -28,13 +27,13 @@ export default function ExperienceApp() {
   return (
     <div className="app-page">
       <AppHeader icon={ExperienceIcon} file="experience.sys" title="Work History" badge={`${experiences.length} role`} />
-      <p className="app-body max-w-2xl">Full-stack development through a two-semester QUT capstone project with The Guinea Group.</p>
+      <p className="app-body max-w-2xl">Industry experience in full-stack development.</p>
       <div className="space-y-4 sm:space-y-5">
         {experiences.map((experience) => (
           <article key={experience.id} className="app-panel">
             <div className="app-experience-grid">
               <div className="app-tile self-start">
-                <span className="app-badge inline-block mb-4">Completed · Capstone</span>
+                <span className="app-badge inline-block mb-4">Completed · Industry Capstone</span>
                 <h2 className="text-lg font-bold leading-tight mb-2">{experience.role}</h2>
                 <p className="font-sans text-base text-zinc-300 mb-4">{experience.company}</p>
                 <div className="space-y-2 border-t border-white/10 pt-3 font-sans text-sm text-zinc-300">

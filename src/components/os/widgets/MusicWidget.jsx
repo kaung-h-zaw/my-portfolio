@@ -4,6 +4,8 @@ import { Music, Play, Pause, SkipForward } from "lucide-react";
 export default function MusicWidget({ variant = "mobile" }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [playbackError, setPlaybackError] = useState(false);
+  const startingRef = useRef(false);
   const audioRef = useRef(null);
   const timeoutRef = useRef(null);
   const intervalRef = useRef(null);
@@ -11,20 +13,53 @@ export default function MusicWidget({ variant = "mobile" }) {
   const PLAY_DURATION = 10000;
 
   useEffect(() => {
-    audioRef.current = new Audio("/lofi.mp3");
+    const audio = new Audio("/lofi.mp3");
+    audio.preload = "none";
+    audioRef.current = audio;
+    const stop = () => {
+      clearTimeout(timeoutRef.current);
+      clearInterval(intervalRef.current);
+      setIsPlaying(false);
+    };
+    const ended = () => { stop(); setProgress(0); };
+    const failed = () => { ended(); setPlaybackError(true); };
+    audio.addEventListener("pause", stop);
+    audio.addEventListener("ended", ended);
+    audio.addEventListener("error", failed);
+    return () => {
+      audio.removeEventListener("pause", stop);
+      audio.removeEventListener("ended", ended);
+      audio.removeEventListener("error", failed);
+      clearTimeout(timeoutRef.current);
+      clearInterval(intervalRef.current);
+      audio.pause();
+      audioRef.current = null;
+    };
   }, []);
 
-  const togglePlay = () => {
-    if (!audioRef.current) return;
+  const togglePlay = async () => {
+    if (!audioRef.current || startingRef.current) return;
     if (isPlaying) {
       audioRef.current.pause();
       setIsPlaying(false);
       clearTimeout(timeoutRef.current);
       clearInterval(intervalRef.current);
     } else {
-      audioRef.current
-        .play()
-        .catch((e) => console.log("Audio play failed.", e));
+      const audio = audioRef.current;
+      startingRef.current = true;
+      setPlaybackError(false);
+      try {
+        await audio.play();
+      } catch {
+        if (audioRef.current === audio) setPlaybackError(true);
+        return;
+      } finally {
+        startingRef.current = false;
+      }
+      if (audioRef.current !== audio) {
+        audio.pause();
+        return;
+      }
       setIsPlaying(true);
 
       const startTime = Date.now();
@@ -52,23 +87,11 @@ export default function MusicWidget({ variant = "mobile" }) {
     }
   };
 
-  useEffect(() => {
-    return () => {
-      clearTimeout(timeoutRef.current);
-      clearInterval(intervalRef.current);
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current.currentTime = 0;
-        audioRef.current = null;
-      }
-    };
-  }, []);
-
   if (variant === "compact") {
     return <button type="button" onClick={togglePlay} aria-label={isPlaying ? "Pause music" : "Play music"} aria-pressed={isPlaying}
       className="native-widget flex h-full min-h-[112px] flex-col justify-between p-3.5 text-left transition-colors hover:bg-[#242424]">
       <span className="flex w-full items-center justify-between"><span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#353539] text-zinc-100"><Music size={15} aria-hidden="true" /></span>{isPlaying ? <Pause size={18} aria-hidden="true" /> : <Play size={18} aria-hidden="true" />}</span>
-      <span><span className="block font-sans text-xs font-bold text-zinc-100">Lofi beats</span><span className="block font-sans text-[10px] text-zinc-300">{isPlaying ? "Now playing" : "Tap to play"}</span></span>
+      <span><span className="block font-sans text-xs font-bold text-zinc-100">Lofi beats</span><span role="status" className="block font-sans text-[10px] text-zinc-300">{playbackError ? "Playback unavailable. Try again." : isPlaying ? "Now playing" : "Tap to play"}</span></span>
       <span className="block h-1 w-full overflow-hidden rounded-full bg-white/5"><span className="block h-full rounded-full bg-[#c4c4ca]" style={{ width: `${progress}%` }} /></span>
     </button>;
   }
@@ -76,8 +99,7 @@ export default function MusicWidget({ variant = "mobile" }) {
   if (variant === "desktop") {
     return (
       <div
-        onClick={togglePlay}
-        className="w-full box-border bg-[#1c1c1c] border border-white/10 hover:border-white/10 relative transition-all !p-0 overflow-hidden cursor-pointer group rounded-2xl flex flex-col"
+        className="w-full box-border bg-[#1c1c1c] border border-white/10 hover:border-white/10 relative transition-all !p-0 overflow-hidden group rounded-2xl flex flex-col"
       >
         <div className="p-3 xl:p-3.5 2xl:p-4 bg-black/90 text-white flex justify-between items-center">
           <div className="flex gap-2 items-center w-full overflow-hidden">
@@ -86,7 +108,7 @@ export default function MusicWidget({ variant = "mobile" }) {
             </div>
             <div className="flex flex-col overflow-hidden">
               <span className="text-[7px] xl:text-[8px] 2xl:text-[9px] font-medium uppercase opacity-40 tracking-widest">
-                Spotify
+                Audio preview
               </span>
               <span className="font-bold text-[10px] xl:text-xs 2xl:text-sm truncate w-full text-white/80">
                 Lofi Study Beats
@@ -108,6 +130,7 @@ export default function MusicWidget({ variant = "mobile" }) {
           </div>
         </div>
 
+        {playbackError && <p role="status" className="px-3 py-2 text-xs text-zinc-300">Playback unavailable. Try again.</p>}
         <div className="bg-white/5 p-2.5 xl:p-3 flex justify-between items-center border-t border-white/10">
           <div className="w-full h-1 xl:h-1.5 bg-white/5 rounded-full mr-3 overflow-hidden">
             <div
@@ -118,6 +141,7 @@ export default function MusicWidget({ variant = "mobile" }) {
           <div className="flex gap-1.5">
             <button
               aria-label={isPlaying ? "Pause music" : "Play music"}
+              aria-pressed={isPlaying}
               className="min-h-11 min-w-11 flex items-center justify-center hover:bg-white/5 p-1 rounded-lg transition-colors"
               onClick={(e) => {
                 e.stopPropagation();
@@ -182,7 +206,7 @@ export default function MusicWidget({ variant = "mobile" }) {
               Lofi Beats
             </span>
             <span className="text-[9px] md:text-[10px] text-zinc-400 font-medium truncate block w-full uppercase tracking-widest mt-0.5">
-              Spotify
+              Audio preview
             </span>
           </div>
           <div className="text-zinc-400 mb-0.5">
@@ -200,6 +224,7 @@ export default function MusicWidget({ variant = "mobile" }) {
           </div>
         </div>
 
+        {playbackError && <p role="status" className="text-xs text-zinc-300">Playback unavailable. Try again.</p>}
         <div className="w-full h-1.5 md:h-2 bg-white/5 rounded-full overflow-hidden">
           <div
             className="h-full bg-zinc-300 transition-none rounded-full"
